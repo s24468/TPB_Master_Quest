@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(Move(targetPos));
             }
         }
+        animator.SetBool("isMoving",isMoving);
     }
 
     IEnumerator Move(Vector3 targetPos)
