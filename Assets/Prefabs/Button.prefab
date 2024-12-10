@@ -486,5 +486,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f966c09cfd02296419fc682fa6fd4b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointLeft: {fileID: 4171589718354304083}
-  pointRight: {fileID: 1110086924494024782}
+  newSprite: {fileID: 21300000, guid: 6d0237f170c8e1745bff9856676241aa, type: 3}
+  originalSprite: {fileID: 21300000, guid: 450da3b64e760ac488c4250c4b7f3235, type: 3}
+  buttonImage: {fileID: 5172042777389626161}
