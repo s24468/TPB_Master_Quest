@@ -1180,7 +1180,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fileName: data.game
-  gameData: {fileID: 0}
+  useEncryption: 1
+  gameData:
+    _money: 0
+    playerPosition: {x: 0, y: 0, z: 0}
+    CardDictionaryCollected:
+      keys: []
+      values: 
 --- !u!1001 &1750975167
 PrefabInstance:
   m_ObjectHideFlags: 0

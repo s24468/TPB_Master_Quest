@@ -1,24 +1,29 @@
-using UnityEngine;
 using System;
 using System.IO;
+using UnityEngine;
+
+// namespace DataPersistance;
 
 namespace DataPersistance
 {
-    
     public class FileDataHandler
     {
         private string dataDirectoryPath = "";
         private string dataFileName = "";
 
-        public FileDataHandler(string dataDirectoryPath, string dataFileName)
+        private bool useEncryption = false;
+        private string encryptionCodeWord = "word";
+
+
+        public FileDataHandler(string dataDirectoryPath, string dataFileName, bool useEncryption)
         {
             this.dataDirectoryPath = dataDirectoryPath;
             this.dataFileName = dataFileName;
+            this.useEncryption = useEncryption;
         }
 
         public GameData Load()
         {
-            
             string fullPath = Path.Combine(this.dataDirectoryPath, dataFileName);
             GameData loadedData = null;
             if (File.Exists(fullPath))
@@ -34,7 +39,12 @@ namespace DataPersistance
                             Debug.Log(dataToLoad);
                         }
                     }
-                    
+
+                    if (useEncryption)
+                    {
+                        dataToLoad = EncryptDecrypt(dataToLoad);
+                    }
+
                     loadedData = JsonUtility.FromJson<GameData>(dataToLoad);
                 }
                 catch (Exception e)
@@ -42,6 +52,7 @@ namespace DataPersistance
                     Debug.Log(e.Message);
                 }
             }
+
             return loadedData;
         }
 
@@ -51,7 +62,12 @@ namespace DataPersistance
             try
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
-                string dataToStore = JsonUtility.ToJson(data,true);
+                string dataToStore = JsonUtility.ToJson(data, true);
+                if (useEncryption)
+                {
+                    dataToStore = EncryptDecrypt(dataToStore);
+                }
+
                 using (FileStream stream = new FileStream(fullPath, FileMode.Create))
                 {
                     using (StreamWriter writer = new StreamWriter(stream))
@@ -64,6 +80,17 @@ namespace DataPersistance
             {
                 Debug.LogError("Error occurred when trying to save data to file: " + fullPath + "\n" + e);
             }
+        }
+
+        private string EncryptDecrypt(string dataToEncrypt)
+        {
+            string modifiedData = "";
+            for (int i = 0; i < dataToEncrypt.Length; i++)
+            {
+                modifiedData += (char)(dataToEncrypt[i] ^ encryptionCodeWord[i % encryptionCodeWord.Length]);
+            }
+
+            return modifiedData;
         }
     }
 }

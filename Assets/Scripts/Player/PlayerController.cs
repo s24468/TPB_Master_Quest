@@ -1,7 +1,8 @@
 using System.Collections;
+using DataPersistance;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDataPersistence
 {
     private static readonly int IsMoving = Animator.StringToHash("isMoving");
     public float moveSpeed = 5f;
@@ -77,5 +78,15 @@ public class PlayerController : MonoBehaviour
     private bool IsWalkable(Vector3 targetPos)
     {
         return Physics2D.OverlapCircle(targetPos, 0.2f, solidObjectsLayer) is null;
+    }
+
+    public void LoadData(GameData data)
+    {
+        this.transform.position = data.playerPosition;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.playerPosition = this.transform.position;
     }
 }
