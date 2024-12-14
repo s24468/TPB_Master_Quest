@@ -14,9 +14,26 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
+    public void LoadSave()
+    {
+        SceneManager.LoadSceneAsync(startGameGameScene.ToString());
+        Debug.Log("Loading save file...");
+    }
+
+    public void StartNewSave()
+    {
+        // SceneManager.LoadSceneAsync()
+        // DataPersistenceManager.instance.NewGame();
+        //
+        // SceneManager.LoadSceneAsync(startGameGameScene.ToString());
+    }
+
+
     public void StartNewGame()
     {
-        SceneManager.LoadScene(startGameGameScene.ToString());
+        DataPersistenceManager.instance.NewGame();
+
+        SceneManager.LoadSceneAsync(startGameGameScene.ToString());
         // SceneManager.LoadScene(nameEssentialScene, LoadSceneMode.Single);
         // SceneManager.LoadScene(nameEssentialScene, LoadSceneMode.Additive);
     }

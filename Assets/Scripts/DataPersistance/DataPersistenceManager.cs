@@ -4,15 +4,16 @@ using UnityEngine;
 using System.Linq;
 using DataPersistance;
 using NUnit.Framework;
+using UnityEngine.SceneManagement;
 
 public class DataPersistenceManager : MonoBehaviour
 {
-    
-    [Header("File Storage Configuration")]
-    [SerializeField] private string fileName;
+    [Header("File Storage Configuration")] [SerializeField]
+    private string fileName;
+
     [SerializeField] private bool useEncryption = false;
 
-    
+
     public GameData gameData;
     private List<IDataPersistence> dataPersistenceObject;
     public static DataPersistenceManager instance { get; private set; }
@@ -22,17 +23,40 @@ public class DataPersistenceManager : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.LogError("Found more than one Data Persistence Manager in the scene.");
+            Debug.LogWarning("Found more than one Data Persistence Manager in the scene.");
+            Destroy(this.gameObject);
+            return;
         }
 
         instance = this;
+        DontDestroyOnLoad(this.gameObject);
+
+        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
+    }
+
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("YYYYYYYYYYYYYYYYYYYYYYYY");
         this.dataPersistenceObject = GetAllDataPersistenceObjects();
         LoadGame();
+    }
+
+    public void OnSceneUnloaded(Scene scene)
+    {
+        Debug.Log("OnsceneUnloaded!!!!!");
+        SaveGame();
     }
 
     public void NewGame()
@@ -54,7 +78,8 @@ public class DataPersistenceManager : MonoBehaviour
             dataPersistenceObj.LoadData(gameData);
         }
 
-        Debug.Log("Game Data loaded." + gameData._money);
+        Debug.Log("Game Data loaded, money" + gameData.money);
+        Debug.Log("Game Data loaded, nickname" + gameData.nickname);
     }
 
     public void SaveGame()
@@ -64,7 +89,8 @@ public class DataPersistenceManager : MonoBehaviour
             dataPersistenceObj.SaveData(ref gameData);
         }
 
-        Debug.Log("Game Data saved." + gameData._money);
+        Debug.Log("Game Data saved, money: " + gameData.money);
+        Debug.Log("Game Data saved, nickname: " + gameData.nickname);
         dataHandler.Save(gameData);
     }
 

@@ -69,6 +69,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         {
             return;
         }
+
         if (Random.Range(0, 101) <= 10)
         {
             Debug.Log("Encounter Pokemon");
