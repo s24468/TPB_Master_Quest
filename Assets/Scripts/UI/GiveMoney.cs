@@ -6,13 +6,9 @@ namespace UI
     public class GiveMoney : MonoBehaviour, IDataPersistence
     {
         int _money;
-        // string nickname;
-
         public void giveMoney()
         {
             _money++;
-            // nickname = "ahhaahahah";
-            // Debug.Log(_money + nickname);
             Debug.Log(_money);
         }
 
@@ -24,13 +20,11 @@ namespace UI
         public void LoadData(GameData data)
         {
             _money = data.money;
-            // nickname = data.nickname;
         }
 
         public void SaveData(ref GameData data)
         {
             data.money = _money;
-            // data.nickname = nickname;
         }
     }
 }

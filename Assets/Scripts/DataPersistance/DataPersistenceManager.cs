@@ -48,14 +48,12 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("YYYYYYYYYYYYYYYYYYYYYYYY");
         this.dataPersistenceObject = GetAllDataPersistenceObjects();
         LoadGame();
     }
 
     public void OnSceneUnloaded(Scene scene)
     {
-        Debug.Log("OnsceneUnloaded!!!!!");
         SaveGame();
     }
 
@@ -78,8 +76,8 @@ public class DataPersistenceManager : MonoBehaviour
             dataPersistenceObj.LoadData(gameData);
         }
 
-        Debug.Log("Game Data loaded, money" + gameData.money);
-        Debug.Log("Game Data loaded, nickname" + gameData.nickname);
+        Debug.Log("Game Data loaded, money: " + gameData.money);
+        Debug.Log("Game Data loaded, nickname: " + gameData.nickname);
     }
 
     public void SaveGame()

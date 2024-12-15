@@ -6,34 +6,29 @@ namespace UI
 {
     public class GiveNickname : MonoBehaviour, IDataPersistence
     {
-        string nickname;
+        string _nickname;
 
         [SerializeField] private TextMeshProUGUI nicknameInput;
-        [SerializeField] public GameObject buttonPrefab;
 
         public void SetNickname()
         {
-            nickname = nicknameInput.text; // Bez GetComponent
-            // nickname = "ssss"; // Bez GetComponent
-            Debug.Log("Saved: "+nickname);
-            buttonPrefab.SetActive(true);
-
+            _nickname = nicknameInput.text; // Bez GetComponent
+            Debug.Log("Saved: " + _nickname);
         }
 
         private void Awake()
         {
-            buttonPrefab.SetActive(false);
             Debug.Log("awakeNickName");
         }
 
         public void LoadData(GameData data)
         {
-            nickname = data.nickname;
+            _nickname = data.nickname;
         }
 
         public void SaveData(ref GameData data)
         {
-            data.nickname = nickname;
+            data.nickname = _nickname;
         }
     }
 }
