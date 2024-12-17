@@ -2,9 +2,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
-public class MainMenu : MonoBehaviour
+public class SceneManager : MonoBehaviour
 {
-    [SerializeField] GameScene startGameGameScene;
+    [FormerlySerializedAs("startGameGameScene")] [SerializeField] GameScene gameScene;
 
     public void ExitGame()
     {
@@ -14,7 +14,7 @@ public class MainMenu : MonoBehaviour
 
     public void LoadSave()
     {
-        SceneManager.LoadSceneAsync(startGameGameScene.ToString());
+        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(gameScene.ToString());
         Debug.Log("Loading save file...");
     }
 
@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour
     {
         DataPersistenceManager.instance.NewGame();
 
-        SceneManager.LoadSceneAsync(startGameGameScene.ToString());
+        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(gameScene.ToString());
     }
 }
 // [SerializeField] string nameEssentialScene;

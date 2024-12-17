@@ -1,5 +1,7 @@
 public enum GameScene
 {
     MainMenuScene,
-    PlayScene
+    PlayScene,
+    Village,
+    Shop
 }
