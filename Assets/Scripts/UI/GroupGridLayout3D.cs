@@ -5,53 +5,56 @@ using System.Collections;
 // others will be placed automatically with equal distances between first and last elements
 public class GroupGridLayout3D : MonoBehaviour {
 	
-	[Header("Grid Settings")]
-	public Vector3 spacing = new Vector3(2f, 2f, 2f); // Spacing between objects
-	public int columns = 3; // Number of columns
-	public int rows = 3;    // Number of rows per layer
-	public bool autoArrangeOnStart = true; // Automatically arrange on start
+    [Header("Grid Settings")]
+    public Vector3 spacing = new Vector3(32, 50, 0); // Spacing between objects
+    public int columns = 3; // Number of columns
+    public bool centerGrid = false; // Optional centering
 
-	[Header("Alignment Options")]
-	public bool centerGrid = true; // Center the grid around the parent position
+    [Header("Offset Settings")]
+    public Vector3 startOffset = new Vector3(0, -50, 0); // Offset to adjust starting position
 
-	void Start()
-	{
-		if (autoArrangeOnStart)
-			ArrangeObjects();
-	}
+    [Header("Auto Adjust Content Size")]
+    public bool autoAdjustContentSize = true; // Dynamically adjust content size
 
-	public void ArrangeObjects()
-	{
-		int childCount = transform.childCount;
+    private RectTransform _rectTransform;
 
-		for (int i = 0; i < childCount; i++)
-		{
-			Transform child = transform.GetChild(i);
+    void Start()
+    {
+        _rectTransform = GetComponent<RectTransform>();
+        ArrangeObjects();
+    }
 
-			// Calculate grid position
-			int layer = i / (columns * rows); // Depth (Z-axis layer)
-			int row = (i % (columns * rows)) / columns; // Row index
-			int column = i % columns; // Column index
+    public void ArrangeObjects()
+    {
+        int childCount = transform.childCount;
 
-			Vector3 position = new Vector3(
-				column * spacing.x,
-				-row * spacing.y,
-				-layer * spacing.z
-			);
+        for (int i = 0; i < childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
 
-			// Optional: Center grid around the parent position
-			if (centerGrid)
-			{
-				Vector3 gridCenterOffset = new Vector3(
-					(columns - 1) * spacing.x * -0.5f,
-					(rows - 1) * spacing.y * 0.5f,
-					layer * spacing.z * 0.5f
-				);
-				position += gridCenterOffset;
-			}
+            // Calculate grid position
+            int row = i / columns;
+            int column = i % columns;
 
-			// Set child's position relative to parent
-			child.localPosition = position;
-		}
-	}
+            Vector3 position = new Vector3(
+                column * spacing.x + startOffset.x,  // Apply X offset
+                -row * spacing.y + startOffset.y,   // Apply Y offset
+                startOffset.z                       // Apply Z offset
+            );
+
+            child.localPosition = position;
+        }
+
+        // Adjust content size for ScrollRect
+        if (autoAdjustContentSize && _rectTransform != null)
+        {
+            int totalRows = Mathf.CeilToInt((float)childCount / columns);
+            Vector2 size = new Vector2(
+                columns * spacing.x,
+                totalRows * spacing.y
+            );
+
+            _rectTransform.sizeDelta = size;
+        }
+    }
 }
