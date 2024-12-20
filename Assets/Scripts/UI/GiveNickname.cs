@@ -18,7 +18,7 @@ namespace UI
 
         private void Awake()
         {
-            Debug.Log("awakeNickName");
+            // Debug.Log("awakeNickName");
         }
 
         public void LoadData(GameData data)

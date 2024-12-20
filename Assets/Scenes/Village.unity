@@ -209,7 +209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2679892652886121486, guid: 9842e399a40c73c42955a5db80bb0485, type: 3}
       propertyPath: m_text
-      value: Go to roud
+      value: Go to route
       objectReference: {fileID: 0}
     - target: {fileID: 5127965954309540694, guid: 9842e399a40c73c42955a5db80bb0485, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -357,7 +357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470a35a1051b351428719abd55f63687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startGameGameScene: 1
+  gameScene: 1
 --- !u!1 &132375711
 GameObject:
   m_ObjectHideFlags: 0
@@ -1000,7 +1000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470a35a1051b351428719abd55f63687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startGameGameScene: 3
+  gameScene: 3
 --- !u!114 &1294706130
 MonoBehaviour:
   m_ObjectHideFlags: 0

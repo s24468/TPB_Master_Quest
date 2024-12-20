@@ -44,7 +44,7 @@ public class CardDataLoader : MonoBehaviour
         if (request.result == UnityWebRequest.Result.Success)
         {
             string csvData = request.downloadHandler.text;
-            Debug.Log("Pobrano dane CSV z S3:\n" + csvData);
+            // Debug.Log("Pobrano dane CSV z S3:\n" + csvData);
             LoadCardsFromCSV(csvData);
         }
         else
@@ -66,8 +66,8 @@ public class CardDataLoader : MonoBehaviour
             // string[] fields = line.Split(',');
             string[] fields = ParseCSVLine(line);
             ;
-            Debug.Log(fields[0] + fields[1] + fields[2] + fields[3] + fields[4] + fields[5] + fields[6] + fields[7] +
-                      fields[8] + fields[9] + fields[10]);
+            // Debug.Log(fields[0] + fields[1] + fields[2] + fields[3] + fields[4] + fields[5] + fields[6] + fields[7] +
+            //           fields[8] + fields[9] + fields[10]);
 
             // if (fields.Length < 9) continue;
             Card card = new Card
@@ -103,7 +103,7 @@ public class CardDataLoader : MonoBehaviour
         }
 
         reader.Close();
-        Debug.Log($"Załadowano {creatureCards.Count} kart typu Creature i {spellCards.Count} kart typu Spell.");
+        // Debug.Log($"Załadowano {creatureCards.Count} kart typu Creature i {spellCards.Count} kart typu Spell.");
     }
 
     private string[] ParseCSVLine(string line)

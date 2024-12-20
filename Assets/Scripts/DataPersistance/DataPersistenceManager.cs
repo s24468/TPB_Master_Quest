@@ -14,14 +14,12 @@ public class DataPersistenceManager : MonoBehaviour
     [Header("File Storage Configuration")] [SerializeField]
     private string fileName;
 
-    [SerializeField] private bool useEncryption = false;
-
-
-    // private S3DataHandler dataHandler;
+    // [SerializeField] private bool useEncryption = false;
+    private S3DataHandler s3DataHandler;
     public GameData gameData;
     private List<IDataPersistence> dataPersistenceObject;
     public static DataPersistenceManager instance { get; private set; }
-    private FileDataHandler dataHandler;
+
 
     private void Awake()
     {
@@ -34,14 +32,20 @@ public class DataPersistenceManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(this.gameObject);
-
-        // dataHandler = new S3DataHandler();
-        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
     }
 
+    // private async void Start()
+    // {
+    //     // LoadGame();
+    //     s3DataHandler = new S3DataHandler(); //useEncryption
+    //
+    //     Debug.Log("S3DataHandler initialized.");
+    // }
     private async void Start()
     {
-        LoadGame();
+        s3DataHandler = new S3DataHandler();
+        Debug.Log("S3DataHandler initialized.");
+        await LoadGame();
     }
 
     private void OnEnable()
@@ -72,14 +76,20 @@ public class DataPersistenceManager : MonoBehaviour
         this.gameData = new GameData();
     }
 
-    public void LoadGame()
-    // public async Task LoadGame()
+    public async Task LoadGame()
     {
-        // this.gameData = await dataHandler.LoadAsync();
-        this.gameData =  dataHandler.Load();
-        if (this.gameData == null)
+        if (s3DataHandler == null)
         {
-            Debug.Log("No Game Data loaded.");
+            Debug.Log("S3DataHandler not initialized.");
+            return;
+        }
+
+        string uniqueID = SystemInfo.deviceUniqueIdentifier;
+        gameData = await s3DataHandler.LoadAsync(uniqueID);
+
+        if (gameData == null)
+        {
+            Debug.Log("No Game Data found in S3. Creating a new game.");
             NewGame();
         }
 
@@ -88,11 +98,9 @@ public class DataPersistenceManager : MonoBehaviour
             dataPersistenceObj.LoadData(gameData);
         }
 
-        Debug.Log("Game Data loaded, money: " + gameData.money);
-        Debug.Log("Game Data loaded, nickname: " + gameData.nickname);
+        Debug.Log("Game Data loaded.");
     }
 
-    // public void SaveGame()
     public async void SaveGame()
     {
         foreach (var dataPersistenceObj in dataPersistenceObject)
@@ -100,11 +108,19 @@ public class DataPersistenceManager : MonoBehaviour
             dataPersistenceObj.SaveData(ref gameData);
         }
 
-        Debug.Log("Game Data saved, money: " + gameData.money);
-        Debug.Log("Game Data saved, nickname: " + gameData.nickname);
-        // await dataHandler.SaveAsync(gameData);
-        dataHandler.Save(gameData);
+        if (s3DataHandler != null)
+        {
+            string uniqueID = SystemInfo.deviceUniqueIdentifier;
+            await s3DataHandler.SaveAsync(uniqueID, gameData);
+        }
+        else
+        {
+            Debug.LogError("S3DataHandler not initialized. Cannot save data.");
+        }
+
+        Debug.Log("Game Data saved.");
     }
+
 
     private void OnApplicationQuit()
     {
