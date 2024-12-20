@@ -7,7 +7,8 @@ namespace Cards
     public class CardController: MonoBehaviour, IDataPersistence
     {
         [SerializeField] private string id;
-        private bool owned = false;
+        // private bool owned = false;
+        private int numberOfCards;
 
         //If you want to create unique id, in editor u need to click an instance of a class (Object) and click RMB on id
         [ContextMenu("Generate guid for id")]
@@ -18,8 +19,8 @@ namespace Cards
 
         public void LoadData(GameData data)
         {
-            data.CardDictionaryCollected.TryGetValue(id, out owned);
-            if (owned)
+            data.CardDictionaryCollected.TryGetValue(id, out numberOfCards);
+            if (numberOfCards>0)
             {
                 //make sth that means player owns the card
             }
@@ -31,7 +32,7 @@ namespace Cards
             {
                 data.CardDictionaryCollected.Remove(id);
             }
-            data.CardDictionaryCollected.Add(id, owned);
+            data.CardDictionaryCollected.Add(id, numberOfCards);
         }
     }
 }

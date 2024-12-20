@@ -1,14 +1,6 @@
-using System;
 using UnityEngine;
 using System.Collections.Generic;
-using System.IO;
-using System.Text.RegularExpressions;
-using TMPro;
 using UI;
-using UnityEngine;
-using UnityEngine.Networking;
-using System.Collections;
-using System.Linq;
 
 public class CardSpawner : MonoBehaviour
 {
