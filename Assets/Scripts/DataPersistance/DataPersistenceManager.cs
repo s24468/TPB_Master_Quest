@@ -5,6 +5,9 @@ using System.Linq;
 using DataPersistance;
 using NUnit.Framework;
 using UnityEngine.SceneManagement;
+using UnityEngine;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public class DataPersistenceManager : MonoBehaviour
 {
@@ -14,10 +17,11 @@ public class DataPersistenceManager : MonoBehaviour
     [SerializeField] private bool useEncryption = false;
 
 
+    private S3DataHandler dataHandler;
     public GameData gameData;
     private List<IDataPersistence> dataPersistenceObject;
     public static DataPersistenceManager instance { get; private set; }
-    private FileDataHandler dataHandler;
+    // private FileDataHandler dataHandler;
 
     private void Awake()
     {
@@ -31,7 +35,13 @@ public class DataPersistenceManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(this.gameObject);
 
-        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
+        dataHandler = new S3DataHandler();
+        // this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
+    }
+
+    private async void Start()
+    {
+        LoadGame();
     }
 
     private void OnEnable()
@@ -62,9 +72,10 @@ public class DataPersistenceManager : MonoBehaviour
         this.gameData = new GameData();
     }
 
-    public void LoadGame()
+    // public void LoadGame()
+    public async Task LoadGame()
     {
-        this.gameData = dataHandler.Load();
+        this.gameData = await dataHandler.LoadAsync();
         if (this.gameData == null)
         {
             Debug.Log("No Game Data loaded.");
@@ -80,7 +91,8 @@ public class DataPersistenceManager : MonoBehaviour
         Debug.Log("Game Data loaded, nickname: " + gameData.nickname);
     }
 
-    public void SaveGame()
+    // public void SaveGame()
+    public async void SaveGame()
     {
         foreach (var dataPersistenceObj in dataPersistenceObject)
         {
@@ -89,7 +101,7 @@ public class DataPersistenceManager : MonoBehaviour
 
         Debug.Log("Game Data saved, money: " + gameData.money);
         Debug.Log("Game Data saved, nickname: " + gameData.nickname);
-        dataHandler.Save(gameData);
+        await dataHandler.SaveAsync(gameData);
     }
 
     private void OnApplicationQuit()
