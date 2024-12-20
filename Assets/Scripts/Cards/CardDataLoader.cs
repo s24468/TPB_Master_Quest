@@ -10,6 +10,7 @@ public class CardDataLoader : MonoBehaviour
     public static CardDataLoader Instance; // Singleton do łatwego dostępu do danych
     private List<Card> creatureCards = new List<Card>();
 
+    private List<Card> spellCards = new List<Card>();
     private string s3CsvUrl = "https://mygame-cards-storage.s3.eu-north-1.amazonaws.com/DatabaseCards.csv";
 
     public Sprite DefaultSprite; // Assign a placeholder sprite in the inspector
@@ -85,7 +86,9 @@ public class CardDataLoader : MonoBehaviour
                 CardSprite = DefaultSprite
             };
 // Wczytaj sprite z katalogu Resources, jeśli istnieje
-            string spritePath = $"Sprites/Cards/Creatures/{card.ID} {card.Name}";
+            // string spritePath = $"Sprites/Cards/Creatures/{card.ID} {card.Name}";
+            string spritePath = $"Sprites/Cards/{card.Type}s/{card.ID} {card.Name}";
+
             Sprite loadedSprite = Resources.Load<Sprite>(spritePath);
             if (loadedSprite != null) card.CardSprite = loadedSprite;
 
@@ -93,10 +96,14 @@ public class CardDataLoader : MonoBehaviour
             {
                 creatureCards.Add(card);
             }
+            else if (card.Type.ToLower() == "spell")
+            {
+                spellCards.Add(card);
+            }
         }
 
         reader.Close();
-        Debug.Log("Załadowano karty: " + creatureCards.Count);
+        Debug.Log($"Załadowano {creatureCards.Count} kart typu Creature i {spellCards.Count} kart typu Spell.");
     }
 
     private string[] ParseCSVLine(string line)
@@ -106,32 +113,6 @@ public class CardDataLoader : MonoBehaviour
             return line.Split(','); // Simple split for lines without quotes
         }
 
-        // Parse the line while respecting quotes
-        // List<string> fields = new List<string>();
-        //          bool insideQuote = false;
-        //          string currentField = "";
-        //  
-        //          foreach (char c in line)
-        //          {
-        //              if (c == '"' && insideQuote)
-        //              {
-        //                  insideQuote = false; // Close quote
-        //              }
-        //              else if (c == '"' && !insideQuote)
-        //              {
-        //                  insideQuote = true; // Open quote
-        //              }
-        //              else if (c == ',' && !insideQuote)
-        //              {
-        //                  fields.Add(currentField);
-        //                  currentField = "";
-        //              }
-        //              else
-        //              {
-        //                  currentField += c;
-        //              }
-        //          }
-        // fields.Add(currentField); // Add the last field
 
         List<string> fields = new List<string>();
         bool insideQuote = false;
@@ -164,8 +145,6 @@ public class CardDataLoader : MonoBehaviour
     }
 
     // Publiczny dostęp do danych kart
-    public List<Card> GetCreatureCards()
-    {
-        return creatureCards;
-    }
+    public List<Card> GetCreatureCards() => creatureCards;
+    public List<Card> GetSpellCards() => spellCards;
 }

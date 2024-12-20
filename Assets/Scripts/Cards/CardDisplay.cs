@@ -27,14 +27,38 @@ public class CardDisplay : MonoBehaviour
             nameText.text = cardData.Name;
         if (manaText != null)
             manaText.text = cardData.Mana.ToString();
+        // if (tPowerText != null)
+        //     if (cardData.TPower==-1)
+        //     {
+        //         tPowerText.text = "";
+        //     }
+        //     tPowerText.text = "T: " + cardData.TPower.ToString();
+        // if (pPowerText != null)
+        //     pPowerText.text = "P: " + cardData.PPower.ToString();
+        // if (bPowerText != null)
+        //     bPowerText.text = "B: " + cardData.BPower.ToString();
+        // if (casualPowerText != null)
+        //     casualPowerText.text = cardData.CasualPower.ToString();
         if (tPowerText != null)
-            tPowerText.text = "T: " + cardData.TPower.ToString();
+        {
+            tPowerText.text = cardData.TPower == -1 ? "" : "T: " + cardData.TPower.ToString();
+        }
+
         if (pPowerText != null)
-            pPowerText.text = "P: " + cardData.PPower.ToString();
+        {
+            pPowerText.text = cardData.PPower == -1 ? "" : "P: " + cardData.PPower.ToString();
+        }
+
         if (bPowerText != null)
-            bPowerText.text = "B: " + cardData.BPower.ToString();
+        {
+            bPowerText.text = cardData.BPower == -1 ? "" : "B: " + cardData.BPower.ToString();
+        }
+
         if (casualPowerText != null)
-            casualPowerText.text = cardData.CasualPower.ToString();
+        {
+            casualPowerText.text = cardData.CasualPower == -1 ? "" : cardData.CasualPower.ToString();
+        }
+
         if (descriptionText != null)
             descriptionText.text = "• " + cardData.Description;
 
