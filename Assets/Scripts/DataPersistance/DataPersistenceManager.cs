@@ -17,11 +17,11 @@ public class DataPersistenceManager : MonoBehaviour
     [SerializeField] private bool useEncryption = false;
 
 
-    private S3DataHandler dataHandler;
+    // private S3DataHandler dataHandler;
     public GameData gameData;
     private List<IDataPersistence> dataPersistenceObject;
     public static DataPersistenceManager instance { get; private set; }
-    // private FileDataHandler dataHandler;
+    private FileDataHandler dataHandler;
 
     private void Awake()
     {
@@ -35,8 +35,8 @@ public class DataPersistenceManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(this.gameObject);
 
-        dataHandler = new S3DataHandler();
-        // this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
+        // dataHandler = new S3DataHandler();
+        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
     }
 
     private async void Start()
@@ -72,10 +72,11 @@ public class DataPersistenceManager : MonoBehaviour
         this.gameData = new GameData();
     }
 
-    // public void LoadGame()
-    public async Task LoadGame()
+    public void LoadGame()
+    // public async Task LoadGame()
     {
-        this.gameData = await dataHandler.LoadAsync();
+        // this.gameData = await dataHandler.LoadAsync();
+        this.gameData =  dataHandler.Load();
         if (this.gameData == null)
         {
             Debug.Log("No Game Data loaded.");
@@ -101,7 +102,8 @@ public class DataPersistenceManager : MonoBehaviour
 
         Debug.Log("Game Data saved, money: " + gameData.money);
         Debug.Log("Game Data saved, nickname: " + gameData.nickname);
-        await dataHandler.SaveAsync(gameData);
+        // await dataHandler.SaveAsync(gameData);
+        dataHandler.Save(gameData);
     }
 
     private void OnApplicationQuit()
