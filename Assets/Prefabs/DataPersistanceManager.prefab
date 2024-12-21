@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5728506449315282894}
   - component: {fileID: 8628765268379031219}
+  - component: {fileID: 337651351779248255}
   m_Layer: 0
   m_Name: DataPersistanceManager
   m_TagString: Untagged
@@ -45,7 +46,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fileName: data.game
-  useEncryption: 0
   gameData:
     money: 0
     nickname: 
@@ -53,3 +53,15 @@ MonoBehaviour:
     CardDictionaryCollected:
       keys: []
       values: 
+--- !u!114 &337651351779248255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4750826195941575341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fa40c53ab4642188555ebc2b48eb15a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

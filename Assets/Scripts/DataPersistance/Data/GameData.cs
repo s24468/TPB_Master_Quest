@@ -41,4 +41,18 @@ public class GameData
             { "18", 1 }
         };
     }
+    /// <summary>
+    /// Get the number of owned cards for the given card ID.
+    /// </summary>
+    /// <param name="cardId">The ID of the card as a string.</param>
+    /// <returns>The number of owned cards, or 0 if the card is not found.</returns>
+    public int GetNumberOfOwnedCards(string cardId)
+    {
+        if (CardDictionaryCollected.ContainsKey(cardId))
+        {
+            return CardDictionaryCollected[cardId];
+        }
+
+        return 0; // Default to 0 if the card ID doesn't exist in the dictionary
+    }
 }

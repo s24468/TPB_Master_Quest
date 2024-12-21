@@ -35,21 +35,6 @@ public class CardSpawner : MonoBehaviour
         }
     }
 
-    // public void InitializePool()
-    // {
-    //     List<Card> allCards = new List<Card>();
-    //     // List<Card> cards = CardDataLoader.Instance.GetCreatureCards();
-    //     allCards.AddRange(CardDataLoader.Instance.GetCreatureCards());
-    //     allCards.AddRange(CardDataLoader.Instance.GetSpellCards());
-    //     poolSize = allCards.Count;
-    //     for (int i = 0; i < poolSize; i++)
-    //     {
-    //         GameObject newCard = Instantiate(cardPrefab, cardParent);
-    //         newCard.SetActive(false); // Deactivate by default
-    //         newCard.transform.localScale = localCardScale; // Ensure correct scale
-    //         cardPool.Add(newCard);
-    //     }
-    // }
     public void DisplayCreatureCards()
     {
         DisplayCards(creatureCardPool, CardDataLoader.Instance.GetCreatureCards());
@@ -98,6 +83,24 @@ public class CardSpawner : MonoBehaviour
             }
         }
     }
+    
+    
+}
+// public void InitializePool()
+    // {
+    //     List<Card> allCards = new List<Card>();
+    //     // List<Card> cards = CardDataLoader.Instance.GetCreatureCards();
+    //     allCards.AddRange(CardDataLoader.Instance.GetCreatureCards());
+    //     allCards.AddRange(CardDataLoader.Instance.GetSpellCards());
+    //     poolSize = allCards.Count;
+    //     for (int i = 0; i < poolSize; i++)
+    //     {
+    //         GameObject newCard = Instantiate(cardPrefab, cardParent);
+    //         newCard.SetActive(false); // Deactivate by default
+    //         newCard.transform.localScale = localCardScale; // Ensure correct scale
+    //         cardPool.Add(newCard);
+    //     }
+    // }
     // public void DisplayCreatureCards()
     // {
     //     // ClearCards();
@@ -210,4 +213,3 @@ public class CardSpawner : MonoBehaviour
     //         Destroy(child.gameObject);
     //     }
     // }
-}

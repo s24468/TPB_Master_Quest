@@ -10,6 +10,10 @@ public class SceneManager : MonoBehaviour
     {
         Debug.Log("Quitting game...");
         Application.Quit();
+        // Note: This won't work in the editor. To test in the editor:
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 
     public void LoadSave()

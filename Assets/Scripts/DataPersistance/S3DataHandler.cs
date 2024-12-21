@@ -73,6 +73,37 @@
 //         }
 //     }
 // }
+// public async Task<GameData> LoadAsync(string uniqueID)
+// {
+//     string fileName = $"PlayersData{uniqueID}.json";
+//     string url = bucketUrl + fileName;
+//
+//     Debug.Log($"Attempting to load data from S3: {url}");
+//     GameData loadedData = null;
+//
+//     using (UnityWebRequest request = UnityWebRequest.Get(url))
+//     {
+//         var operation = request.SendWebRequest();
+//
+//         while (!operation.isDone)
+//         {
+//             await Task.Yield();
+//         }
+//
+//         if (request.result == UnityWebRequest.Result.Success)
+//         {
+//             Debug.Log("Successfully fetched JSON data.");
+//             string json = request.downloadHandler.text;
+//             loadedData = JsonUtility.FromJson<GameData>(json);
+//         }
+//         else
+//         {
+//             Debug.LogError($"Error fetching data from S3: {request.error}");
+//         }
+//     }
+//
+//     return loadedData;
+// }
 using System;
 using System.IO;
 using UnityEngine;
@@ -85,37 +116,7 @@ namespace DataPersistance
     {
         private string bucketUrl = "https://mygame-cards-storage.s3.eu-north-1.amazonaws.com/";
 
-        // public async Task<GameData> LoadAsync(string uniqueID)
-        // {
-        //     string fileName = $"PlayersData{uniqueID}.json";
-        //     string url = bucketUrl + fileName;
-        //
-        //     Debug.Log($"Attempting to load data from S3: {url}");
-        //     GameData loadedData = null;
-        //
-        //     using (UnityWebRequest request = UnityWebRequest.Get(url))
-        //     {
-        //         var operation = request.SendWebRequest();
-        //
-        //         while (!operation.isDone)
-        //         {
-        //             await Task.Yield();
-        //         }
-        //
-        //         if (request.result == UnityWebRequest.Result.Success)
-        //         {
-        //             Debug.Log("Successfully fetched JSON data.");
-        //             string json = request.downloadHandler.text;
-        //             loadedData = JsonUtility.FromJson<GameData>(json);
-        //         }
-        //         else
-        //         {
-        //             Debug.LogError($"Error fetching data from S3: {request.error}");
-        //         }
-        //     }
-        //
-        //     return loadedData;
-        // }
+        
         public async Task<GameData> LoadAsync(string uniqueID)
         {
             string fileName = $"PlayersData{uniqueID}.json";
