@@ -1,12 +1,8 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using DataPersistance;
-using NUnit.Framework;
 using UnityEngine.SceneManagement;
-using UnityEngine;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 public class DataPersistenceManager : MonoBehaviour
@@ -14,7 +10,6 @@ public class DataPersistenceManager : MonoBehaviour
     [Header("File Storage Configuration")] [SerializeField]
     private string fileName;
 
-    // [SerializeField] private bool useEncryption = false;
     private S3DataHandler s3DataHandler;
     public GameData gameData;
     private List<IDataPersistence> dataPersistenceObject;
@@ -34,13 +29,6 @@ public class DataPersistenceManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    // private async void Start()
-    // {
-    //     // LoadGame();
-    //     s3DataHandler = new S3DataHandler(); //useEncryption
-    //
-    //     Debug.Log("S3DataHandler initialized.");
-    // }
     private async void Start()
     {
         s3DataHandler = new S3DataHandler();
