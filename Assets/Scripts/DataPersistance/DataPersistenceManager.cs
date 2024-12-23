@@ -12,6 +12,8 @@ public class DataPersistenceManager : MonoBehaviour
 
     private S3DataHandler s3DataHandler;
     public GameData gameData;
+
+
     private List<IDataPersistence> dataPersistenceObject;
     public static DataPersistenceManager instance { get; private set; }
 
@@ -32,7 +34,6 @@ public class DataPersistenceManager : MonoBehaviour
     private async void Start()
     {
         s3DataHandler = new S3DataHandler();
-        Debug.Log("S3DataHandler initialized.");
         await LoadGame();
     }
 
@@ -51,17 +52,33 @@ public class DataPersistenceManager : MonoBehaviour
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         this.dataPersistenceObject = GetAllDataPersistenceObjects();
-        LoadGame();
+        LoadGameInGame();
     }
 
     public void OnSceneUnloaded(Scene scene)
     {
-        SaveGame();
+        SaveGameToMemory();
     }
 
     public void NewGame()
     {
         this.gameData = new GameData();
+    }
+
+    public void SaveGameToMemory()
+    {
+        foreach (var dataPersistenceObj in dataPersistenceObject)
+        {
+            dataPersistenceObj.SaveData(ref gameData);
+        }
+    }
+
+    public void LoadGameInGame()
+    {
+        foreach (var dataPersistenceObj in dataPersistenceObject)
+        {
+            dataPersistenceObj.LoadData(gameData);
+        }
     }
 
     public async Task LoadGame()
@@ -85,8 +102,6 @@ public class DataPersistenceManager : MonoBehaviour
         {
             dataPersistenceObj.LoadData(gameData);
         }
-
-        Debug.Log("Game Data loaded.");
     }
 
     public async void SaveGame()
@@ -105,8 +120,6 @@ public class DataPersistenceManager : MonoBehaviour
         {
             Debug.LogError("S3DataHandler not initialized. Cannot save data.");
         }
-
-        Debug.Log("Game Data saved.");
     }
 
 
@@ -119,8 +132,6 @@ public class DataPersistenceManager : MonoBehaviour
     {
         IEnumerable<IDataPersistence> dataPersistenceObjects =
             FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistence>();
-
-        // return dataPersistenceObjects.ToList();
         return new List<IDataPersistence>(dataPersistenceObjects);
     }
 }

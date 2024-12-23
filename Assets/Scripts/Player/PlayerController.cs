@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     public bool isMoving;
     private Vector2 _input;
     private Animator _animator;
+    Vector3 playersPlace = new Vector3();
 
     private void Awake()
     {
@@ -47,6 +48,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     }
 
     // ReSharper disable Unity.PerformanceAnalysis
+
     private IEnumerator Move(Vector3 targetPos)
     {
         isMoving = true;
@@ -59,7 +61,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
 
         transform.position = targetPos;
         isMoving = false;
-
+        playersPlace = transform.position;
         CheckForEncounters();
     }
 
@@ -76,6 +78,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         }
     }
 
+
     private bool IsWalkable(Vector3 targetPos)
     {
         return Physics2D.OverlapCircle(targetPos, 0.2f, solidObjectsLayer) is null;
@@ -83,11 +86,12 @@ public class PlayerController : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        this.transform.position = data.playerPosition;
+        transform.position = data.playerPosition;
     }
 
     public void SaveData(ref GameData data)
     {
-        data.playerPosition = this.transform.position;
+        // data.playerPosition = transform.position;
+        data.playerPosition = playersPlace;
     }
 }

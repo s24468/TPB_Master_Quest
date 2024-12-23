@@ -1,3 +1,4 @@
+using DataPersistance;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -39,7 +40,7 @@ public class CardPreviewManager : MonoBehaviour
         }
 
         currentCard = cardData;
-        
+
         // Update UI elements
         nameText.text = cardData.Name;
         manaText.text = cardData.Mana.ToString();
@@ -50,16 +51,16 @@ public class CardPreviewManager : MonoBehaviour
         bPowerText.text = "B: " + cardData.BPower.ToString();
         descriptionText.text = cardData.Description;
         costText.text = $"Cost: {cardData.Cost}";
-        
+
         numberOfOwnedCardsText.text = $"Owned: {cardData.Cost}";
-        
+
         // Get the number of owned cards using GameData
         string cardId = cardData.ID.ToString(); // Assuming cardData.ID is the card's unique ID
         int ownedCards = DataPersistenceManager.instance.gameData.GetNumberOfOwnedCards(cardId);
         numberOfOwnedCardsText.text = $"Owned: {ownedCards}";
         Debug.Log($"Preview updated for card: {cardData.Name}, Owned: {ownedCards}");
     }
-    
+
     private Card currentCard; // To keep track of the currently displayed card
 
     public void BuyCard()
@@ -79,6 +80,7 @@ public class CardPreviewManager : MonoBehaviour
             // Deduct money and add the card to the collection
             gameData.money -= cardCost;
 
+
             if (gameData.CardDictionaryCollected.ContainsKey(cardId))
             {
                 gameData.CardDictionaryCollected[cardId]++;
@@ -90,7 +92,6 @@ public class CardPreviewManager : MonoBehaviour
 
             // Update the UI
             numberOfOwnedCardsText.text = $"Owned: {gameData.CardDictionaryCollected[cardId]}";
-
             Debug.Log($"Bought card: {currentCard.Name}. Remaining money: {gameData.money}");
         }
         else

@@ -5,13 +5,15 @@ using System.Collections.Generic;
 using System.IO;
 using UI;
 
+using Amazon.S3;
+using Amazon.S3.Model;
+
 public class CardDataLoader : MonoBehaviour
 {
     public static CardDataLoader Instance; // Singleton do łatwego dostępu do danych
     private List<Card> creatureCards = new List<Card>();
 
     private List<Card> spellCards = new List<Card>();
-    private string s3CsvUrl = "https://mygame-cards-storage.s3.eu-north-1.amazonaws.com/DatabaseCards.csv";
 
     public Sprite DefaultSprite; // Assign a placeholder sprite in the inspector
 
@@ -35,23 +37,52 @@ public class CardDataLoader : MonoBehaviour
         // Załaduj dane na początku działania aplikacji
         StartCoroutine(DownloadCSVFromS3());
     }
-
     IEnumerator DownloadCSVFromS3()
     {
-        UnityWebRequest request = UnityWebRequest.Get(s3CsvUrl);
-        yield return request.SendWebRequest();
-
-        if (request.result == UnityWebRequest.Result.Success)
+        
+        string accessKey = "AKIAVYV52E7EM2ERQJBQ";
+        string secretKey = "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";
+        var s3Client = new AmazonS3Client(accessKey, secretKey, Amazon.RegionEndpoint.EUNorth1);
+        var request = new GetObjectRequest
         {
-            string csvData = request.downloadHandler.text;
-            // Debug.Log("Pobrano dane CSV z S3:\n" + csvData);
+            BucketName = "mygame-cards-storage",
+            Key = "DatabaseCards.csv"
+        };
+
+        var task = s3Client.GetObjectAsync(request);
+        yield return new WaitUntil(() => task.IsCompleted);
+
+        if (task.Exception != null)
+        {
+            Debug.LogError($"Error downloading CSV: {task.Exception.Message}");
+            yield break;
+        }
+
+        var response = task.Result;
+        using (var reader = new StreamReader(response.ResponseStream))
+        {
+            string csvData = reader.ReadToEnd();
+            Debug.Log("Successfully downloaded CSV.");
             LoadCardsFromCSV(csvData);
         }
-        else
-        {
-            Debug.LogError("Błąd pobierania pliku z S3: " + request.error);
-        }
     }
+    // private string s3CsvUrl = "https://mygame-cards-storage.s3.eu-north-1.amazonaws.com/DatabaseCards.csv";
+    // IEnumerator DownloadCSVFromS3()
+    // {
+    //     UnityWebRequest request = UnityWebRequest.Get(s3CsvUrl);
+    //     yield return request.SendWebRequest();
+    //
+    //     if (request.result == UnityWebRequest.Result.Success)
+    //     {
+    //         string csvData = request.downloadHandler.text;
+    //         // Debug.Log("Pobrano dane CSV z S3:\n" + csvData);
+    //         LoadCardsFromCSV(csvData);
+    //     }
+    //     else
+    //     {
+    //         Debug.LogError("Błąd pobierania pliku z S3: " + request.error);
+    //     }
+    // }
 
     void LoadCardsFromCSV(string csvContent)
     {

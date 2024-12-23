@@ -16,11 +16,6 @@ namespace UI
             Debug.Log("Saved: " + _nickname);
         }
 
-        private void Awake()
-        {
-            // Debug.Log("awakeNickName");
-        }
-
         public void LoadData(GameData data)
         {
             _nickname = data.nickname;
