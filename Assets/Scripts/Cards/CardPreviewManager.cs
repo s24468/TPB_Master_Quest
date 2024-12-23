@@ -18,6 +18,8 @@ public class CardPreviewManager : MonoBehaviour
     public Image cardImage; // Image component for the card sprite
     public TextMeshProUGUI costText;
     public TextMeshProUGUI numberOfOwnedCardsText;
+    private Card currentCard; // To keep track of the currently displayed card
+    [SerializeField] TextMeshProUGUI _moneyText; // UI Text reference
 
     private void Awake()
     {
@@ -51,23 +53,19 @@ public class CardPreviewManager : MonoBehaviour
         bPowerText.text = "B: " + cardData.BPower.ToString();
         descriptionText.text = cardData.Description;
         costText.text = $"Cost: {cardData.Cost}";
-
         numberOfOwnedCardsText.text = $"Owned: {cardData.Cost}";
-
         // Get the number of owned cards using GameData
         string cardId = cardData.ID.ToString(); // Assuming cardData.ID is the card's unique ID
         int ownedCards = DataPersistenceManager.instance.gameData.GetNumberOfOwnedCards(cardId);
         numberOfOwnedCardsText.text = $"Owned: {ownedCards}";
-        Debug.Log($"Preview updated for card: {cardData.Name}, Owned: {ownedCards}");
     }
 
-    private Card currentCard; // To keep track of the currently displayed card
 
-    public void BuyCard()
+    public void HandleCardTransaction(bool isBuying)
     {
         if (currentCard == null)
         {
-            Debug.LogError("No card selected for purchase.");
+            Debug.LogError("No card selected for transaction.");
             return;
         }
 
@@ -75,28 +73,51 @@ public class CardPreviewManager : MonoBehaviour
         string cardId = currentCard.ID.ToString();
         int cardCost = currentCard.Cost;
 
-        if (gameData.money >= cardCost)
+        if (isBuying)
         {
-            // Deduct money and add the card to the collection
-            gameData.money -= cardCost;
-
-
-            if (gameData.CardDictionaryCollected.ContainsKey(cardId))
+            if (gameData.money >= cardCost)
             {
-                gameData.CardDictionaryCollected[cardId]++;
+                gameData.money -= cardCost;
+                if (gameData.CardDictionaryCollected.ContainsKey(cardId))
+                {
+                    gameData.CardDictionaryCollected[cardId]++;
+                }
+                else
+                {
+                    gameData.CardDictionaryCollected[cardId] = 1;
+                }
+
+                numberOfOwnedCardsText.text = $"Owned: {gameData.CardDictionaryCollected[cardId]}";
+                Debug.Log($"Bought card: {currentCard.Name}. Remaining money: {gameData.money}");
             }
             else
             {
-                gameData.CardDictionaryCollected[cardId] = 1;
+                Debug.LogWarning("Not enough money to buy this card.");
             }
-
-            // Update the UI
-            numberOfOwnedCardsText.text = $"Owned: {gameData.CardDictionaryCollected[cardId]}";
-            Debug.Log($"Bought card: {currentCard.Name}. Remaining money: {gameData.money}");
         }
         else
         {
-            Debug.LogWarning("Not enough money to buy this card.");
+            if (!gameData.CardDictionaryCollected.ContainsKey(cardId) || gameData.CardDictionaryCollected[cardId] <= 0)
+            {
+                Debug.LogWarning("No cards available to sell.");
+            }
+            else
+            {
+                gameData.money += cardCost;
+                gameData.CardDictionaryCollected[cardId]--;
+                Debug.Log($"Sold card: {currentCard.Name}. New balance: {gameData.money}");
+            }
         }
+
+        UpdateOwnedCardsUI();
+    }
+    
+    private void UpdateOwnedCardsUI()
+    {
+        GameData gameData = DataPersistenceManager.instance.gameData;
+        string cardId = currentCard.ID.ToString();
+        int ownedCards = DataPersistenceManager.instance.gameData.GetNumberOfOwnedCards(cardId);
+        _moneyText.text = $"Money: {gameData.money}";
+        numberOfOwnedCardsText.text = $"Owned: {ownedCards}";
     }
 }
