@@ -2357,8 +2357,7 @@ PrefabInstance:
       propertyPath: fileName
       value: PlayersData.json
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 337651351779248255, guid: e8a2f44063fb5b64aba30f7082169b8a, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
