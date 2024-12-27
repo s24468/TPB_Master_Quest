@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5728506449315282894}
   - component: {fileID: 8628765268379031219}
+  - component: {fileID: 2760322266086705945}
+  - component: {fileID: 5386524307226176880}
   m_Layer: 0
   m_Name: DataPersistanceManager
   m_TagString: Untagged
@@ -52,3 +54,28 @@ MonoBehaviour:
     CardDictionaryCollected:
       keys: []
       values: 
+--- !u!114 &2760322266086705945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4750826195941575341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 718485277ea792148ac8ed858d4f90ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultSprite: {fileID: 21300000, guid: 1a218a214707a4642971f9358f28d48d, type: 3}
+--- !u!114 &5386524307226176880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4750826195941575341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d36dc418a3c7db645b8396f4308927bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
