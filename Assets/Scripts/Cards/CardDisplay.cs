@@ -14,6 +14,7 @@ public class CardDisplay : MonoBehaviour
     public TextMeshProUGUI descriptionText;
     public Image cardImage; // Image component for the card sprite
     private Card cardData;
+    public GameObject NotUnlocked; // Reference to the "NotUnlocked" GameObject
 
     public void Setup(Card card)
     {
@@ -23,6 +24,7 @@ public class CardDisplay : MonoBehaviour
 
     void UpdateDisplay()
     {
+        UpdateNotUnlocked();
         if (nameText != null)
             nameText.text = cardData.Name;
         if (manaText != null)
@@ -49,11 +51,22 @@ public class CardDisplay : MonoBehaviour
 
         if (descriptionText != null)
             descriptionText.text = "• " + cardData.Description;
-
-        // Set the card image
         if (cardImage != null && cardData.CardSprite != null)
         {
             cardImage.sprite = cardData.CardSprite;
         }
+    }
+
+    public void UpdateNotUnlocked()
+    {
+        if (cardData == null)
+        {
+            Debug.LogWarning("Card data is null in CardDisplay! Skipping UpdateNotUnlocked.");
+            return;
+        }
+
+        var cardKey = cardData.ID.ToString();
+        var isUnlocked = DataPersistenceManager.instance.gameData.CardDictionaryCollected.ContainsKey(cardKey);
+        NotUnlocked.SetActive(!isUnlocked);
     }
 }

@@ -8,7 +8,8 @@ public class HoverOver : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public Sprite newSprite;
     public Sprite originalSprite;
     public Image buttonImage;
-
+    [SerializeField] private Color hoverColor = new Color(1f, 0.086f, 0f, 1f);
+    [SerializeField] private Color mainColor = new Color(0.086f, 0.714f, 0.694f, 1f);
     private Light[] _lights;
 
     void Start()
@@ -16,12 +17,26 @@ public class HoverOver : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         _lights = GetComponentsInChildren<Light>();
     }
 
+    private void OnEnable()
+    {
+        buttonImage.sprite = originalSprite;
+        if (_lights != null)
+        {
+
+            foreach (var light in _lights)
+            {
+                light.color = mainColor;
+            }            
+        }
+
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         buttonImage.sprite = newSprite;
         foreach (var light in _lights)
         {
-            light.color = new Color(255f / 255f, 22f / 255f, 0f / 255f, 255f / 255f);
+            light.color = hoverColor;
         }
     }
 
@@ -30,7 +45,7 @@ public class HoverOver : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         buttonImage.sprite = originalSprite;
         foreach (var light in _lights)
         {
-            light.color = new Color(22f / 255f, 182f / 255f, 177f / 255f, 255f / 255f);
+            light.color = mainColor;
         }
     }
 }

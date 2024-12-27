@@ -747,6 +747,7 @@ MonoBehaviour:
   casualPowerText: {fileID: 2932099079334295875}
   descriptionText: {fileID: 855750878278543328}
   cardImage: {fileID: 8018403274779271722}
+  NotUnlocked: {fileID: 2446866462857264208}
 --- !u!114 &5276111446403842444
 MonoBehaviour:
   m_ObjectHideFlags: 0

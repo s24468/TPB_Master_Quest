@@ -17,7 +17,6 @@ public class CardPreviewInteraction : MonoBehaviour, IPointerEnterHandler, IPoin
     {
         isHovered = true;
         hoverPreviewGlow.SetActive(true);
-        Debug.Log(hoverPreviewGlow);
     }
 
     public void OnPointerExit(PointerEventData eventData)

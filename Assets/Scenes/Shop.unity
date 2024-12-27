@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 317979991}
   - component: {fileID: 317979992}
   m_Layer: 0
-  m_Name: Slots (1)
+  m_Name: SpellSlots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -991,7 +991,7 @@ GameObject:
   - component: {fileID: 940556714}
   - component: {fileID: 940556715}
   m_Layer: 5
-  m_Name: Viewport
+  m_Name: CreatureViewport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1490,6 +1490,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionButton: {fileID: 1819442157}
   actionButtonText: {fileID: 219202474}
+  cardSpawner: {fileID: 1860843885}
 --- !u!1 &1320911221
 GameObject:
   m_ObjectHideFlags: 0
@@ -2288,7 +2289,7 @@ GameObject:
   - component: {fileID: 1650139076}
   - component: {fileID: 1650139075}
   m_Layer: 5
-  m_Name: Viewport (1)
+  m_Name: SpellViewport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2631,6 +2632,10 @@ PrefabInstance:
     - target: {fileID: 2679892652886121486, guid: 9842e399a40c73c42955a5db80bb0485, type: 3}
       propertyPath: m_text
       value: Buy Card
+      objectReference: {fileID: 0}
+    - target: {fileID: 5127965954309540694, guid: 9842e399a40c73c42955a5db80bb0485, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5127965954309540694, guid: 9842e399a40c73c42955a5db80bb0485, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -3142,7 +3147,7 @@ GameObject:
   - component: {fileID: 2104725365}
   - component: {fileID: 2104725366}
   m_Layer: 0
-  m_Name: Slots
+  m_Name: CreatureSlots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
