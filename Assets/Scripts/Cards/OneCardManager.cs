@@ -1,108 +1,109 @@
-﻿using UnityEngine;
-using System.Collections;
-using TMPro;
-using TMPro.Examples;
+﻿using TMPro;
+using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 // holds the refs to all the Text, Images on the card
-public class OneCardManager : MonoBehaviour
+namespace Cards
 {
-    public CardAsset cardAsset;
-    public OneCardManager PreviewManager;
-    [Header("Text Component References")] public Text NameText;
-
-    public Text ManaCostText;
-
-    // public Text DescriptionText;
-    public TextMeshProUGUI DescriptionText;
-
-    // public Text HealthText;
-    // public Text AttackText;
-    // public Text TPowerText;
-    // public Text PPowerText;
-    // public Text BPowerText;
-    public TextMeshProUGUI TPowerText;
-    public TextMeshProUGUI PPowerText;
-    public TextMeshProUGUI BPowerText;
-
-    [Header("Image References")]
-    // public Image CardTopRibbonImage;
-    // public Image CardLowRibbonImage;
-    public Image CardGraphicImage;
-
-    public Image CardBodyImage;
-    public Image CardFaceFrameImage;
-    public Image CardFaceGlowImage;
-    public Image CardBackGlowImage;
-
-    void Awake()
+    public class OneCardManager : MonoBehaviour
     {
-        if (cardAsset != null)
-            ReadCardFromAsset();
-    }
+        public CardAsset cardAsset;
 
-    private bool canBePlayedNow = false;
+        [FormerlySerializedAs("PreviewManager")] public OneCardManager previewManager;
 
-    public bool CanBePlayedNow
-    {
-        get { return canBePlayedNow; }
+        // [Header("Text Component References")] public Text NameText;
+        [FormerlySerializedAs("NameText")] [Header("Text Component References")] public TextMeshProUGUI nameText;
 
-        set
+        // public Text ManaCostText;
+        [FormerlySerializedAs("ManaCostText")] public TextMeshProUGUI manaCostText;
+
+        // public Text DescriptionText;
+        [FormerlySerializedAs("DescriptionText")] public TextMeshProUGUI descriptionText;
+
+        [FormerlySerializedAs("TPowerText")] public TextMeshProUGUI powerText;
+        [FormerlySerializedAs("PPowerText")] public TextMeshProUGUI pPowerText;
+        [FormerlySerializedAs("BPowerText")] public TextMeshProUGUI bPowerText;
+
+        [FormerlySerializedAs("CardGraphicImage")] [Header("Image References")]
+        // public Image CardTopRibbonImage;
+        // public Image CardLowRibbonImage;
+        public Image cardGraphicImage;
+
+        [FormerlySerializedAs("CardBodyImage")] public Image cardBodyImage;
+        [FormerlySerializedAs("CardFaceFrameImage")] public Image cardFaceFrameImage;
+        [FormerlySerializedAs("CardFaceGlowImage")] public Image cardFaceGlowImage;
+        [FormerlySerializedAs("CardBackGlowImage")] public Image cardBackGlowImage;
+
+        void Awake()
         {
-            canBePlayedNow = value;
-
-            CardFaceGlowImage.enabled = value;
-        }
-    }
-
-    public void ReadCardFromAsset()
-    {
-        // universal actions for any Card
-        // 1) apply tint
-        // if (cardAsset.characterAsset != null)
-        // {
-        //     CardBodyImage.color = cardAsset.characterAsset.ClassCardTint;
-        //     CardFaceFrameImage.color = cardAsset.characterAsset.ClassCardTint;
-        //     // CardTopRibbonImage.color = cardAsset.characterAsset.ClassRibbonsTint;
-        //     // CardLowRibbonImage.color = cardAsset.characterAsset.ClassRibbonsTint;
-        // }
-        // else
-        // {
-        //     // CardBodyImage.color = GlobalSettings.Instance.CardBodyStandardColor;
-        //     CardFaceFrameImage.color = Color.white;
-        //     // CardTopRibbonImage.color = GlobalSettings.Instance.CardRibbonsStandardColor;
-        //     // CardLowRibbonImage.color = GlobalSettings.Instance.CardRibbonsStandardColor;
-        // }
-
-        // 2) add card name
-        NameText.text = cardAsset.name;
-        // 3) add mana cost
-        ManaCostText.text = cardAsset.ManaCost.ToString();
-        // 4) add description
-        DescriptionText.text = cardAsset.Description;
-        // 5) Change the card graphic sprite
-        CardGraphicImage.sprite = cardAsset.CardImage;
-
-        // if (cardAsset.MaxHealth != 0)
-        if (cardAsset.IsCreature)
-        {
-            // this is a creature
-            // AttackText.text = cardAsset.Attack.ToString();
-            // HealthText.text = cardAsset.MaxHealth.ToString();
-            TPowerText = new TextMeshProUGUI();
-            PPowerText = new TextMeshProUGUI();
-            BPowerText = new TextMeshProUGUI();
-            TPowerText.SetText(cardAsset.TPower.ToString());
-            PPowerText.SetText(cardAsset.PPower.ToString());
-            BPowerText.SetText(cardAsset.BPower.ToString());
+            if (cardAsset != null)
+                ReadCardFromAsset();
         }
 
-        if (PreviewManager != null)
+        private bool _canBePlayedNow = false;
+
+        public bool CanBePlayedNow
         {
-            // this is a card and not a preview
-            // Preview GameObject will have OneCardManager as well, but PreviewManager should be null there
-            PreviewManager.cardAsset = cardAsset;
-            PreviewManager.ReadCardFromAsset();
+            get => _canBePlayedNow;
+
+            set
+            {
+                _canBePlayedNow = value;
+
+                cardFaceGlowImage.enabled = value;
+            }
+        }
+
+        public void ReadCardFromAsset()
+        {
+            // universal actions for any Card
+            // 1) apply tint
+            // if (cardAsset.characterAsset != null)
+            // {
+            //     CardBodyImage.color = cardAsset.characterAsset.ClassCardTint;
+            //     CardFaceFrameImage.color = cardAsset.characterAsset.ClassCardTint;
+            //     // CardTopRibbonImage.color = cardAsset.characterAsset.ClassRibbonsTint;
+            //     // CardLowRibbonImage.color = cardAsset.characterAsset.ClassRibbonsTint;
+            // }
+            // else
+            // {
+            //     // CardBodyImage.color = GlobalSettings.Instance.CardBodyStandardColor;
+            //     CardFaceFrameImage.color = Color.white;
+            //     // CardTopRibbonImage.color = GlobalSettings.Instance.CardRibbonsStandardColor;
+            //     // CardLowRibbonImage.color = GlobalSettings.Instance.CardRibbonsStandardColor;
+            // }
+
+            // 2) add card name
+            nameText.text = cardAsset.name;
+            // 3) add mana cost
+            manaCostText.text = cardAsset.ManaCost.ToString();
+            // 4) add description
+            descriptionText.text = cardAsset.Description;
+            // 5) Change the card graphic sprite
+            cardGraphicImage.sprite = cardAsset.CardImage;
+
+            // if (cardAsset.MaxHealth != 0)
+            if (cardAsset.IsCreature)
+            {
+                // this is a creature
+                // AttackText.text = cardAsset.Attack.ToString();
+                // HealthText.text = cardAsset.MaxHealth.ToString();
+                powerText = gameObject.AddComponent<TextMeshProUGUI>();
+                pPowerText = gameObject.AddComponent<TextMeshProUGUI>();
+                bPowerText = gameObject.AddComponent<TextMeshProUGUI>();
+                powerText.SetText(cardAsset.TPower.ToString());
+                pPowerText.SetText(cardAsset.PPower.ToString());
+                bPowerText.SetText(cardAsset.BPower.ToString());
+            }
+
+            if (previewManager != null)
+            {
+                // this is a card and not a preview
+                //  GameObject will have OneCardManager as well, but PreviewManager should be null there
+                previewManager.cardAsset = cardAsset;
+                previewManager.ReadCardFromAsset();
+            }
         }
     }
 }

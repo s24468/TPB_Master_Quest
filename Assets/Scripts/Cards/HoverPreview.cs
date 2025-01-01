@@ -1,129 +1,132 @@
-﻿using UnityEngine;
-using System.Collections;
-using DG.Tweening;
+﻿using DG.Tweening;
+using UnityEngine;
+using UnityEngine.Serialization;
 
-public class HoverPreview: MonoBehaviour
+namespace Cards
 {
-    // PUBLIC FIELDS
-    public GameObject TurnThisOffWhenPreviewing;  // if this is null, will not turn off anything 
-    public Vector3 TargetPosition;
-    public float TargetScale;
-    public GameObject previewGameObject;
-    public bool ActivateInAwake = false;
-
-    // PRIVATE FIELDS
-    private static HoverPreview currentlyViewing = null;
-
-    // PROPERTIES WITH UNDERLYING PRIVATE FIELDS
-    private static bool _PreviewsAllowed = true;
-    public static bool PreviewsAllowed
+    public class HoverPreview: MonoBehaviour
     {
-        get { return _PreviewsAllowed;}
+        // PUBLIC FIELDS
+        [FormerlySerializedAs("TurnThisOffWhenPreviewing")] public GameObject turnThisOffWhenPreviewing;  // if this is null, will not turn off anything 
+        [FormerlySerializedAs("TargetPosition")] public Vector3 targetPosition;
+        [FormerlySerializedAs("TargetScale")] public float targetScale;
+        public GameObject previewGameObject;
+        [FormerlySerializedAs("ActivateInAwake")] public bool activateInAwake = false;
 
-        set 
-        { 
-            //Debug.Log("Hover Previews Allowed is now: " + value);
-            _PreviewsAllowed= value;
-            if (!_PreviewsAllowed)
+        // PRIVATE FIELDS
+        private static HoverPreview _currentlyViewing = null;
+
+        // PROPERTIES WITH UNDERLYING PRIVATE FIELDS
+        private static bool _previewsAllowed = true;
+        public static bool PreviewsAllowed
+        {
+            get => _previewsAllowed;
+
+            set 
+            { 
+                //Debug.Log("Hover Previews Allowed is now: " + value);
+                _previewsAllowed= value;
+                if (!_previewsAllowed)
+                    StopAllPreviews();
+            }
+        }
+
+        private bool _thisPreviewEnabled = false;
+
+        private bool ThisPreviewEnabled
+        {
+            get => _thisPreviewEnabled;
+
+            set 
+            { 
+                _thisPreviewEnabled = value;
+                if (!_thisPreviewEnabled)
+                    StopThisPreview();
+            }
+        }
+
+        private bool OverCollider { get; set;}
+ 
+        void Awake()
+        {
+            ThisPreviewEnabled = activateInAwake;
+        }
+            
+        void OnMouseEnter()
+        {
+            OverCollider = true;
+            if (PreviewsAllowed && ThisPreviewEnabled)
+                PreviewThisObject();
+        }
+        
+        void OnMouseExit()
+        {
+            OverCollider = false;
+
+            if (!PreviewingSomeCard())
                 StopAllPreviews();
         }
-    }
 
-    private bool _thisPreviewEnabled = false;
-    public bool ThisPreviewEnabled
-    {
-        get { return _thisPreviewEnabled;}
-
-        set 
-        { 
-            _thisPreviewEnabled = value;
-            if (!_thisPreviewEnabled)
-                StopThisPreview();
-        }
-    }
-
-    public bool OverCollider { get; set;}
- 
-    // MONOBEHVIOUR METHODS
-    void Awake()
-    {
-        ThisPreviewEnabled = ActivateInAwake;
-    }
-            
-    void OnMouseEnter()
-    {
-        OverCollider = true;
-        if (PreviewsAllowed && ThisPreviewEnabled)
-            PreviewThisObject();
-    }
-        
-    void OnMouseExit()
-    {
-        OverCollider = false;
-
-        if (!PreviewingSomeCard())
+        // OTHER METHODS
+        void PreviewThisObject()
+        {
+            // 1) clone this card 
+            // first disable the previous preview if there is one already
             StopAllPreviews();
-    }
+            // 2) save this HoverPreview as current
+            _currentlyViewing = this;
+            // 3) enable Preview game object
+            previewGameObject.SetActive(true);
+            // 4) disable if we have what to disable
+            if (turnThisOffWhenPreviewing!=null)
+                turnThisOffWhenPreviewing.SetActive(false); 
+            // 5) tween to target position
+            previewGameObject.transform.localPosition = Vector3.zero;
+            previewGameObject.transform.localScale = Vector3.one;
 
-    // OTHER METHODS
-    void PreviewThisObject()
-    {
-        // 1) clone this card 
-        // first disable the previous preview if there is one already
-        StopAllPreviews();
-        // 2) save this HoverPreview as curent
-        currentlyViewing = this;
-        // 3) enable Preview game object
-        previewGameObject.SetActive(true);
-        // 4) disable if we have what to disable
-        if (TurnThisOffWhenPreviewing!=null)
-            TurnThisOffWhenPreviewing.SetActive(false); 
-        // 5) tween to target position
-        previewGameObject.transform.localPosition = Vector3.zero;
-        previewGameObject.transform.localScale = Vector3.one;
-
-        previewGameObject.transform.DOLocalMove(TargetPosition, 1f).SetEase(Ease.OutQuint);
-        previewGameObject.transform.DOScale(TargetScale, 1f).SetEase(Ease.OutQuint);
-    }
-
-    void StopThisPreview()
-    {
-        previewGameObject.SetActive(false);
-        previewGameObject.transform.localScale = Vector3.one;
-        previewGameObject.transform.localPosition = Vector3.zero;
-        if (TurnThisOffWhenPreviewing!=null)
-            TurnThisOffWhenPreviewing.SetActive(true); 
-    }
-
-    // STATIC METHODS
-    private static void StopAllPreviews()
-    {
-        if (currentlyViewing != null)
-        {
-            currentlyViewing.previewGameObject.SetActive(false);
-            currentlyViewing.previewGameObject.transform.localScale = Vector3.one;
-            currentlyViewing.previewGameObject.transform.localPosition = Vector3.zero;
-            if (currentlyViewing.TurnThisOffWhenPreviewing!=null)
-                currentlyViewing.TurnThisOffWhenPreviewing.SetActive(true); 
+            previewGameObject.transform.DOLocalMove(targetPosition, 1f).SetEase(Ease.OutQuint);
+            previewGameObject.transform.DOScale(targetScale, 1f).SetEase(Ease.OutQuint);
         }
+
+        void StopThisPreview()
+        {
+            previewGameObject.SetActive(false);
+            previewGameObject.transform.localScale = Vector3.one;
+            previewGameObject.transform.localPosition = Vector3.zero;
+            if (turnThisOffWhenPreviewing!=null)
+                turnThisOffWhenPreviewing.SetActive(true); 
+        }
+
+        // STATIC METHODS
+        private static void StopAllPreviews()
+        {
+            if (_currentlyViewing != null)
+            {
+                _currentlyViewing.previewGameObject.SetActive(false);
+                _currentlyViewing.previewGameObject.transform.localScale = Vector3.one;
+                _currentlyViewing.previewGameObject.transform.localPosition = Vector3.zero;
+                if (_currentlyViewing.turnThisOffWhenPreviewing!=null)
+                    _currentlyViewing.turnThisOffWhenPreviewing.SetActive(true); 
+            }
          
-    }
-
-    private static bool PreviewingSomeCard()
-    {
-        if (!PreviewsAllowed)
-            return false;
-
-        HoverPreview[] allHoverBlowups = GameObject.FindObjectsOfType<HoverPreview>();
-
-        foreach (HoverPreview hb in allHoverBlowups)
-        {
-            if (hb.OverCollider && hb.ThisPreviewEnabled)
-                return true;
         }
 
-        return false;
-    }
+        private static bool PreviewingSomeCard()
+        {
+            if (!PreviewsAllowed)
+                return false;
+
+            HoverPreview[] allHoverBlowups = GameObject.FindObjectsOfType<HoverPreview>();
+
+            foreach (HoverPreview hb in allHoverBlowups)
+            {
+                if (hb.OverCollider && hb.ThisPreviewEnabled)
+                    return true;
+            }
+
+            return false;
+        }
 
    
+    }
 }

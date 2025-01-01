@@ -1,69 +1,69 @@
-﻿using UnityEngine;
-using System.Collections;
-using TMPro;
+﻿using TMPro;
+using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class OneCreatureManager : MonoBehaviour
+namespace Cards
 {
-    public CardAsset cardAsset;
-    public OneCardManager PreviewManager;
-    [Header("Text Component References")] 
-    // public Text TPowerText;
-    // public Text PPowerText;
-    // public Text BPowerText;
-    public TextMeshProUGUI TPowerText;
-    public TextMeshProUGUI PPowerText;
-    public TextMeshProUGUI BPowerText;
-    [Header("Image References")] public Image CreatureGraphicImage;
-    public Image CreatureGlowImage;
-
-    void Awake()
+    public class OneCreatureManager : MonoBehaviour
     {
-        if (cardAsset != null)
-            ReadCreatureFromAsset();
-    }
+        public CardAsset cardAsset;
+        [FormerlySerializedAs("PreviewManager")] public OneCardManager previewManager;
+        [FormerlySerializedAs("TPowerText")] [Header("Text Component References")] 
+        public TextMeshProUGUI powerText;
+        [FormerlySerializedAs("PPowerText")] public TextMeshProUGUI pPowerText;
+        [FormerlySerializedAs("BPowerText")] public TextMeshProUGUI bPowerText;
+        [FormerlySerializedAs("CreatureGraphicImage")] [Header("Image References")] public Image creatureGraphicImage;
+        [FormerlySerializedAs("CreatureGlowImage")] public Image creatureGlowImage;
 
-    private bool canAttackNow = false;
-
-    public bool CanAttackNow
-    {
-        get { return canAttackNow; }
-
-        set
+        void Awake()
         {
-            canAttackNow = value;
-
-            CreatureGlowImage.enabled = value;
+            if (cardAsset != null)
+                ReadCreatureFromAsset();
         }
-    }
 
-    public void ReadCreatureFromAsset()
-    {
-        // Change the card graphic sprite
-        CreatureGraphicImage.sprite = cardAsset.CardImage;
+        private bool _canAttackNow = false;
 
-        // AttackText.text = cardAsset.Attack.ToString();
-        // HealthText.text = cardAsset.MaxHealth.ToString();
-        // TPowerText.text =  cardAsset.TPower.ToString();
-        // PPowerText.text =  cardAsset.PPower.ToString();
-        // BPowerText.text =  cardAsset.BPower.ToString();
-        TPowerText.SetText(cardAsset.TPower.ToString());
-        PPowerText.SetText(cardAsset.PPower.ToString());
-        BPowerText.SetText(cardAsset.BPower.ToString());
-
-        if (PreviewManager != null)
+        public bool CanAttackNow
         {
-            PreviewManager.cardAsset = cardAsset;
-            PreviewManager.ReadCardFromAsset();
+            get => _canAttackNow;
+
+            set
+            {
+                _canAttackNow = value;
+
+                creatureGlowImage.enabled = value;
+            }
         }
-    }
 
-    public void TakeDamage(int amount, int healthAfter)
-    {
-        if (amount > 0)
+        private void ReadCreatureFromAsset()
         {
-            // TODO DamageEffect.CreateDamageEffect(transform.position, amount);
-            // HealthText.text = healthAfter.ToString();
+            // Change the card graphic sprite
+            creatureGraphicImage.sprite = cardAsset.CardImage;
+
+            // AttackText.text = cardAsset.Attack.ToString();
+            // HealthText.text = cardAsset.MaxHealth.ToString();
+            // TPowerText.text =  cardAsset.TPower.ToString();
+            // PPowerText.text =  cardAsset.PPower.ToString();
+            // BPowerText.text =  cardAsset.BPower.ToString();
+            powerText.SetText(cardAsset.TPower.ToString());
+            pPowerText.SetText(cardAsset.PPower.ToString());
+            bPowerText.SetText(cardAsset.BPower.ToString());
+
+            if (previewManager != null)
+            {
+                previewManager.cardAsset = cardAsset;
+                previewManager.ReadCardFromAsset();
+            }
+        }
+
+        public void TakeDamage(int amount, int healthAfter)
+        {
+            if (amount > 0)
+            {
+                // TODO DamageEffect.CreateDamageEffect(transform.position, amount);
+                // HealthText.text = healthAfter.ToString();
+            }
         }
     }
 }
