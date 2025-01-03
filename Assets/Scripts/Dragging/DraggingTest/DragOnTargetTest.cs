@@ -1,22 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class DragOnTargetTest : DraggingActionsTest
 {
     public TargetingOptions Targets = TargetingOptions.AllCharacters;
-    private SpriteRenderer sr;
+    public SpriteRenderer sr;
     private LineRenderer lr;
-    private Transform triangle;
+    public Transform triangle;
     private SpriteRenderer triangleSR;
-    private GameObject Target;
+    // private GameObject Target;
+
+    private const float ArrowOffset = 2.3f;
+    private const float TriangleOffset = 1.5f;
 
     void Awake()
     {
-        sr = GetComponent<SpriteRenderer>();
+        // sr = GetComponent<SpriteRenderer>();
         lr = GetComponentInChildren<LineRenderer>();
         lr.sortingLayerName = "AboveEverything";
-        triangle = transform.Find("Triangle");
+        // triangle = transform.Find("Triangle");
+        lr.positionCount = 2; // Ensure LineRenderer has 2 points
+
         triangleSR = triangle.GetComponent<SpriteRenderer>();
     }
 
@@ -31,16 +38,16 @@ public class DragOnTargetTest : DraggingActionsTest
         // This code only draws the arrow
         Vector3 notNormalized = transform.position - transform.parent.position;
         Vector3 direction = notNormalized.normalized;
-        float distanceToTarget = (direction*2.3f).magnitude;
+        float distanceToTarget = (direction * 2.3f).magnitude;
         if (notNormalized.magnitude > distanceToTarget)
         {
             // draw a line between the creature and the target
-            lr.SetPositions(new Vector3[]{ transform.parent.position, transform.position - direction*2.3f });
+            lr.SetPositions(new Vector3[] { transform.parent.position, transform.position - direction * 2.3f });
             lr.enabled = true;
 
             // position the end of the arrow between near the target.
             triangleSR.enabled = true;
-            triangleSR.transform.position = transform.position - 1.5f*direction;
+            triangleSR.transform.position = transform.position - 1.5f * direction;
 
             // proper rotarion of arrow end
             float rot_z = Mathf.Atan2(notNormalized.y, notNormalized.x) * Mathf.Rad2Deg;
@@ -52,19 +59,17 @@ public class DragOnTargetTest : DraggingActionsTest
             lr.enabled = false;
             triangleSR.enabled = false;
         }
-
     }
+
 
     public override void OnEndDrag()
     {
-
         // return target and arrow to original position
         // this position is special for spell cards to show the arrow on top
         transform.localPosition = new Vector3(0f, 0f, 0.4f);
         sr.enabled = false;
         lr.enabled = false;
         triangleSR.enabled = false;
-
     }
 
     // NOT USED IN THIS SCRIPT

@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -33,6 +34,7 @@ namespace Cards
 
         private bool _thisPreviewEnabled = false;
 
+        private Coroutine _previewCoroutine;
         private bool ThisPreviewEnabled
         {
             get => _thisPreviewEnabled;
@@ -55,18 +57,43 @@ namespace Cards
         void OnMouseEnter()
         {
             OverCollider = true;
+            
             if (PreviewsAllowed && ThisPreviewEnabled)
-                PreviewThisObject();
+            {
+                // Start a coroutine to delay the preview
+                _previewCoroutine = StartCoroutine(DelayedPreview());
+            }
+            // if (PreviewsAllowed && ThisPreviewEnabled)
+            //     PreviewThisObject();
         }
         
         void OnMouseExit()
         {
             OverCollider = false;
 
+            // if (!PreviewingSomeCard())
+            //     StopAllPreviews();
+            // Stop the preview coroutine if it's running
+            if (_previewCoroutine != null)
+            {
+                StopCoroutine(_previewCoroutine);
+                _previewCoroutine = null;
+            }
+
             if (!PreviewingSomeCard())
                 StopAllPreviews();
         }
+        private IEnumerator DelayedPreview()
+        {
+            // Wait for 2 seconds
+            yield return new WaitForSeconds(0.5f);
 
+            // Ensure the mouse is still over the collider before previewing
+            if (OverCollider && PreviewsAllowed && ThisPreviewEnabled)
+            {
+                PreviewThisObject();
+            }
+        }
         // OTHER METHODS
         void PreviewThisObject()
         {
