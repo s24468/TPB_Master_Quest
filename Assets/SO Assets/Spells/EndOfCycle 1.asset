@@ -10,16 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 434bd6f32ce585a4aa14f881a1f18122, type: 3}
-  m_Name: EndOfCycle
+  m_Name: EndOfCycle 1
   m_EditorClassIdentifier: 
-  Name: End Of Cycle
-  CardImage: {fileID: 21300000, guid: 704ae6b0d5acfd749bfa3701a5aad9b1, type: 3}
-  ManaCost: 4
-  IsCreature: 0
+  characterAsset: {fileID: 0}
   Description: "\u2022 You may destroy one of your opponent's creatures. If you succeed,
     discard one card at random from your hand"
-  CasualPower: 0
-  TPower: 0
-  PPower: 0
-  BPower: 0
+  CardImage: {fileID: 21300000, guid: 704ae6b0d5acfd749bfa3701a5aad9b1, type: 3}
+  ManaCost: 4
+  MaxHealth: 0
+  Attack: 0
+  AttacksForOneTurn: 1
+  Taunt: 0
+  Charge: 0
+  CreatureScriptName: 
+  specialCreatureAmount: 0
+  SpellScriptName: 
+  specialSpellAmount: 7
   Targets: 4

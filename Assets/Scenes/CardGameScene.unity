@@ -2193,7 +2193,7 @@ MonoBehaviour:
   CardPreviewTimeFast: 0.2
   CardTransitionTimeFast: 0.5
   NoTargetSpellCardPrefab: {fileID: 0}
-  TargetedSpellCardPrefab: {fileID: 0}
+  TargetedSpellCardPrefab: {fileID: 4639431296629373937, guid: 618c41c7f50814c40b6219599db8588f, type: 3}
   CreatureCardPrefab: {fileID: 4639431296629373937, guid: 6409e381d7595714b83dde2d99344df7, type: 3}
   CreaturePrefab: {fileID: 5521912666727682290, guid: 0a8ab85579579854ca50ef83b0aa88da, type: 3}
   DamageEffectPrefab: {fileID: 0}
@@ -3871,7 +3871,7 @@ PrefabInstance:
     - target: {fileID: 1598650242238377646, guid: 08d27d2f8caa6b344851a88fc54367fa, type: 3}
       propertyPath: 'cards.Array.data[1]'
       value: 
-      objectReference: {fileID: 11400000, guid: a41f8949e15418041ab4477d770d2d77, type: 2}
+      objectReference: {fileID: 11400000, guid: 79a060987fd127e45acd77f1c6e0bfb9, type: 2}
     - target: {fileID: 1598650242238377646, guid: 08d27d2f8caa6b344851a88fc54367fa, type: 3}
       propertyPath: 'cards.Array.data[2]'
       value: 
@@ -3879,7 +3879,7 @@ PrefabInstance:
     - target: {fileID: 1598650242238377646, guid: 08d27d2f8caa6b344851a88fc54367fa, type: 3}
       propertyPath: 'cards.Array.data[3]'
       value: 
-      objectReference: {fileID: 11400000, guid: a41f8949e15418041ab4477d770d2d77, type: 2}
+      objectReference: {fileID: 11400000, guid: 79a060987fd127e45acd77f1c6e0bfb9, type: 2}
     - target: {fileID: 1598650242238377646, guid: 08d27d2f8caa6b344851a88fc54367fa, type: 3}
       propertyPath: 'cards.Array.data[4]'
       value: 

@@ -87,7 +87,7 @@ public class HandVisual : MonoBehaviour
         }
         else
         {
-            card = Instantiate(GlobalSettings.Instance.CreatureCardPrefab, position,
+            card = Instantiate(GlobalSettings.Instance.TargetedSpellCardPrefab, position,
                 Quaternion.Euler(eulerAngles));
         }
 

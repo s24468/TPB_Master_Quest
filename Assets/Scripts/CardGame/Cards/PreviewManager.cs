@@ -23,7 +23,7 @@ namespace Cards
 
         public void setReferences(CardAsset cardAsset)
         {
-            nameTextPreview.text = cardAsset.name;
+            nameTextPreview.text = cardAsset.Name;
             manaCostTextPreview.text = cardAsset.ManaCost.ToString();
             descriptionTextPreview.text = cardAsset.Description;
             cardGraphicImagePreview.sprite = cardAsset.CardImage;

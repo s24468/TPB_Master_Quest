@@ -33,7 +33,7 @@ namespace Cards
 
         public void ReadCardFromAsset()
         {
-            nameText.text = cardAsset.name;
+            nameText.text = cardAsset.Name;
             manaCostText.text = cardAsset.ManaCost.ToString();
             descriptionText.text = cardAsset.Description;
             cardGraphicImage.sprite = cardAsset.CardImage;

@@ -12,20 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 434bd6f32ce585a4aa14f881a1f18122, type: 3}
   m_Name: HorsesOfMana
   m_EditorClassIdentifier: 
-  characterAsset: {fileID: 0}
-  Description: "\u2022 When you put this creature into your battle zone, put the
-    top card of your deck into your mana"
+  Name: Horses Of Mana
   CardImage: {fileID: 21300000, guid: e59e0ce2c7cc7a848b5042158341c29f, type: 3}
   ManaCost: 2
   IsCreature: 1
+  Description: "\u2022 When you put this creature into your battle zone, put the
+    top card of your deck into your mana"
+  CasualPower: 0
   TPower: 200
   PPower: 100
   BPower: 0
-  AttacksForOneTurn: 1
-  Taunt: 0
-  Charge: 0
-  CreatureScriptName: 
-  specialCreatureAmount: 0
-  SpellScriptName: 
-  specialSpellAmount: 0
   Targets: 0

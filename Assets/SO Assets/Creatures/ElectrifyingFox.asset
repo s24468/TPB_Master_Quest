@@ -12,18 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 434bd6f32ce585a4aa14f881a1f18122, type: 3}
   m_Name: ElectrifyingFox
   m_EditorClassIdentifier: 
-  Description: 
+  Name: Electrifying Fox
   CardImage: {fileID: 21300000, guid: 1a218a214707a4642971f9358f28d48d, type: 3}
   ManaCost: 7
   IsCreature: 1
+  Description: "\u2022 When this creature is attacked, it gets +100 casual power"
+  CasualPower: 0
   TPower: 200
   PPower: 100
   BPower: 0
-  AttacksForOneTurn: 1
-  Taunt: 0
-  Charge: 0
-  CreatureScriptName: 
-  specialCreatureAmount: 0
-  SpellScriptName: 
-  specialSpellAmount: 0
   Targets: 0
