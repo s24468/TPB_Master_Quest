@@ -1,12 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Cards;
+using Cards.ExtenstionMethods;
 using DG.Tweening;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 using UI;
+using UnityEditor;
 using UnityEngine.Serialization;
 
 public class HandVisual : MonoBehaviour
@@ -25,6 +29,43 @@ public class HandVisual : MonoBehaviour
         card.transform.SetParent(slots.transform);
         PlaceCardsOnNewSlots();
         UpdatePlacementOfSlots();
+    }
+
+    private void Awake()
+    {
+        setDeck();
+        ShufflingExtention.Shuffle(Deck.GetComponent<Deck>().cards);
+    }
+
+    public void setDeck()
+    {
+        string folderPath = "Assets/SOAssets";
+        var cardDictionaryCollected = DataPersistenceManager.instance.gameData.CardDictionaryCollected;
+        
+        var cards = CardDataLoader.Instance.GetCreatureCards();
+        cards.AddRange(CardDataLoader.Instance.GetSpellCards());
+    
+        foreach (var cardDic in cardDictionaryCollected)
+        {
+            int key = Convert.ToInt32(cardDic.Key);
+            int count = cardDic.Value;
+            var card = cards.FirstOrDefault(c => c.ID == key);
+            CardAsset cardAsset = ScriptableObject.CreateInstance<CardAsset>();
+            cardAsset.Id = card.ID;
+            cardAsset.Name = card.Name;
+            cardAsset.CardImage = card.CardSprite;
+            cardAsset.ManaCost = card.Mana;
+            cardAsset.IsCreature = card.Type.ToLower() == "creature";
+            cardAsset.Description = card.Description;
+            cardAsset.CasualPower = card.CasualPower;
+            cardAsset.TPower = card.TPower;
+            cardAsset.PPower = card.PPower;
+            cardAsset.BPower = card.BPower;
+            for (int i = 0; i < count; i++)
+            {
+                Deck.GetComponent<Deck>().cards.Add(cardAsset);
+            }
+        }
     }
 
     public void RemoveCard(GameObject card)
@@ -48,9 +89,6 @@ public class HandVisual : MonoBehaviour
         return CardsInHand[index];
     }
 
-    // MANAGING CARDS AND SLOTS
-
-    // move Slots GameObject according to the number of cards in hand
     void UpdatePlacementOfSlots()
     {
         float posX;
@@ -100,14 +138,17 @@ public class HandVisual : MonoBehaviour
 
     void Update()
     {
-        // Check if the "D" key is pressed
         if (Input.GetKeyDown(KeyCode.R))
         {
-            GivePlayerACard(getRandomCardFromDeck());
+            GivePlayerARandomCard();
         }
     }
 
-    private CardAsset getRandomCardFromDeck()
+    public void GivePlayerARandomCard()
+    {
+        GivePlayerACard(getRandomCardFromDeck());
+    }
+    public CardAsset getRandomCardFromDeck()
     {
         CardAsset c = Deck.GetComponent<Deck>().cards[0];
         Deck.GetComponent<Deck>().cards.RemoveAt(0);

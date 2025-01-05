@@ -66,24 +66,6 @@ public class CardDataLoader : MonoBehaviour
             LoadCardsFromCSV(csvData);
         }
     }
-    // private string s3CsvUrl = "https://mygame-cards-storage.s3.eu-north-1.amazonaws.com/DatabaseCards.csv";
-    // IEnumerator DownloadCSVFromS3()
-    // {
-    //     UnityWebRequest request = UnityWebRequest.Get(s3CsvUrl);
-    //     yield return request.SendWebRequest();
-    //
-    //     if (request.result == UnityWebRequest.Result.Success)
-    //     {
-    //         string csvData = request.downloadHandler.text;
-    //         // Debug.Log("Pobrano dane CSV z S3:\n" + csvData);
-    //         LoadCardsFromCSV(csvData);
-    //     }
-    //     else
-    //     {
-    //         Debug.LogError("Błąd pobierania pliku z S3: " + request.error);
-    //     }
-    // }
-
     void LoadCardsFromCSV(string csvContent)
     {
         StringReader reader = new StringReader(csvContent);
@@ -179,3 +161,22 @@ public class CardDataLoader : MonoBehaviour
     public List<Card> GetCreatureCards() => creatureCards;
     public List<Card> GetSpellCards() => spellCards;
 }
+
+
+// private string s3CsvUrl = "https://mygame-cards-storage.s3.eu-north-1.amazonaws.com/DatabaseCards.csv";
+// IEnumerator DownloadCSVFromS3()
+// {
+//     UnityWebRequest request = UnityWebRequest.Get(s3CsvUrl);
+//     yield return request.SendWebRequest();
+//
+//     if (request.result == UnityWebRequest.Result.Success)
+//     {
+//         string csvData = request.downloadHandler.text;
+//         // Debug.Log("Pobrano dane CSV z S3:\n" + csvData);
+//         LoadCardsFromCSV(csvData);
+//     }
+//     else
+//     {
+//         Debug.LogError("Błąd pobierania pliku z S3: " + request.error);
+//     }
+// }

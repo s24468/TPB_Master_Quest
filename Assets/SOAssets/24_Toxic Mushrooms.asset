@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 434bd6f32ce585a4aa14f881a1f18122, type: 3}
+  m_Name: 24_Toxic Mushrooms
+  m_EditorClassIdentifier: 
+  Id: 0
+  Name: Toxic Mushrooms
+  CardImage: {fileID: 21300000, guid: 03c9d4b0d3530d34e8d69c55e84b400e, type: 3}
+  ManaCost: 3
+  IsCreature: 1
+  Description: 
+  CasualPower: 200
+  TPower: 300
+  PPower: 0
+  BPower: 100
+  Targets: 0

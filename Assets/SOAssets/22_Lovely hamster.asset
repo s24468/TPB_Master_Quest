@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 434bd6f32ce585a4aa14f881a1f18122, type: 3}
+  m_Name: 22_Lovely hamster
+  m_EditorClassIdentifier: 
+  Id: 0
+  Name: Lovely hamster
+  CardImage: {fileID: 21300000, guid: b0d2311b9ac751b42b0366872213d865, type: 3}
+  ManaCost: 2
+  IsCreature: 1
+  Description: When you put this creature into the battle zone, you may draw a card
+  CasualPower: 100
+  TPower: 100
+  PPower: 0
+  BPower: 200
+  Targets: 0

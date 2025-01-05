@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 434bd6f32ce585a4aa14f881a1f18122, type: 3}
+  m_Name: 40_Energy Crab
+  m_EditorClassIdentifier: 
+  Id: 0
+  Name: Energy Crab
+  CardImage: {fileID: 21300000, guid: 0a75ca57d5d5bf74b9163fd263e7bf4c, type: 3}
+  ManaCost: 6
+  IsCreature: 1
+  Description: Symbiosis 2, In the symbiotic form, every second creature's additional
+    power doubles
+  CasualPower: 300
+  TPower: 200
+  PPower: 100
+  BPower: 100
+  Targets: 0

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 434bd6f32ce585a4aa14f881a1f18122, type: 3}
+  m_Name: 11_Healing Fireplace
+  m_EditorClassIdentifier: 
+  Id: 0
+  Name: Healing Fireplace
+  CardImage: {fileID: 21300000, guid: 21880156d820adf459e861cf12c8a15d, type: 3}
+  ManaCost: 5
+  IsCreature: 0
+  Description: You may draw a card and heal 1/4 of chosen turret
+  CasualPower: -1
+  TPower: -1
+  PPower: -1
+  BPower: -1
+  Targets: 0

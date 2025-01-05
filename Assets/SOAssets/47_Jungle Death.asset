@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 434bd6f32ce585a4aa14f881a1f18122, type: 3}
+  m_Name: 47_Jungle Death
+  m_EditorClassIdentifier: 
+  Id: 0
+  Name: Jungle Death
+  CardImage: {fileID: 21300000, guid: eb0926670ab11c6469f6ad59423da9ee, type: 3}
+  ManaCost: 3
+  IsCreature: 1
+  Description: When this creature is attacked, it gets -300 casual power.
+  CasualPower: 500
+  TPower: 0
+  PPower: 100
+  BPower: 100
+  Targets: 0

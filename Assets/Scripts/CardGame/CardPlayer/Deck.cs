@@ -10,7 +10,7 @@ namespace Cards
 
         void Awake()
         {
-            ShufflingExtention.Shuffle(cards);
+            // ShufflingExtention.Shuffle(cards);
         }
     }
 }

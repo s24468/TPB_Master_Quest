@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 434bd6f32ce585a4aa14f881a1f18122, type: 3}
+  m_Name: 12_Give me a drink, bartender
+  m_EditorClassIdentifier: 
+  Id: 0
+  Name: Give me a drink, bartender
+  CardImage: {fileID: 21300000, guid: bd25584f6260a2b4eb88a92a55017642, type: 3}
+  ManaCost: 4
+  IsCreature: 0
+  Description: Draw 2 cards and if you have no cards in your hand, draw another one
+  CasualPower: -1
+  TPower: -1
+  PPower: -1
+  BPower: -1
+  Targets: 0
