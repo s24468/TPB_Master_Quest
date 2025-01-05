@@ -5,29 +5,27 @@ using UnityEngine.Serialization;
 // others will be placed automatically with equal distances between first and last elements
 namespace UI
 {
-	public class SameDistanceChildren : MonoBehaviour {
+    public class SameDistanceChildren : MonoBehaviour
+    {
+        public Transform[] children;
 
-		[FormerlySerializedAs("Children")] public Transform[] children;
+        // Use this for initialization
+        void Awake()
+        {
+            Vector3 firstElementPos = children[0].transform.position;
+            Vector3 lastElementPos = children[^1].transform.position;
 
-		// Use this for initialization
-		void Awake () 
-		{
-			Vector3 firstElementPos = children[0].transform.position;
-			Vector3 lastElementPos = children[^1].transform.position;
+            // dividing by Children.Length - 1 because for example: between 10 points that are 9 segments
+            var xDist = (lastElementPos.x - firstElementPos.x) / (float)(children.Length - 1);
+            var yDist = (lastElementPos.y - firstElementPos.y) / (float)(children.Length - 1);
+            var zDist = (lastElementPos.z - firstElementPos.z) / (float)(children.Length - 1);
 
-			// dividing by Children.Length - 1 because for example: between 10 points that are 9 segments
-			var xDist = (lastElementPos.x - firstElementPos.x)/(float)(children.Length - 1);
-			var yDist = (lastElementPos.y - firstElementPos.y)/(float)(children.Length - 1);
-			var zDist = (lastElementPos.z - firstElementPos.z)/(float)(children.Length - 1);
+            var dist = new Vector3(xDist, yDist, zDist);
 
-			var dist = new Vector3(xDist, yDist, zDist);
-
-			for (int i = 1; i < children.Length; i++)
-			{
-				children[i].transform.position = children[i - 1].transform.position + dist;
-			}
-		}
-	
-	
-	}
+            for (int i = 1; i < children.Length; i++)
+            {
+                children[i].transform.position = children[i - 1].transform.position + dist;
+            }
+        }
+    }
 }

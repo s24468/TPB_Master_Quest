@@ -10,30 +10,37 @@ namespace Cards
     {
         public CardAsset cardAsset;
 
-        [FormerlySerializedAs("PreviewManager")] public OneCardManager previewManager;
+        // public OneCardManager previewManager;
 
         // [Header("Text Component References")] public Text NameText;
-        [FormerlySerializedAs("NameText")] [Header("Text Component References")] public TextMeshProUGUI nameText;
+        public TextMeshProUGUI nameText;
 
         // public Text ManaCostText;
-        [FormerlySerializedAs("ManaCostText")] public TextMeshProUGUI manaCostText;
+        public TextMeshProUGUI manaCostText;
 
         // public Text DescriptionText;
-        [FormerlySerializedAs("DescriptionText")] public TextMeshProUGUI descriptionText;
+        public TextMeshProUGUI descriptionText;
 
-        [FormerlySerializedAs("TPowerText")] public TextMeshProUGUI powerText;
-        [FormerlySerializedAs("PPowerText")] public TextMeshProUGUI pPowerText;
-        [FormerlySerializedAs("BPowerText")] public TextMeshProUGUI bPowerText;
+        public TextMeshProUGUI tPowerText;
+        public TextMeshProUGUI pPowerText;
+        public TextMeshProUGUI bPowerText;
 
-        [FormerlySerializedAs("CardGraphicImage")] [Header("Image References")]
+        [Header("Image References")]
         // public Image CardTopRibbonImage;
         // public Image CardLowRibbonImage;
         public Image cardGraphicImage;
 
-        [FormerlySerializedAs("CardBodyImage")] public Image cardBodyImage;
-        [FormerlySerializedAs("CardFaceFrameImage")] public Image cardFaceFrameImage;
-        [FormerlySerializedAs("CardFaceGlowImage")] public Image cardFaceGlowImage;
-        [FormerlySerializedAs("CardBackGlowImage")] public Image cardBackGlowImage;
+        [FormerlySerializedAs("CardBodyImage")]
+        public Image cardBodyImage;
+
+        [FormerlySerializedAs("CardFaceFrameImage")]
+        public Image cardFaceFrameImage;
+
+        [FormerlySerializedAs("CardFaceGlowImage")]
+        public Image cardFaceGlowImage;
+
+        [FormerlySerializedAs("CardBackGlowImage")]
+        public Image cardBackGlowImage;
 
         void Awake()
         {
@@ -83,27 +90,27 @@ namespace Cards
             // 5) Change the card graphic sprite
             cardGraphicImage.sprite = cardAsset.CardImage;
 
-            // if (cardAsset.MaxHealth != 0)
             if (cardAsset.IsCreature)
             {
-                // this is a creature
-                // AttackText.text = cardAsset.Attack.ToString();
-                // HealthText.text = cardAsset.MaxHealth.ToString();
-                powerText = gameObject.AddComponent<TextMeshProUGUI>();
-                pPowerText = gameObject.AddComponent<TextMeshProUGUI>();
-                bPowerText = gameObject.AddComponent<TextMeshProUGUI>();
-                powerText.SetText(cardAsset.TPower.ToString());
-                pPowerText.SetText(cardAsset.PPower.ToString());
-                bPowerText.SetText(cardAsset.BPower.ToString());
+            //     // this is a creature
+            //     // AttackText.text = cardAsset.Attack.ToString();
+            //     // HealthText.text = cardAsset.MaxHealth.ToString();
+            //     tPowerText = gameObject.AddComponent<TextMeshProUGUI>();
+            //     pPowerText = gameObject.AddComponent<TextMeshProUGUI>();
+            //     bPowerText = gameObject.AddComponent<TextMeshProUGUI>();
+            tPowerText.SetText(cardAsset.TPower.ToString());
+            pPowerText.SetText(cardAsset.PPower.ToString());
+            bPowerText.SetText(cardAsset.BPower.ToString());
             }
+            
 
-            if (previewManager != null)
-            {
-                // this is a card and not a preview
-                //  GameObject will have OneCardManager as well, but PreviewManager should be null there
-                previewManager.cardAsset = cardAsset;
-                previewManager.ReadCardFromAsset();
-            }
+            // if (previewManager != null)
+            // {
+            //     // this is a card and not a preview
+            //     //  GameObject will have OneCardManager as well, but PreviewManager should be null there
+            //     previewManager.cardAsset = cardAsset;
+            //     previewManager.ReadCardFromAsset();
+            // }
         }
     }
 }

@@ -1554,6 +1554,9 @@ GameObject:
   - component: {fileID: 2347493925817204057}
   - component: {fileID: 1245717538467585295}
   - component: {fileID: 8038526561061488244}
+  - component: {fileID: 2579307482869930617}
+  - component: {fileID: 3000284396557388073}
+  - component: {fileID: 5783735680520401103}
   m_Layer: 0
   m_Name: CreatureCard
   m_TagString: Untagged
@@ -1637,6 +1640,55 @@ MonoBehaviour:
   targetScale: 2.5
   previewGameObject: {fileID: 4475253028087909903}
   activateInAwake: 1
+--- !u!114 &2579307482869930617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4639431296629373937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108e28a584de378409a51f709cd7d0ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UsePointerDisplacement: 1
+--- !u!114 &3000284396557388073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4639431296629373937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6317f618ae567a4a98d451951599d1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5783735680520401103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4639431296629373937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6f7002328ad4a5483bf4dc3328733c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardAsset: {fileID: 0}
+  nameText: {fileID: 8816413281063200860}
+  manaCostText: {fileID: 7933303173330088532}
+  descriptionText: {fileID: 855750878278543328}
+  tPowerText: {fileID: 7404872404312516348}
+  pPowerText: {fileID: 7072597071187283721}
+  bPowerText: {fileID: 6934355848314052200}
+  cardGraphicImage: {fileID: 8018403274779271722}
+  cardBodyImage: {fileID: 6552840175825580479}
+  cardFaceFrameImage: {fileID: 0}
+  cardFaceGlowImage: {fileID: 0}
+  cardBackGlowImage: {fileID: 0}
 --- !u!1 &4916647108421934005
 GameObject:
   m_ObjectHideFlags: 0

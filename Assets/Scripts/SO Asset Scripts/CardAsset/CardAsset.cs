@@ -27,6 +27,7 @@ public class CardAsset : ScriptableObject
     [Header("Creature Info")]
     // public int MaxHealth;
     // public int Attack;
+    public int CasualPower;
     public int TPower;
     public int PPower;
     public int BPower;
