@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cards;
 using DG.Tweening;
 using NUnit.Framework;
@@ -11,16 +12,10 @@ using UnityEngine.Serialization;
 public class HandVisual : MonoBehaviour
 {
     // PUBLIC FIELDS
-    // public AreaPosition owner;
     public bool TakeCardsOpenly = true;
-    [FormerlySerializedAs("CardAsset")] public CardAsset CardAssetx;
     public SameDistanceChildren slots;
 
-    [Header("Transform References")]
-    // public Transform DrawPreviewSpot;
-    public Transform DeckTransform;
-    // public Transform OtherCardDrawSourceTransform;
-    // public Transform PlayPreviewSpot;
+    [Header("Transform References")] public GameObject Deck;
 
     private List<GameObject> CardsInHand = new List<GameObject>();
 
@@ -82,28 +77,24 @@ public class HandVisual : MonoBehaviour
         }
     }
 
-    // CARD DRAW METHODS
-
-    // creates a card and returns a new card as a GameObject
-    GameObject CreateACardAtPosition(CardAsset c, Vector3 position, Vector3 eulerAngles)
+    GameObject CreateACardAtPosition(CardAsset cardAsset, Vector3 position, Vector3 eulerAngles)
     {
-        // Instantiate a card depending on its type
         GameObject card;
-        // if (c.TPower > 0)
-        // {
-            // this card is a creature card
-            card = GameObject.Instantiate(GlobalSettings.Instance.CreatureCardPrefab, position,
-                Quaternion.Euler(eulerAngles)) as GameObject;
-        // }
+        if (cardAsset.IsCreature)
+        {
+            card = Instantiate(GlobalSettings.Instance.CreatureCardPrefab, position,
+                Quaternion.Euler(eulerAngles));
+        }
+        else
+        {
+            card = Instantiate(GlobalSettings.Instance.CreatureCardPrefab, position,
+                Quaternion.Euler(eulerAngles));
+        }
 
         card.transform.localScale = new Vector3(8f, 8f, 1f);
-
         OneCardManager manager = card.GetComponent<OneCardManager>();
-        manager.cardAsset = c;
-        
-        
+        manager.cardAsset = cardAsset;
         manager.ReadCardFromAsset();
-
         return card;
     }
 
@@ -112,16 +103,21 @@ public class HandVisual : MonoBehaviour
         // Check if the "D" key is pressed
         if (Input.GetKeyDown(KeyCode.R))
         {
-            GivePlayerACard(CardAssetx);
+            GivePlayerACard(getRandomCardFromDeck());
         }
     }
 
-    // gives player a new card from a given position
-    // public void GivePlayerACard(CardAsset c, int UniqueID, bool fast = false, bool fromDeck = true)
+    private CardAsset getRandomCardFromDeck()
+    {
+        CardAsset c = Deck.GetComponent<Deck>().cards[0];
+        Deck.GetComponent<Deck>().cards.RemoveAt(0);
+        return c;
+    }
+
     public void GivePlayerACard(CardAsset c, bool fast = false, bool fromDeck = true)
     {
         GameObject card;
-        card = CreateACardAtPosition(c, DeckTransform.position, new Vector3(0f, -179f, 0f));
+        card = CreateACardAtPosition(c, Deck.transform.position, new Vector3(0f, -179f, 0f));
 
         AddCard(card);
 
@@ -264,7 +260,6 @@ public class HandVisual : MonoBehaviour
 //     }
 //     void Update()
 //     {
-//         // Check if the "D" key is pressed
 //         if (Input.GetKeyDown(KeyCode.R))
 //         {
 //             GivePlayerACard(CardAssetx);
