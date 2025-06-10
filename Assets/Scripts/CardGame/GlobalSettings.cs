@@ -28,42 +28,11 @@ public class GlobalSettings: MonoBehaviour
     public Button EndTurnButton;
     public CardAsset CoinCard;
     public GameObject GameOverCanvas;
-    //public Sprite HeroPowerCrossMark;
-
-    // public Dictionary<AreaPosition, Player> Players = new Dictionary<AreaPosition, Player>();
-
-
-    // SINGLETON
     public static GlobalSettings Instance;
 
     void Awake()
     {
-        // Players.Add(AreaPosition.Top, TopPlayer);
-        // Players.Add(AreaPosition.Low, LowPlayer);
         Instance = this;
     }
 
-    // public bool CanControlThisPlayer(AreaPosition owner)
-    // {
-    //     bool PlayersTurn = (TurnManager.Instance.whoseTurn == Players[owner]);
-    //     bool NotDrawingAnyCards = !Command.CardDrawPending();
-    //     return Players[owner].PArea.AllowedToControlThisPlayer && Players[owner].PArea.ControlsON && PlayersTurn && NotDrawingAnyCards;
-    // }
-    //
-    // public bool CanControlThisPlayer(Player ownerPlayer)
-    // {
-    //     bool PlayersTurn = (TurnManager.Instance.whoseTurn == ownerPlayer);
-    //     bool NotDrawingAnyCards = !Command.CardDrawPending();
-    //     return ownerPlayer.PArea.AllowedToControlThisPlayer && ownerPlayer.PArea.ControlsON && PlayersTurn && NotDrawingAnyCards;
-    // }
-    //
-    // public void EnableEndTurnButtonOnStart(Player P)
-    // {
-    //     if (P == LowPlayer && CanControlThisPlayer(AreaPosition.Low) ||
-    //         P == TopPlayer && CanControlThisPlayer(AreaPosition.Top))
-    //         EndTurnButton.interactable = true;
-    //     else
-    //         EndTurnButton.interactable = false;
-    //         
-    // }
 }

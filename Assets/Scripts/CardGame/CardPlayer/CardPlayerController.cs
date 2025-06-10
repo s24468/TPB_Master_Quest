@@ -10,10 +10,6 @@ namespace Cards
         public Table table;
         public static CardPlayerController[] Players;
 
-        void Awake()
-        {
-            // Initialization code
-        }
 
         public virtual void OnTurnStart()
         {

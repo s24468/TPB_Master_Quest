@@ -36,7 +36,7 @@ namespace Cards
             }
         }
 
-        private void ReadCreatureFromAsset()
+        public void ReadCreatureFromAsset()
         {
             // Change the card graphic sprite
             creatureGraphicImage.sprite = cardAsset.CardImage;
