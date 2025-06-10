@@ -19,15 +19,15 @@ public class S3BucketAccess : MonoBehaviour
     [SerializeField] private TextMeshProUGUI Column2; // Reference to TextMeshPro object
     [SerializeField] private TextMeshProUGUI Column3; // Reference to TextMeshPro object
 
-    void Start()
-    {
-        string accessKey = "AKIAVYV52E7EM2ERQJBQ";
-        string secretKey = "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";
-
-        s3Client = new AmazonS3Client(accessKey, secretKey, Amazon.RegionEndpoint.EUNorth1);
-        StartCoroutine(ListObjectsInBucket());
-        // StartCoroutine(SaveFormattedGameData());
-    }
+    // void Start()
+    // {
+    //     string accessKey = "AKIAVYV52E7EM2ERQJBQ";
+    //     string secretKey = "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";
+    //
+    //     s3Client = new AmazonS3Client(accessKey, secretKey, Amazon.RegionEndpoint.EUNorth1);
+    //     StartCoroutine(ListObjectsInBucket());
+    //     // StartCoroutine(SaveFormattedGameData());
+    // }
 
     private IEnumerator ListObjectsInBucket()
     {

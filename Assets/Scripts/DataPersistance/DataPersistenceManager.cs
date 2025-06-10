@@ -33,7 +33,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     private async void Start()
     {
-        s3DataHandler = new S3DataHandler();
+        // s3DataHandler = new S3DataHandler();
         await LoadGame();
     }
 
@@ -90,7 +90,8 @@ public class DataPersistenceManager : MonoBehaviour
         }
 
         string uniqueID = SystemInfo.deviceUniqueIdentifier;
-        gameData = await s3DataHandler.LoadAsync(uniqueID);
+        // gameData = await s3DataHandler.LoadAsync(uniqueID);
+        gameData = null;
 
         if (gameData == null)
         {
@@ -113,8 +114,8 @@ public class DataPersistenceManager : MonoBehaviour
 
         if (s3DataHandler != null)
         {
-            string uniqueID = SystemInfo.deviceUniqueIdentifier;
-            await s3DataHandler.SaveAsync(uniqueID, gameData);
+            // string uniqueID = SystemInfo.deviceUniqueIdentifier;
+            // await s3DataHandler.SaveAsync(uniqueID, gameData);
         }
         else
         {

@@ -6,7 +6,7 @@ public class SaveGameButton : MonoBehaviour
     {
         if (DataPersistenceManager.instance != null)
         {
-            DataPersistenceManager.instance.SaveGame();
+            // DataPersistenceManager.instance.SaveGame();
             Debug.Log("Game saved manually via button.");
         }
         else

@@ -35,7 +35,17 @@ public class CardDataLoader : MonoBehaviour
     void Start()
     {
         // Załaduj dane na początku działania aplikacji
-        StartCoroutine(DownloadCSVFromS3());
+        // StartCoroutine(DownloadCSVFromS3());
+        
+        TextAsset csvAsset = Resources.Load<TextAsset>("cards_csv");
+
+        if (csvAsset == null)
+        {
+            Debug.LogError("Nie znaleziono pliku cars_csv.csv w Resources!");
+            return;
+        }
+
+        LoadCardsFromCSV(csvAsset.text);
     }
     IEnumerator DownloadCSVFromS3()
     {
