@@ -8,13 +8,14 @@ namespace Cards
     public class OneCreatureManager : MonoBehaviour
     {
         public CardAsset cardAsset;
-        [FormerlySerializedAs("PreviewManager")] public OneCardManager previewManager;
-        [FormerlySerializedAs("TPowerText")] [Header("Text Component References")] 
+        public PreviewManager previewManager;
+        [Header("Text Component References")] public TextMeshProUGUI nameText;
+        public TextMeshProUGUI manaCostText;
         public TextMeshProUGUI powerText;
-        [FormerlySerializedAs("PPowerText")] public TextMeshProUGUI pPowerText;
-        [FormerlySerializedAs("BPowerText")] public TextMeshProUGUI bPowerText;
-        [FormerlySerializedAs("CreatureGraphicImage")] [Header("Image References")] public Image creatureGraphicImage;
-        [FormerlySerializedAs("CreatureGlowImage")] public Image creatureGlowImage;
+        public TextMeshProUGUI pPowerText;
+        public TextMeshProUGUI bPowerText;
+        [Header("Image References")] public Image creatureGraphicImage;
+        public Image creatureGlowImage;
 
         void Awake()
         {
@@ -40,21 +41,15 @@ namespace Cards
         {
             // Change the card graphic sprite
             creatureGraphicImage.sprite = cardAsset.CardImage;
-
-            // AttackText.text = cardAsset.Attack.ToString();
-            // HealthText.text = cardAsset.MaxHealth.ToString();
-            // TPowerText.text =  cardAsset.TPower.ToString();
-            // PPowerText.text =  cardAsset.PPower.ToString();
-            // BPowerText.text =  cardAsset.BPower.ToString();
+            nameText.text = cardAsset.Name;
+            manaCostText.text = cardAsset.ManaCost.ToString();
             powerText.SetText(cardAsset.TPower.ToString());
             pPowerText.SetText(cardAsset.PPower.ToString());
             bPowerText.SetText(cardAsset.BPower.ToString());
 
-            if (previewManager != null)
-            {
-                previewManager.cardAsset = cardAsset;
-                previewManager.ReadCardFromAsset();
-            }
+            previewManager.setReferences(cardAsset);
+            // previewManager.cardAsset = cardAsset;
+            // previewManager.ReadCardFromAsset();
         }
 
         public void TakeDamage(int amount, int healthAfter)

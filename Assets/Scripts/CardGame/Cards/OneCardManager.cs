@@ -9,6 +9,7 @@ namespace Cards
     public class OneCardManager : MonoBehaviour
     {
         public CardAsset cardAsset;
+        public CardLogic cardLogic;
         public PreviewManager previewManager;
 
         [Header("Text Component References")] public TextMeshProUGUI nameText;
@@ -24,6 +25,23 @@ namespace Cards
         [FormerlySerializedAs("CardBodyImage")]
         public Image cardBodyImage;
 
+        public bool CanBePlayedNow = true;
+
+        // private bool canBePlayedNow = false;
+        // public bool CanBePlayedNow
+        // {
+        //     get
+        //     {
+        //         return canBePlayedNow;
+        //     }
+        //
+        //     set
+        //     {
+        //         canBePlayedNow = value;
+        //
+        //         CardFaceGlowImage.enabled = value;
+        //     }
+        // }
         void Awake()
         {
             if (cardAsset != null)
@@ -45,6 +63,7 @@ namespace Cards
                 bPowerText.SetText(cardAsset.BPower.ToString());
                 casualPowerText.SetText(cardAsset.CasualPower.ToString());
             }
+
 
             previewManager.setReferences(cardAsset);
         }

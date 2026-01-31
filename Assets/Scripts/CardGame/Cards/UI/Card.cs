@@ -15,6 +15,6 @@ namespace UI
         public string Description;
         public int Cost; 
         public string Abilities; 
-        public Sprite CardSprite; // Holds the card sprite
+        public Sprite CardSprite;
     }
 }

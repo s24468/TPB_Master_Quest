@@ -6,28 +6,17 @@ using DG.Tweening;
 using NUnit.Framework;
 using UI;
 
-public class TableVisual : MonoBehaviour 
+public class TableVisual : MonoBehaviour
 {
     // PUBLIC FIELDS
+    public AreaPosition owner;
 
-    // an enum that mark to whish caracter this table belongs. The alues are - Top or Low
-    // public AreaPosition owner;
-
-    // a referense to a game object that marks positions where we should put new Creatures
     public SameDistanceChildren slots;
 
     // PRIVATE FIELDS
-
-    // list of all the creature cards on the table as GameObjects
     private List<GameObject> CreaturesOnTable = new List<GameObject>();
-
-    // are we hovering over this table`s collider with a mouse
     private bool cursorOverThisTable = false;
-
-    // A 3D collider attached to this game object
     private BoxCollider col;
-
-    // PROPERTIES
 
     // returns true if we are hovering over any player`s table collider
     public static bool CursorOverSomeTable
@@ -35,19 +24,22 @@ public class TableVisual : MonoBehaviour
         get
         {
             TableVisual[] bothTables = GameObject.FindObjectsOfType<TableVisual>();
-            return (bothTables[0].CursorOverThisTable || bothTables[1].CursorOverThisTable);
+            Debug.Log(bothTables.Length);
+            if (bothTables.Length > 0)
+                Debug.Log(bothTables[0].name);
+
+            return (bothTables[0].CursorOverThisTable); //|| bothTables[1].CursorOverThisTable
         }
     }
 
     // returns true only if we are hovering over this table`s collider
     public bool CursorOverThisTable
     {
-        get{ return cursorOverThisTable; }
+        get { return cursorOverThisTable; }
     }
 
     // METHODS
 
-    // MONOBEHAVIOUR SCRIPTS (mouse over collider detection)
     void Awake()
     {
         col = GetComponent<BoxCollider>();
@@ -56,118 +48,136 @@ public class TableVisual : MonoBehaviour
     // CURSOR/MOUSE DETECTION
     void Update()
     {
-        // we need to Raycast because OnMouseEnter, etc reacts to colliders on cards and cards "cover" the table
-        // create an array of RaycastHits
-        RaycastHit[] hits;
+        // RaycastHit[] hits;
         // raycst to mousePosition and store all the hits in the array
-        hits = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition), 30f);
+        // hits = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition), 30f);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        // Zasięg nieskończony, uwzględniamy wszystkie layer’y oraz triggery
+        RaycastHit[] hits = Physics.RaycastAll(
+            ray,
+            Mathf.Infinity,
+            ~0,
+            QueryTriggerInteraction.Collide
+        );
 
         bool passedThroughTableCollider = false;
+
         foreach (RaycastHit h in hits)
         {
             // check if the collider that we hit is the collider on this GameObject
             if (h.collider == col)
                 passedThroughTableCollider = true;
         }
+
         cursorOverThisTable = passedThroughTableCollider;
     }
-   
-    // method to create a new creature and add it to the table
-    public void AddCreatureAtIndex(CardAsset ca, int UniqueID ,int index)
+
+    public void AddCreatureAtIndex(CardAsset ca, string UniqueID, int index, Vector3 eulerAngles)
     {
-        // create a new creature from prefab
-        GameObject creature = GameObject.Instantiate(GlobalSettings.Instance.CreaturePrefab, slots.children[index].transform.position, Quaternion.identity) as GameObject;
+        GameObject creature = Instantiate(GlobalSettings.Instance.CreaturePrefab,
+            slots.children[index].transform.position, Quaternion.Euler(eulerAngles));
+        creature.transform.localScale = new Vector3(8f, 8f, 1f);
+        creature.transform.rotation = Quaternion.Euler(0, 0, 0);
     
-        // apply the look from CardAsset
+
         OneCreatureManager manager = creature.GetComponent<OneCreatureManager>();
         manager.cardAsset = ca;
         manager.ReadCreatureFromAsset();
     
-        // // add tag according to owner
-        // foreach (Transform t in creature.GetComponentsInChildren<Transform>())
-        //     t.tag = owner.ToString()+"Creature";
-        
+        foreach (Transform t in creature.GetComponentsInChildren<Transform>())
+        {
+            t.tag = owner.ToString() + "Creature";
+        }
+        // t.tag = "Creature";
+    
         // parent a new creature gameObject to table slots
         creature.transform.SetParent(slots.transform);
     
-        // add a new creature to the list
         CreaturesOnTable.Insert(index, creature);
     
-        // let this creature know about its position
-        // WhereIsTheCardOrCreature w = creature.GetComponent<WhereIsTheCardOrCreature>();
-        // w.Slot = index;
+        WhereIsTheCardOrCreature w = creature.GetComponent<WhereIsTheCardOrCreature>();
+        w.Slot = index;
         // w.VisualState = VisualStates.LowTable;
     
         // add our unique ID to this creature
-        // IDHolder id = creature.AddComponent<IDHolder>();
-        // id.UniqueID = UniqueID;
+        IDHolder id = creature.AddComponent<IDHolder>();
+        id.UniqueID = UniqueID;
     
         // after a new creature is added update placing of all the other creatures
         ShiftSlotsGameObjectAccordingToNumberOfCreatures();
         PlaceCreaturesOnNewSlots();
     
         // end command execution
-        // Command.CommandExecutionComplete();
+        Command.CommandExecutionComplete();
     }
+    
 
 
-    // returns an index for a new creature based on mousePosition
-    // included for placing a new creature to any positon on the table
     public int TablePosForNewCreature(float MouseX)
     {
-        // if there are no creatures or if we are pointing to the right of all creatures with a mouse.
-        // right - because the table slots are flipped and 0 is on the right side.
         if (CreaturesOnTable.Count == 0 || MouseX > slots.children[0].transform.position.x)
+        {
             return 0;
-        else if (MouseX < slots.children[CreaturesOnTable.Count - 1].transform.position.x) // cursor on the left relative to all creatures on the table
+        }
+        else if (MouseX < slots.children[CreaturesOnTable.Count - 1].transform.position
+                     .x) // cursor on the left relative to all creatures on the table
+        {
             return CreaturesOnTable.Count;
+        }
+
         for (int i = 0; i < CreaturesOnTable.Count; i++)
         {
             if (MouseX < slots.children[i].transform.position.x && MouseX > slots.children[i + 1].transform.position.x)
                 return i + 1;
         }
+
         Debug.Log("Suspicious behavior. Reached end of TablePosForNewCreature method. Returning 0");
         return 0;
     }
 
     // Destroy a creature
-    // public void RemoveCreatureWithID(int IDToRemove)
-    // {
-    //     GameObject creatureToRemove = IDHolder.GetGameObjectWithID(IDToRemove);
-    //     CreaturesOnTable.Remove(creatureToRemove);
-    //     Destroy(creatureToRemove);
-    //
-    //     ShiftSlotsGameObjectAccordingToNumberOfCreatures();
-    //     PlaceCreaturesOnNewSlots();
-    //     Command.CommandExecutionComplete();
-    // }
-
-    /// <summary>
-    /// Shifts the slots game object according to number of creatures.
-    /// </summary>
-    void ShiftSlotsGameObjectAccordingToNumberOfCreatures()
+    public void RemoveCreatureWithID(string IDToRemove)
     {
-        float posX;
-        if (CreaturesOnTable.Count > 0)
-            posX = (slots.children[0].transform.localPosition.x - slots.children[CreaturesOnTable.Count - 1].transform.localPosition.x) / 2f;
-        else
-            posX = 0f;
-    
-        slots.gameObject.transform.DOLocalMoveX(posX, 0.3f);  
+        GameObject creatureToRemove = IDHolder.GetGameObjectWithID(IDToRemove);
+        CreaturesOnTable.Remove(creatureToRemove);
+        Destroy(creatureToRemove);
+
+        ShiftSlotsGameObjectAccordingToNumberOfCreatures();
+        PlaceCreaturesOnNewSlots();
+        Command.CommandExecutionComplete();
     }
 
-    /// <summary>
-    /// After a new creature is added or an old creature dies, this method
-    /// shifts all the creatures and places the creatures on new slots.
-    /// </summary>
+    void ShiftSlotsGameObjectAccordingToNumberOfCreatures()
+    {
+        float targetX = 0f;
+
+        if (CreaturesOnTable.Count > 0)
+        {
+            float right = slots.children[0].localPosition.x;
+            float left  = slots.children[CreaturesOnTable.Count - 1].localPosition.x;
+
+            float mid = (right + left) * 0.5f;
+            targetX = -mid;
+        }
+
+        slots.transform.DOLocalMoveX(targetX, 0.3f);
+    }
+
     void PlaceCreaturesOnNewSlots()
     {
-        foreach (GameObject g in CreaturesOnTable)
+        for (int i = 0; i < CreaturesOnTable.Count; i++)
         {
-            g.transform.DOLocalMoveX(slots.children[CreaturesOnTable.IndexOf(g)].transform.localPosition.x, 0.3f);
-            // apply correct sorting order and HandSlot value for later 
-            // TODO: figure out if I need to do something here:
-            // g.GetComponent<WhereIsTheCardOrCreature>().SetTableSortingOrder() = CreaturesOnTable.IndexOf(g);
+            GameObject g = CreaturesOnTable[i];
+
+            var slot = slots.children[i];
+
+            Debug.Log(
+                $"[TABLE] i={i} | slot local={slot.localPosition} world={slot.position} | " +
+                $"creature local={g.transform.localPosition} world={g.transform.position} | " +
+                $"slots scale={slots.transform.lossyScale}"
+            );
+
+            g.transform.DOLocalMove(slot.localPosition, 0.3f);
         }
     }
 

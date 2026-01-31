@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class GlobalSettings: MonoBehaviour 
 {
-    // [Header("Players")]
-    // public Player TopPlayer;
-    // public Player LowPlayer;
+    [Header("Players")]
+    public Player TopPlayer;
+    public Player LowPlayer;
     [Header("Colors")]
     public Color32 CardBodyStandardColor;
     public Color32 CardRibbonsStandardColor;
@@ -29,10 +29,40 @@ public class GlobalSettings: MonoBehaviour
     public CardAsset CoinCard;
     public GameObject GameOverCanvas;
     public static GlobalSettings Instance;
+    public Dictionary<AreaPosition, Player> Players = new Dictionary<AreaPosition, Player>();
+
 
     void Awake()
     {
+        Debug.Log(LowPlayer);
+
+        Debug.Log(LowPlayer.PArea);
+        Players.Add(AreaPosition.Top, TopPlayer);
+        Players.Add(AreaPosition.Low, LowPlayer);
         Instance = this;
     }
 
+    // public bool CanControlThisPlayer(AreaPosition owner)
+    // {
+    //     bool PlayersTurn = (TurnManager.Instance.whoseTurn == Players[owner]);
+    //     bool NotDrawingAnyCards = !Command.CardDrawPending();
+    //     return Players[owner].PArea.AllowedToControlThisPlayer && Players[owner].PArea.ControlsON && PlayersTurn && NotDrawingAnyCards;
+    // }
+    //
+    // public bool CanControlThisPlayer(Player ownerPlayer)
+    // {
+    //     bool PlayersTurn = (TurnManager.Instance.whoseTurn == ownerPlayer);
+    //     bool NotDrawingAnyCards = !Command.CardDrawPending();
+    //     return ownerPlayer.PArea.AllowedToControlThisPlayer && ownerPlayer.PArea.ControlsON && PlayersTurn && NotDrawingAnyCards;
+    // }
+
+    // public void EnableEndTurnButtonOnStart(Player P)
+    // {
+    //     if (P == LowPlayer && CanControlThisPlayer(AreaPosition.Low) ||
+    //         P == TopPlayer && CanControlThisPlayer(AreaPosition.Top))
+    //         EndTurnButton.interactable = true;
+    //     else
+    //         EndTurnButton.interactable = false;
+    //         
+    // }
 }

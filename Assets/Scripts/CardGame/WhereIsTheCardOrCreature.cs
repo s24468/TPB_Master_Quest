@@ -2,11 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cards;
+public enum VisualStates
+{
+    Transition,
+    LowHand, 
+    TopHand,
+    LowTable,
+    TopTable,
+    Dragging
+}
 
 public class WhereIsTheCardOrCreature : MonoBehaviour {
 
     // reference to a HoverPreview Component
-    private HoverPreview hover;
+    public HoverPreview hover;
 
     // reference to a canvas on this object to set sorting order
     private Canvas canvas;
@@ -14,6 +23,36 @@ public class WhereIsTheCardOrCreature : MonoBehaviour {
     // a value for canvas sorting order when we want to show this object above everything
     private int TopSortingOrder = 500;
 
+    private VisualStates state;
+
+     public VisualStates VisualState
+     {
+         get { return state; }
+
+         set
+         {
+             state = value;
+             switch (state)
+             {
+                 case VisualStates.LowHand:
+                     hover.ThisPreviewEnabled = true;
+                     break;
+                 case VisualStates.LowTable:
+                 case VisualStates.TopTable:
+                     hover.ThisPreviewEnabled = true;
+                     break;
+                 case VisualStates.Transition:
+                     hover.ThisPreviewEnabled = false;
+                     break;
+                 case VisualStates.Dragging:
+                     hover.ThisPreviewEnabled = false;
+                     break;
+                 case VisualStates.TopHand:
+                     hover.ThisPreviewEnabled = false;
+                     break;
+             }
+         }
+     }
     // PROPERTIES
     private int slot = -1;
     public int Slot
@@ -80,6 +119,7 @@ public class WhereIsTheCardOrCreature : MonoBehaviour {
 // public class WhereIsTheCardOrCreature : MonoBehaviour {
 //
 //     // reference to a HoverPreview Component
+//     private HoverPreview hover;
 //     private HoverPreview hover;
 //
 //     // reference to a canvas on this object to set sorting order

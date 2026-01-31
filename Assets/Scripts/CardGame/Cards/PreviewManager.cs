@@ -17,8 +17,6 @@ namespace Cards
         public TextMeshProUGUI casualPowerTextPreview;
 
         [Header("Image References")] public Image cardGraphicImagePreview;
-
-        [FormerlySerializedAs("CardBodyImage")]
         public Image cardBodyImage;
 
         public void setReferences(CardAsset cardAsset)
@@ -30,7 +28,6 @@ namespace Cards
 
             if (cardAsset.IsCreature)
             {
-
                 tPowerTextPreview.SetText(cardAsset.TPower.ToString());
                 pPowerTextPreview.SetText(cardAsset.PPower.ToString());
                 bPowerTextPreview.SetText(cardAsset.BPower.ToString());
