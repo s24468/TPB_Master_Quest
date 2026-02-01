@@ -29,6 +29,9 @@ public class DragCreatureOnTable : DraggingActions
     public override void OnStartDrag()
     {
         savedHandSlot = whereIsCard.Slot;
+        Debug.Log("Saving handslot number: "+ savedHandSlot);
+        
+        
         tempState = whereIsCard.VisualState;
         whereIsCard.VisualState = VisualStates.Dragging;
         whereIsCard.BringToFront();
@@ -54,12 +57,18 @@ public class DragCreatureOnTable : DraggingActions
         else
         {
             // Set old sorting order 
+            Debug.Log("Saved  handslot number: "+ savedHandSlot);
+
             whereIsCard.SetHandSortingOrder();
+            Debug.Log("Saved  handslot number after setgandSortingOrder: "+ savedHandSlot);
+
             whereIsCard.VisualState = tempState;
             // Move this card back to its slot position
             HandVisual PlayerHand = playerOwner.PArea.handVisual;
-            Debug.Log("I coulnt find table pos for new creature "+ PlayerHand.slots.children.Length.ToString());
-            // Vector3 oldCardPos = PlayerHand.slots.Children[savedHandSlot].transform.localPosition;
+            Debug.Log("I coulnt find table pos for new creature "+ PlayerHand.slots.children.Length.ToString() +" "+ savedHandSlot);
+            
+            
+            
             Vector3 oldCardPos = PlayerHand.slots.children[savedHandSlot].transform.localPosition;
             transform.DOLocalMove(oldCardPos, 1f);
         }

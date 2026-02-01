@@ -154,9 +154,9 @@ public class HandVisual : MonoBehaviour
             g.transform.DOLocalMoveX(slots.children[CardsInHand.IndexOf(g)].transform.localPosition.x, 0.3f);
 
             // // apply correct sorting order and HandSlot value for later 
-            // WhereIsTheCardOrCreature w = g.GetComponent<WhereIsTheCardOrCreature>();
-            // w.Slot = CardsInHand.IndexOf(g);
-            // w.SetHandSortingOrder();
+            WhereIsTheCardOrCreature w = g.GetComponent<WhereIsTheCardOrCreature>();
+            w.Slot = CardsInHand.IndexOf(g);
+            w.SetHandSortingOrder();
         }
     }
 
@@ -220,10 +220,16 @@ public class HandVisual : MonoBehaviour
         IDHolder id = card.AddComponent<IDHolder>();
         id.UniqueID = UniqueID;
         Sequence s = DOTween.Sequence();
+        Vector3 targetPos = slots.children[0].transform.localPosition;
 
-        s.Append(card.transform.DOLocalMove(slots.children[0].transform.localPosition,
-            GlobalSettings.Instance.CardTransitionTimeFast));
-        if (TakeCardsOpenly)
-            s.Insert(0f, card.transform.DORotate(Vector3.zero, GlobalSettings.Instance.CardTransitionTimeFast));
+        float upTime = 1.8f;
+        float moveTime = GlobalSettings.Instance.CardTransitionTimeFast;
+
+        s.Append(card.transform.DOLocalMove(targetPos, moveTime));
+        s.Append(card.transform.DORotate(Vector3.zero, moveTime/2));
+        // s.Append(card.transform.DOLocalMove(slots.children[0].transform.localPosition,
+        //     GlobalSettings.Instance.CardTransitionTimeFast));
+        // if (TakeCardsOpenly)
+        //     s.Insert(0f, card.transform.DORotate(Vector3.zero, GlobalSettings.Instance.CardTransitionTimeFast));
     }
 }
