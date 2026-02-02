@@ -66,7 +66,8 @@ public class DragOnTargetTest : DraggingActionsTest
     {
         // return target and arrow to original position
         // this position is special for spell cards to show the arrow on top
-        transform.localPosition = new Vector3(0f, 0f, 0.4f);
+        // transform.localPosition = new Vector3(0f, 0f, 0.4f);
+        transform.localPosition = new Vector3(0f, 0f, -0.1f);
         sr.enabled = false;
         lr.enabled = false;
         triangleSR.enabled = false;

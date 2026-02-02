@@ -3,12 +3,12 @@
 // using System.Collections.Generic;
 //
 // [System.Serializable]
-// public class CreatureLogic: ICharacter 
+// public class CreatureLogic : MonoBehaviour//ICharacter 
 // {
 //     // PUBLIC FIELDS
 //     public Player owner;
 //     public CardAsset ca;
-//     public CreatureEffect effect;
+//     // public CreatureEffect effect;
 //     public int UniqueCreatureID;
 //     public int ID
 //     {

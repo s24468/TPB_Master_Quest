@@ -26,8 +26,12 @@ public class DraggableTestWithActions : MonoBehaviour {
 
     void OnMouseDown()
     {
+        Debug.Log($"OnMouseDown on {name}, CanDrag={da?.CanDrag}, dragging={dragging}, active={gameObject.activeInHierarchy}");
+
         if (da.CanDrag)
         {
+            Debug.Log($"OnMouseDown on {name}, CanDrag={da?.CanDrag}, dragging={dragging}, active={gameObject.activeInHierarchy}, drugi raz");
+
             dragging = true;
             HoverPreview.PreviewsAllowed = false;
             da.OnStartDrag();
