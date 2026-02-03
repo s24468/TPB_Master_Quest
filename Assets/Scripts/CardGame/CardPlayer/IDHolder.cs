@@ -23,7 +23,11 @@ public class IDHolder : MonoBehaviour
         }
         return null;
     }
-
+    private void OnDestroy()
+    {
+        // usuń z listy, gdy GO/komponent jest niszczony
+        AllIDHolders.Remove(this);
+    }
     public static void ClearIDHoldersList()
     {
         AllIDHolders.Clear();

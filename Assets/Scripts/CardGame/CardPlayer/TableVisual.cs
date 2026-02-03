@@ -78,39 +78,38 @@ public class TableVisual : MonoBehaviour
             slots.children[index].transform.position, Quaternion.Euler(eulerAngles));
         creature.transform.localScale = new Vector3(8f, 8f, 1f);
         creature.transform.rotation = Quaternion.Euler(0, 0, 0);
-    
+
 
         OneCreatureManager manager = creature.GetComponent<OneCreatureManager>();
         manager.cardAsset = ca;
         manager.ReadCreatureFromAsset();
-    
+
         foreach (Transform t in creature.GetComponentsInChildren<Transform>())
         {
             t.tag = owner.ToString() + "Creature";
         }
         // t.tag = "Creature";
-    
+
         // parent a new creature gameObject to table slots
         creature.transform.SetParent(slots.transform);
-    
+
         CreaturesOnTable.Insert(index, creature);
-    
+
         WhereIsTheCardOrCreature w = creature.GetComponent<WhereIsTheCardOrCreature>();
         w.Slot = index;
         // w.VisualState = VisualStates.LowTable;
-    
+
         // add our unique ID to this creature
         IDHolder id = creature.AddComponent<IDHolder>();
         id.UniqueID = UniqueID;
-    
+
         // after a new creature is added update placing of all the other creatures
         ShiftSlotsGameObjectAccordingToNumberOfCreatures();
         PlaceCreaturesOnNewSlots();
-    
+
         // end command execution
         Command.CommandExecutionComplete();
     }
-    
 
 
     public int TablePosForNewCreature(float MouseX)
@@ -141,7 +140,6 @@ public class TableVisual : MonoBehaviour
         GameObject creatureToRemove = IDHolder.GetGameObjectWithID(IDToRemove);
         CreaturesOnTable.Remove(creatureToRemove);
         Destroy(creatureToRemove);
-
         ShiftSlotsGameObjectAccordingToNumberOfCreatures();
         PlaceCreaturesOnNewSlots();
         Command.CommandExecutionComplete();
@@ -154,7 +152,7 @@ public class TableVisual : MonoBehaviour
         if (CreaturesOnTable.Count > 0)
         {
             float right = slots.children[0].localPosition.x;
-            float left  = slots.children[CreaturesOnTable.Count - 1].localPosition.x;
+            float left = slots.children[CreaturesOnTable.Count - 1].localPosition.x;
 
             float mid = (right + left) * 0.5f;
             targetX = -mid;
@@ -180,5 +178,4 @@ public class TableVisual : MonoBehaviour
             g.transform.DOLocalMove(slot.localPosition, 0.3f);
         }
     }
-
 }

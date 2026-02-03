@@ -11,7 +11,8 @@ namespace Cards
         public PreviewManager previewManager;
         [Header("Text Component References")] public TextMeshProUGUI nameText;
         public TextMeshProUGUI manaCostText;
-        public TextMeshProUGUI powerText;
+        public TextMeshProUGUI casualpowerText;
+        public TextMeshProUGUI tpowerText;
         public TextMeshProUGUI pPowerText;
         public TextMeshProUGUI bPowerText;
         [Header("Image References")] public Image creatureGraphicImage;
@@ -43,7 +44,8 @@ namespace Cards
             creatureGraphicImage.sprite = cardAsset.CardImage;
             nameText.text = cardAsset.Name;
             manaCostText.text = cardAsset.ManaCost.ToString();
-            powerText.SetText(cardAsset.TPower.ToString());
+            casualpowerText.SetText(cardAsset.CasualPower.ToString());
+            tpowerText.SetText(cardAsset.TPower.ToString());
             pPowerText.SetText(cardAsset.PPower.ToString());
             bPowerText.SetText(cardAsset.BPower.ToString());
 

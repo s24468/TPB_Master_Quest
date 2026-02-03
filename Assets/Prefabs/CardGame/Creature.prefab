@@ -2664,7 +2664,8 @@ MonoBehaviour:
   previewManager: {fileID: 6067160752621711147}
   nameText: {fileID: 7761414816098891486}
   manaCostText: {fileID: 7317709505443366725}
-  powerText: {fileID: 3337555962304909193}
+  casualpowerText: {fileID: 1927702129429012812}
+  tpowerText: {fileID: 3337555962304909193}
   pPowerText: {fileID: 8963273926476816164}
   bPowerText: {fileID: 3861397263911027258}
   creatureGraphicImage: {fileID: 6789282850007635783}
