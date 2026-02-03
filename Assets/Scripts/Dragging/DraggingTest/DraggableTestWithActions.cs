@@ -2,11 +2,11 @@
 using System.Collections;
 using Cards;
 
-public class DraggableTestWithActions : MonoBehaviour {
-
+public class DraggableTestWithActions : MonoBehaviour
+{
     public bool UsePointerDisplacement = true;
+
     // PRIVATE FIELDS
-    // a reference to a DraggingActionsTest script
     private DraggingActionsTest da;
 
     // a flag to know if we are currently dragging this GameObject
@@ -26,12 +26,9 @@ public class DraggableTestWithActions : MonoBehaviour {
 
     void OnMouseDown()
     {
-        Debug.Log($"OnMouseDown on {name}, CanDrag={da?.CanDrag}, dragging={dragging}, active={gameObject.activeInHierarchy}");
 
         if (da.CanDrag)
         {
-            Debug.Log($"OnMouseDown on {name}, CanDrag={da?.CanDrag}, dragging={dragging}, active={gameObject.activeInHierarchy}, drugi raz");
-
             dragging = true;
             HoverPreview.PreviewsAllowed = false;
             da.OnStartDrag();
@@ -43,15 +40,15 @@ public class DraggableTestWithActions : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
-    void Update ()
+    void Update()
     {
         if (dragging)
-        { 
+        {
             Vector3 mousePos = MouseInWorldCoords();
             da.OnDraggingInUpdate();
             //Debug.Log(mousePos);
-            transform.position = new Vector3(mousePos.x - pointerDisplacement.x, mousePos.y - pointerDisplacement.y, transform.position.z);   
+            transform.position = new Vector3(mousePos.x - pointerDisplacement.x, mousePos.y - pointerDisplacement.y,
+                transform.position.z);
         }
     }
 
@@ -64,7 +61,7 @@ public class DraggableTestWithActions : MonoBehaviour {
 
             da.OnEndDrag();
         }
-    }   
+    }
 
     // returns mouse position in World coordinates for our GameObject to follow. 
     private Vector3 MouseInWorldCoords()

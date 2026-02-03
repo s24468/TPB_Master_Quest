@@ -40,8 +40,6 @@ public class Draggable : MonoBehaviour {
 
     void OnMouseDown()
     {
-        Debug.Log("ZZZZZZZZZZZZZZZ");
-
         if (da!=null && da.CanDrag)
         {
             dragging = true;

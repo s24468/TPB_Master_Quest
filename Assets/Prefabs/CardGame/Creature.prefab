@@ -2424,9 +2424,8 @@ GameObject:
   - component: {fileID: 7985480700805324652}
   - component: {fileID: 273887251531908775}
   - component: {fileID: 7671116048019567884}
-  - component: {fileID: 805264040344139029}
-  - component: {fileID: 4607489167859510212}
-  - component: {fileID: 3873004037260528534}
+  - component: {fileID: 4265697480375327633}
+  - component: {fileID: 3180522712034851243}
   m_Layer: 6
   m_Name: TargetObject
   m_TagString: Untagged
@@ -2547,7 +2546,7 @@ MonoBehaviour:
   targetScale: 1.5
   previewGameObject: {fileID: 4953298696862773540}
   activateInAwake: 1
---- !u!114 &805264040344139029
+--- !u!114 &4265697480375327633
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2556,13 +2555,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5337758465215979455}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc873a8f516c08f4da0e1bfd2e460804, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e243de432184d8fa1122fe63758a0e8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  Targets: 4
-  sr: {fileID: 273887251531908775}
-  triangle: {fileID: 4366001867978307552}
---- !u!114 &4607489167859510212
+  m_EditorClassIdentifier: Assembly-CSharp::DragCreatureAttack
+--- !u!114 &3180522712034851243
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2571,38 +2567,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5337758465215979455}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 108e28a584de378409a51f709cd7d0ca, type: 3}
+  m_Script: {fileID: 11500000, guid: fa64938f8d895894c81daf63043555d1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  UsePointerDisplacement: 1
---- !u!114 &3873004037260528534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5337758465215979455}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6f7002328ad4a5483bf4dc3328733c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardAsset: {fileID: 0}
-  cardLogic:
-    UniqueCardID: 0
-    ca: {fileID: 0}
-    VisualRepresentation: {fileID: 0}
-  previewManager: {fileID: 0}
-  nameText: {fileID: 2126431188724062428}
-  manaCostText: {fileID: 6574458145694750749}
-  descriptionText: {fileID: 5679327559022089357}
-  tPowerText: {fileID: 6670894836136161130}
-  pPowerText: {fileID: 8926229074723431855}
-  bPowerText: {fileID: 3023416106463234949}
-  casualPowerText: {fileID: 4784195437247464500}
-  cardGraphicImage: {fileID: 6228796653652214425}
-  cardBodyImage: {fileID: 6748026754961919856}
-  CanBePlayedNow: 1
+  m_EditorClassIdentifier: Assembly-CSharp::Draggable
 --- !u!1 &5454200473412154469
 GameObject:
   m_ObjectHideFlags: 0
@@ -2878,6 +2845,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4032265054955759364}
+  - component: {fileID: 6481026275360696270}
   m_Layer: 8
   m_Name: CardBack
   m_TagString: Untagged
@@ -2905,6 +2873,21 @@ RectTransform:
   m_AnchoredPosition: {x: -0.5724335, y: 3.0217285}
   m_SizeDelta: {x: 400, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6481026275360696270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5825660794051790231}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc873a8f516c08f4da0e1bfd2e460804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Targets: 4
+  sr: {fileID: 273887251531908775}
+  triangle: {fileID: 4366001867978307552}
 --- !u!1 &6019786461722291782
 GameObject:
   m_ObjectHideFlags: 0

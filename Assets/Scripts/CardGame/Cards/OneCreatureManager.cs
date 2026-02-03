@@ -23,7 +23,7 @@ namespace Cards
                 ReadCreatureFromAsset();
         }
 
-        private bool _canAttackNow = false;
+        private bool _canAttackNow = true;
 
         public bool CanAttackNow
         {

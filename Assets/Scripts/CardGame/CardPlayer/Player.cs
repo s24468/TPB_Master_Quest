@@ -191,8 +191,6 @@ public class Player : MonoBehaviour//, ICharacter
 
     public void PlayACreatureFromHand(string UniqueID, int tablePos)
     {
-        
-
         PlayACreatureFromHand(CardLogic.CardsCreatedThisGame[UniqueID], tablePos);
     }
 
@@ -201,11 +199,10 @@ public class Player : MonoBehaviour//, ICharacter
         ManaLeft -= playedCard.CurrentManaCost;
         Debug.Log("Mana Left after played a creature: " + ManaLeft);
         // create a new creature object and add it to Table
-        // CreatureLogic newCreature = new CreatureLogic(this, playedCard.ca);
-        // table.CreaturesOnTable.Insert(tablePos, newCreature);
-        table.CreaturesOnTable.Insert(tablePos, playedCard);
+        CreatureLogic newCreature = new CreatureLogic(this, playedCard.ca);
+        table.CreaturesOnTable.Insert(tablePos, newCreature);
+        // table.CreaturesOnTable.Insert(tablePos, playedCard);
         // no matter what happens, move this card to PlayACardSpot
-        // new PlayACreatureCommand(playedCard, this, tablePos, newCreature.UniqueCreatureID).AddToQueue();
         new PlayACreatureCommand(playedCard, this, tablePos, playedCard.UniqueCardID).AddToQueue();
         // remove this card from hand
         hand.CardsInHand.Remove(playedCard);
