@@ -56,6 +56,9 @@ TagManager:
   - name: Characters
     uniqueID: 1531495087
     locked: 0
+  - name: Cards
+    uniqueID: 1650317915
+    locked: 0
   - name: AboveEverything
     uniqueID: 3859981517
     locked: 0

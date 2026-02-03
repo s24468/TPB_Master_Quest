@@ -91,22 +91,14 @@ public class CreatureLogic //: MonoBehaviour//ICharacter
     public void GoFace()
     {
         AttacksLeftThisTurn--;
-        int targetHealthAfter = owner.otherPlayer.Health - Attack;
+        // int targetHealthAfter = owner.otherPlayer.Health - Attack;
         // new CreatureAttackCommand(owner.otherPlayer.PlayerID, UniqueCreatureID, 0, Attack, Health, targetHealthAfter).AddToQueue();
-        owner.otherPlayer.Health -= Attack;
+        // owner.otherPlayer.Health -= Attack;
     }
 
     public void AttackCreature(CreatureLogic target)
     {
         AttacksLeftThisTurn--;
-        // calculate the values so that the creature does not fire the DIE command before the Attack command is sent
-        // int targetHealthAfter = target.Health - Attack;
-        // int attackerHealthAfter = Health - target.Attack;
-        // new CreatureAttackCommand(target.UniqueCreatureID, UniqueCreatureID, target.Attack, Attack, attackerHealthAfter, targetHealthAfter).AddToQueue();
-
-        // target.Health -= Attack;
-        // Health -= target.Attack;
-
         Debug.Log("target's casual power: " + target.CasualPower + " , target's Tpower: " + target.TPower);
         Debug.Log("Creature's casual power: " + CasualPower + " , creature's Tpower: " + TPower);
         if (target.CasualPower + target.TPower > CasualPower + TPower)

@@ -7,15 +7,17 @@ namespace Cards
     public class CardGameManager : MonoBehaviour
     {
         public GameObject hand;
+        public GameObject hand2;
         public float startNumberOfCards = 5;
 
         void Start()
         {
             // Rozpocznij korutynę
-            StartCoroutine(setHand());
+            StartCoroutine(setHand(hand));
+            StartCoroutine(setHand(hand2));
         }
 
-        IEnumerator setHand()
+        IEnumerator setHand(GameObject hand)
         {
             yield return new WaitForSeconds(1f);
             float duration = startNumberOfCards; // Czas trwania (5 sekund)

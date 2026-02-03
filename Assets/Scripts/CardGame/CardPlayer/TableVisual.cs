@@ -28,7 +28,7 @@ public class TableVisual : MonoBehaviour
             if (bothTables.Length > 0)
                 Debug.Log(bothTables[0].name);
 
-            return (bothTables[0].CursorOverThisTable); //|| bothTables[1].CursorOverThisTable
+            return (bothTables[0].CursorOverThisTable) || bothTables[1].CursorOverThisTable;
         }
     }
 
