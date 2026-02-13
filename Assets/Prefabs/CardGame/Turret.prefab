@@ -257,6 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62f47b8d27f88ad429f44f4cdee01b9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  owner: {fileID: 0}
   uiTurretController: {fileID: 6706112285799936505}
   turretAsset: {fileID: 11400000, guid: 60a5a6ed95439e04b8f06f30b01c60ba, type: 2}
   uiSegmentGlow: []

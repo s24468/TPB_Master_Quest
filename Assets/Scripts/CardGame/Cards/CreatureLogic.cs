@@ -146,7 +146,6 @@ public class CreatureLogic //: MonoBehaviour//ICharacter
             else if (value <= 0)
             {
                 // Die();
-                Debug.Log("haetyhsrathbsrgtfhnbhfghjd");
             }
             else
                 health = value;

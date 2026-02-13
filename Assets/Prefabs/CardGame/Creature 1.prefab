@@ -2383,6 +2383,7 @@ GameObject:
   - component: {fileID: 7671116048019567884}
   - component: {fileID: 4265697480375327633}
   - component: {fileID: 3180522712034851243}
+  - component: {fileID: 6176868009160304106}
   m_Layer: 6
   m_Name: TargetObject
   m_TagString: Untagged
@@ -2527,6 +2528,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa64938f8d895894c81daf63043555d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Draggable
+--- !u!114 &6176868009160304106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5337758465215979455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb50c241c8c47cdb2c0fcacb78634bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CreatureAttackable
 --- !u!1 &5454200473412154469
 GameObject:
   m_ObjectHideFlags: 0

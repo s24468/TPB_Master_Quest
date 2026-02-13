@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Cards;
+using Dragging;
 
 public class DragCreatureAttack : DraggingActions
 {
@@ -85,62 +86,65 @@ public class DragCreatureAttack : DraggingActions
             triangleSR.enabled = false;
         }
     }
-
     public override void OnEndDrag()
     {
         Debug.Log("End dragging");
 
-        // 1) szukamy targetu
-        Target = null;
+        // 1) szukamy targetu (IAttackable)
+        IAttackable targetAttackable = null;
 
         var origin = Camera.main.transform.position;
         var dir = (transform.position - origin).normalized;
 
         RaycastHit[] hits = Physics.RaycastAll(origin, dir, 200f);
-
-        // (opcjonalnie) dla debug:
         Debug.Log($"Raycast hits: {hits.Length}");
 
         foreach (var h in hits)
         {
             // ignoruj samego siebie i swoje dzieci
-            if (h.transform == transform) continue;
-            // ignoruj wszystko bez holdera
-            if (h.transform.GetComponentInParent<IDHolder>() == null)
+            if (h.transform == transform || h.transform.IsChildOf(transform))
+            {
                 continue;
-            CreatureLogic target =
-                CreatureLogic.CreaturesCreatedThisGame[h.transform.GetComponentInParent<IDHolder>().UniqueID];
-            if (target.owner.PlayerID == CreatureLogic.CreaturesCreatedThisGame[GetComponentInParent<IDHolder>().UniqueID].owner.PlayerID)
+            }
+
+            // bierz pierwszy obiekt, który implementuje IAttackable (np. turret albo creature)
+            var candidate = h.transform.GetComponentInParent<IAttackable>();
+            if (candidate == null)
+            {
+                continue;
+            }
+
+            // ignoruj własne obiekty
+            // var myOwner = manager.owner; // jeśli masz owner w managerze
+            // if (candidate.Owner == myOwner)
+            // {
+            //     continue;
+            // }
+            // jeśli nie masz, to weź z CreatureLogic (poniżej wariant)
+            var attackerId = GetComponentInParent<IDHolder>().UniqueID;
+            var attackerOwnerId = CreatureLogic.CreaturesCreatedThisGame[attackerId].owner.PlayerID;
+
+            if (candidate.Owner != null && candidate.Owner.PlayerID == attackerOwnerId)
                 continue;
 
-            //TODO ogarnąć, że to przeciwnika poprzez lower card i top cards
-            Target = h.transform.gameObject;
+
+            targetAttackable = candidate;
             break;
         }
 
         bool targetValid = false;
 
-        // 2) walidacja targetu i wykonanie akcji
-        if (Target != null)
+        // 2) walidacja + wykonanie ataku
+        if (targetAttackable != null)
         {
-            var idHolder = Target.GetComponentInParent<IDHolder>();
-            if (idHolder != null)
-            {
-                string targetID = idHolder.UniqueID;
-                Debug.Log($"Target: {Target.name}, targetID: {targetID}");
+            // attackerId (UniqueID tej creatury)
+            var attackerHolder = GetComponentInParent<IDHolder>();
+            string attackerId = attackerHolder != null ? attackerHolder.UniqueID : string.Empty;
 
-                if (CreatureLogic.CreaturesCreatedThisGame.TryGetValue(targetID, out var creature) &&
-                    creature != null)
-                {
-                    CreatureLogic.CreaturesCreatedThisGame[GetComponentInParent<IDHolder>().UniqueID]
-                        .AttackCreatureWithID(targetID);
-                    targetValid = true;
-                }
-            }
-            else
-            {
-                Debug.Log($"Target {Target.name} has failed somehow");
-            }
+            Debug.Log($"Target picked: {(targetAttackable as MonoBehaviour)?.name}, targetID: {targetAttackable.UniqueID}");
+
+            targetAttackable.ReceiveAttack(attackerId);
+            targetValid = true;
         }
 
         // 3) jeśli nieważny target -> wróć
@@ -156,6 +160,77 @@ public class DragCreatureAttack : DraggingActions
         lr.enabled = false;
         triangleSR.enabled = false;
     }
+
+    // public override void OnEndDrag()
+    // {
+    //     Debug.Log("End dragging");
+    //
+    //     // 1) szukamy targetu
+    //     Target = null;
+    //
+    //     var origin = Camera.main.transform.position;
+    //     var dir = (transform.position - origin).normalized;
+    //
+    //     RaycastHit[] hits = Physics.RaycastAll(origin, dir, 200f);
+    //
+    //     // (opcjonalnie) dla debug:
+    //     Debug.Log($"Raycast hits: {hits.Length}");
+    //
+    //     foreach (var h in hits)
+    //     {
+    //         // ignoruj samego siebie i swoje dzieci
+    //         if (h.transform == transform) continue;
+    //         // ignoruj wszystko bez holdera
+    //         if (h.transform.GetComponentInParent<IDHolder>() == null)
+    //             continue;
+    //         CreatureLogic target =
+    //             CreatureLogic.CreaturesCreatedThisGame[h.transform.GetComponentInParent<IDHolder>().UniqueID];
+    //         if (target.owner.PlayerID == CreatureLogic.CreaturesCreatedThisGame[GetComponentInParent<IDHolder>().UniqueID].owner.PlayerID)
+    //             continue;
+    //
+    //         //TODO ogarnąć, że to przeciwnika poprzez lower card i top cards
+    //         Target = h.transform.gameObject;
+    //         break;
+    //     }
+    //
+    //     bool targetValid = false;
+    //
+    //     // 2) walidacja targetu i wykonanie akcji
+    //     if (Target != null)
+    //     {
+    //         var idHolder = Target.GetComponentInParent<IDHolder>();
+    //         if (idHolder != null)
+    //         {
+    //             string targetID = idHolder.UniqueID;
+    //             Debug.Log($"Target: {Target.name}, targetID: {targetID}");
+    //
+    //             if (CreatureLogic.CreaturesCreatedThisGame.TryGetValue(targetID, out var creature) &&
+    //                 creature != null)
+    //             {
+    //                 CreatureLogic.CreaturesCreatedThisGame[GetComponentInParent<IDHolder>().UniqueID]
+    //                     .AttackCreatureWithID(targetID);
+    //                 targetValid = true;
+    //             }
+    //         }
+    //         else
+    //         {
+    //             Debug.Log($"Target {Target.name} has failed somehow");
+    //         }
+    //     }
+    //
+    //     // 3) jeśli nieważny target -> wróć
+    //     if (!targetValid)
+    //     {
+    //         whereIsThisCreature.VisualState = VisualStates.LowTable;
+    //         whereIsThisCreature.SetTableSortingOrder();
+    //     }
+    //
+    //     // 4) zawsze resetuj wizual
+    //     transform.localPosition = Vector3.zero;
+    //     sr.enabled = false;
+    //     lr.enabled = false;
+    //     triangleSR.enabled = false;
+    // }
 
     // NOT USED IN THIS SCRIPT
     protected override bool DragSuccessful()
