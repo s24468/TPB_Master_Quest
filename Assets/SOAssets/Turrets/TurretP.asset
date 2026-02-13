@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6861db3ab6f4a178b8d27a6e83d9d38, type: 3}
+  m_Name: TurretP
+  m_EditorClassIdentifier: Assembly-CSharp::TurretAsset
+  Biome: 1
+  segmentSprites:
+  - {fileID: -2049964997, guid: f93db3578ad48ce46bd72b6f7462dc56, type: 3}
+  - {fileID: -1165263634, guid: f93db3578ad48ce46bd72b6f7462dc56, type: 3}
+  - {fileID: 1877132913, guid: f93db3578ad48ce46bd72b6f7462dc56, type: 3}
+  - {fileID: 2116147393, guid: f93db3578ad48ce46bd72b6f7462dc56, type: 3}
+  material: {fileID: 2100000, guid: 38c7219249d2e8145a539da54c08df7a, type: 2}
+  strongColor: {r: 1, g: 0.6341173, b: 0, a: 0}
+  weakColor: {r: 0.5, g: 0.30536753, b: 0.040094346, a: 0}

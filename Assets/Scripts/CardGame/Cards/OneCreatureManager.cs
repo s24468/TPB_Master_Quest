@@ -41,9 +41,13 @@ namespace Cards
         public void ReadCreatureFromAsset()
         {
             // Change the card graphic sprite
+            if (manaCostText != null && nameText != null)
+            {
+                nameText.text = cardAsset.Name;
+                manaCostText.text = cardAsset.ManaCost.ToString();
+            }
+
             creatureGraphicImage.sprite = cardAsset.CardImage;
-            nameText.text = cardAsset.Name;
-            manaCostText.text = cardAsset.ManaCost.ToString();
             casualpowerText.SetText(cardAsset.CasualPower.ToString());
             tpowerText.SetText(cardAsset.TPower.ToString());
             pPowerText.SetText(cardAsset.PPower.ToString());

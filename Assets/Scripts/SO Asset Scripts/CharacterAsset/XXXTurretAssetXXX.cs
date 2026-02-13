@@ -8,7 +8,7 @@ public enum CharClass
     BTurret
 }
 
-public class TurretAsset : ScriptableObject
+public partial class XXXTurretAssetXXX : ScriptableObject
 {
     public CharClass Class;
     public string ClassName;

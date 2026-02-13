@@ -5,7 +5,7 @@ static class CharacterUnityIntegration {
 
 	[MenuItem("Assets/Create/CharacterAsset")]
 	public static void CreateYourScriptableObject() {
-		ScriptableObjectUtility2.CreateAsset<TurretAsset>();
+		ScriptableObjectUtility2.CreateAsset<XXXTurretAssetXXX>();
 	}
 
 }
