@@ -261,7 +261,11 @@ MonoBehaviour:
   uiTurretController: {fileID: 6706112285799936505}
   turretAsset: {fileID: 11400000, guid: 60a5a6ed95439e04b8f06f30b01c60ba, type: 2}
   uiSegmentGlow: []
-  healthFragments: 3
+  healthFragments: 4
+  maxSegments: 4
+  segmentValue: 250
+  segmentsLeft: 0
+  health: 0
 --- !u!1 &4916647108421934005
 GameObject:
   m_ObjectHideFlags: 0

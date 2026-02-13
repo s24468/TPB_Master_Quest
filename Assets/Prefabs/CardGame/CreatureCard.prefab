@@ -575,7 +575,7 @@ MonoBehaviour:
   m_fontSizeMin: 1
   m_fontSizeMax: 60
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -786,7 +786,7 @@ MonoBehaviour:
   m_fontSizeMin: 1
   m_fontSizeMax: 60
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -922,7 +922,7 @@ MonoBehaviour:
   m_fontSizeMin: 1
   m_fontSizeMax: 60
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -2333,7 +2333,7 @@ MonoBehaviour:
   m_fontSizeMin: 1
   m_fontSizeMax: 60
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -3375,7 +3375,7 @@ MonoBehaviour:
   m_fontSizeMin: 1
   m_fontSizeMax: 60
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -3511,7 +3511,7 @@ MonoBehaviour:
   m_fontSizeMin: 1
   m_fontSizeMax: 60
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0

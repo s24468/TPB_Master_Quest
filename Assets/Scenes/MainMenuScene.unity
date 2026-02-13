@@ -2324,7 +2324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 311688496905854528, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
       propertyPath: healthFragments
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4639431296629373937, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
       propertyPath: m_Name
