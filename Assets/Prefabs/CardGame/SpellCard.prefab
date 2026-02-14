@@ -1128,6 +1128,8 @@ GameObject:
   - component: {fileID: 5783735680520401103}
   - component: {fileID: 3959198061230551890}
   - component: {fileID: 5489751851871147332}
+  - component: {fileID: 6238899842590256991}
+  - component: {fileID: 8916588186008052341}
   m_Layer: 0
   m_Name: SpellCard
   m_TagString: Untagged
@@ -1219,7 +1221,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4639431296629373937}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 108e28a584de378409a51f709cd7d0ca, type: 3}
   m_Name: 
@@ -1232,7 +1234,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4639431296629373937}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6317f618ae567a4a98d451951599d1d, type: 3}
   m_Name: 
@@ -1294,6 +1296,30 @@ MonoBehaviour:
   cardBack: {fileID: 2377328830379232765}
   targetFacePoint: {fileID: 6459862036115149349}
   col: {fileID: 2347493925817204057}
+--- !u!114 &6238899842590256991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4639431296629373937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa64938f8d895894c81daf63043555d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Draggable
+--- !u!114 &8916588186008052341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4639431296629373937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bd1f323c8f14fea9e0678e6c69f80a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DragSpellOnTable
 --- !u!1 &4916647108421934005
 GameObject:
   m_ObjectHideFlags: 0

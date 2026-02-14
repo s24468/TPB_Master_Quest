@@ -5,12 +5,12 @@ public class TurretController : AttackableBase
     [SerializeField] private UITurretController uiTurretController;
     [SerializeField] private TurretAsset turretAsset;
 
-    [Header("Segments")]
-    [SerializeField] private int maxSegments = 4;
+    [Header("Segments")] [SerializeField] private int maxSegments = 4;
     [SerializeField] private int segmentValue = 250;
 
-    [Header("Runtime (read-only)")]
-    [SerializeField] private int segmentsLeft;
+    [Header("Runtime (read-only)")] [SerializeField]
+    private int segmentsLeft;
+
     [SerializeField] private int health; // zawsze = segmentsLeft * segmentValue
 
     private Biome biome;
@@ -64,7 +64,8 @@ public class TurretController : AttackableBase
 
         uiTurretController.UpdateHealthVisual(segmentsLeft);
 
-        Debug.Log($"Turret {name} hit by {attackerId}. Biome={biome}, Damage={damage}, SegmentsLost={segmentsLost}, SegmentsLeft={segmentsLeft}, Health={health}");
+        Debug.Log(
+            $"Turret {name} hit by {attackerId}. Biome={biome}, Damage={damage}, SegmentsLost={segmentsLost}, SegmentsLeft={segmentsLeft}, Health={health}");
 
         if (segmentsLeft <= 0)
         {
@@ -88,14 +89,8 @@ public class TurretController : AttackableBase
     private int ComputeSegmentsLost(int damage)
     {
         if (damage <= 0) return 0;
-
         // 250*2 < 600 < 250*3 => floor(600/250)=2 segmenty
         int lost = damage / segmentValue;
-
-        // jeśli damage < 250, to i tak urywamy 1 segment
-        if (lost < 1) lost = 1;
-
-        // nie urwij więcej niż masz
         return Mathf.Min(lost, segmentsLeft);
     }
 
