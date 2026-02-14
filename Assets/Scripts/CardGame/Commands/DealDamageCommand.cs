@@ -18,7 +18,7 @@ public class DealDamageCommand : Command {
     {
         Debug.Log("In deal damage command!");
 
-        GameObject target = IDHolder.GetGameObjectWithID(targetID);
+        GameObject target = Services.Get<IInstanceIdService>().Find(targetID);
         // if (targetID == GlobalSettings.Instance.LowPlayer.PlayerID || targetID == GlobalSettings.Instance.TopPlayer.PlayerID)
         // {
         //     // target is a hero

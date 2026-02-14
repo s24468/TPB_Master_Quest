@@ -809,7 +809,6 @@ MonoBehaviour:
   - {fileID: 1812811324}
   - {fileID: 472999842}
   - {fileID: 1851293932}
-  usedHeroPowerThisTurn: 0
 --- !u!1 &257034022
 GameObject:
   m_ObjectHideFlags: 0
@@ -2188,6 +2187,7 @@ GameObject:
   - component: {fileID: 1037153808}
   - component: {fileID: 1037153809}
   - component: {fileID: 1037153810}
+  - component: {fileID: 1037153811}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2382,6 +2382,18 @@ MonoBehaviour:
   hand: {fileID: 772031555}
   hand2: {fileID: 238356719}
   startNumberOfCards: 5
+--- !u!114 &1037153811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037153801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e078a25912c445299782dda7982f15f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameServicesBootstrap
 --- !u!1 &1049421722
 GameObject:
   m_ObjectHideFlags: 0
@@ -3804,7 +3816,6 @@ MonoBehaviour:
   - {fileID: 39752338}
   - {fileID: 525236930}
   - {fileID: 235911073}
-  usedHeroPowerThisTurn: 0
 --- !u!1 &1800278247
 GameObject:
   m_ObjectHideFlags: 0

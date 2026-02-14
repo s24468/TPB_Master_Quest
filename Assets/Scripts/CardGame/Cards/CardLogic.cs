@@ -18,12 +18,6 @@ public class CardLogic//: MonoBehaviour//: IIdentifiable
 
     // STATIC (for managing IDs)
     public static Dictionary<string, CardLogic> CardsCreatedThisGame = new Dictionary<string, CardLogic>();
-
-    public string ID
-    {
-        get{ return UniqueCardID; }
-    }
-
     public int CurrentManaCost{ get; set; }
 
     public bool CanBePlayed
@@ -41,18 +35,16 @@ public class CardLogic//: MonoBehaviour//: IIdentifiable
             return false;
         }
     }
-
-    public CardLogic(CardAsset ca)
+    public CardLogic(CardAsset ca, string UniqueCardID)
     {
         this.ca = ca;
-        //UniqueCardID = IDFactory.GetUniqueID();
+        this.UniqueCardID = UniqueCardID;
         baseManaCost = ca.ManaCost;
         ResetManaCost();
         // if (ca.SpellScriptName!= null && ca.SpellScriptName!= "")
         // {
         //     effect = System.Activator.CreateInstance(System.Type.GetType(ca.SpellScriptName)) as SpellEffect;
         // }
-        UniqueCardID = ca.Id;
         CardsCreatedThisGame.Add(UniqueCardID, this);
     }
 

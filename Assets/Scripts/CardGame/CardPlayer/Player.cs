@@ -19,7 +19,6 @@ public class Player : MonoBehaviour //, ICharacter
 
 
     private int bonusManaThisTurn = 0;
-    public bool usedHeroPowerThisTurn = false;
 
     public int ID
     {
@@ -58,18 +57,18 @@ public class Player : MonoBehaviour //, ICharacter
         }
     }
 
-    private int health;
-
-    public int Health
-    {
-        get { return health; }
-        set
-        {
-            health = value;
-            if (value <= 0)
-                Die();
-        }
-    }
+    // private int health;
+    //
+    // public int Health
+    // {
+    //     get { return health; }
+    //     set
+    //     {
+    //         health = value;
+    //         if (value <= 0)
+    //             Die();
+    //     }
+    // }
 
     public delegate void VoidWithNoArguments();
 
@@ -83,26 +82,6 @@ public class Player : MonoBehaviour //, ICharacter
         // PlayerID = IDFactory.GetUniqueID();
     }
 
-
-    // public void PlayACreatureFromHand(string UniqueID, int tablePos)
-    // {
-    //     PlayACreatureFromHand(CardLogic.CardsCreatedThisGame[UniqueID], tablePos);
-    // }
-    //
-    // public void PlayACreatureFromHand(CardLogic playedCard, int tablePos)
-    // {
-    //     ManaLeft -= playedCard.CurrentManaCost;
-    //     Debug.Log("Mana Left after played a creature: " + ManaLeft);
-    //     // create a new creature object and add it to Table
-    //     CreatureLogic newCreature = new CreatureLogic(this, playedCard.ca);
-    //     table.CreaturesOnTable.Insert(tablePos, newCreature);
-    //     // table.CreaturesOnTable.Insert(tablePos, playedCard);
-    //     // no matter what happens, move this card to PlayACardSpot
-    //     new PlayACreatureCommand(playedCard, this, tablePos, playedCard.UniqueCardID).AddToQueue();
-    //     // remove this card from hand
-    //     hand.CardsInHand.Remove(playedCard);
-    //     HighlightPlayableCards();
-    // }
     public void PlayACreatureFromHand(string UniqueID, int laneIndex, int tablePos)
     {
         PlayACreatureFromHand(CardLogic.CardsCreatedThisGame[UniqueID], laneIndex, tablePos);

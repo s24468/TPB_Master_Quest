@@ -23,7 +23,7 @@ public class PlayACreatureCommand : Command
     {
         // remove and destroy the card in hand
         HandVisual playerHand = p.PArea.handVisual;
-        GameObject card = IDHolder.GetGameObjectWithID(cl.UniqueCardID);
+        GameObject card = Services.Get<IInstanceIdService>().Find(cl.UniqueCardID);
 
         playerHand.RemoveCard(card);
         GameObject.Destroy(card);

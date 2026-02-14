@@ -88,11 +88,7 @@ public class CardDataLoader : MonoBehaviour
 
             // string[] fields = line.Split(',');
             string[] fields = ParseCSVLine(line);
-            ;
-            // Debug.Log(fields[0] + fields[1] + fields[2] + fields[3] + fields[4] + fields[5] + fields[6] + fields[7] +
-            //           fields[8] + fields[9] + fields[10]);
-
-            // if (fields.Length < 9) continue;
+            
             Card card = new Card
             {
                 ID = int.TryParse(fields[0], out int id) ? id : 0,
@@ -108,7 +104,6 @@ public class CardDataLoader : MonoBehaviour
                 Abilities = fields[10],
                 CardSprite = DefaultSprite
             };
-// Wczytaj sprite z katalogu Resources, jeśli istnieje
             // string spritePath = $"Sprites/Cards/Creatures/{card.ID} {card.Name}";
             string spritePath = $"Sprites/Cards/{card.Type}s/{card.ID} {card.Name}";
 
@@ -126,7 +121,6 @@ public class CardDataLoader : MonoBehaviour
         }
 
         reader.Close();
-        // Debug.Log($"Załadowano {creatureCards.Count} kart typu Creature i {spellCards.Count} kart typu Spell.");
     }
 
     private string[] ParseCSVLine(string line)

@@ -11,9 +11,7 @@ public class PlayerArea : MonoBehaviour
     // public PlayerDeckVisual PDeck;
     public ManaPoolVisual ManaBar;
     public HandVisual handVisual;
-    // public PlayerPortraitVisual Portrait;
     // public EndTurnButton EndTurnButton;
-    // public TableVisual tableVisual;
     public TableVisual[] tableVisuals = new TableVisual[3]; // size 3
 
     public Transform PortraitPosition;

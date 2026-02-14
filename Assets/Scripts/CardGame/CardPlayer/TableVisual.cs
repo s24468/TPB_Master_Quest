@@ -20,21 +20,6 @@ public class TableVisual : MonoBehaviour
     public static TableVisual HoveredTable { get; private set; }
 
     public static bool CursorOverSomeTable => HoveredTable != null;
-    // returns true if we are hovering over any player`s table collider
-    // public static bool CursorOverSomeTable
-    // {
-    //     get
-    //     {
-    //         TableVisual[] bothTables = GameObject.FindObjectsOfType<TableVisual>();
-    //         Debug.Log(bothTables.Length);
-    //         if (bothTables.Length > 0)
-    //             Debug.Log(bothTables[0].name);
-    //
-    //         return (bothTables[0].CursorOverThisTable) || bothTables[1].CursorOverThisTable;
-    //     }
-    // }
-
-    // returns true only if we are hovering over this table`s collider
     public bool CursorOverThisTable
     {
         get { return cursorOverThisTable; }
@@ -46,30 +31,6 @@ public class TableVisual : MonoBehaviour
     {
         col = GetComponent<BoxCollider>();
     }
-
-    // CURSOR/MOUSE DETECTION
-    // void Update()
-    // {
-    //     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    //     // Zasięg nieskończony, uwzględniamy wszystkie layer’y oraz triggery
-    //     RaycastHit[] hits = Physics.RaycastAll(
-    //         ray,
-    //         Mathf.Infinity,
-    //         ~0,
-    //         QueryTriggerInteraction.Collide
-    //     );
-    //
-    //     bool passedThroughTableCollider = false;
-    //
-    //     foreach (RaycastHit h in hits)
-    //     {
-    //         // check if the collider that we hit is the collider on this GameObject
-    //         if (h.collider == col)
-    //             passedThroughTableCollider = true;
-    //     }
-    //
-    //     cursorOverThisTable = passedThroughTableCollider;
-    // }
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -116,8 +77,8 @@ public class TableVisual : MonoBehaviour
         // w.VisualState = VisualStates.LowTable;
 
         // add our unique ID to this creature
-        IDHolder id = creature.AddComponent<IDHolder>();
-        id.UniqueID = UniqueID;
+        // IDHolder id = creature.AddComponent<IDHolder>();
+        // id.UniqueID = UniqueID;
 
         // after a new creature is added update placing of all the other creatures
         ShiftSlotsGameObjectAccordingToNumberOfCreatures();
@@ -153,7 +114,7 @@ public class TableVisual : MonoBehaviour
     // Destroy a creature
     public void RemoveCreatureWithID(string IDToRemove)
     {
-        GameObject creatureToRemove = IDHolder.GetGameObjectWithID(IDToRemove);
+        GameObject creatureToRemove = Services.Get<IInstanceIdService>().Find(IDToRemove);
         CreaturesOnTable.Remove(creatureToRemove);
         Destroy(creatureToRemove);
         ShiftSlotsGameObjectAccordingToNumberOfCreatures();

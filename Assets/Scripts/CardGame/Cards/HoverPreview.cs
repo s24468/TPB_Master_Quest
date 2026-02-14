@@ -26,7 +26,6 @@ namespace Cards
 
             set
             {
-                //Debug.Log("Hover Previews Allowed is now: " + value);
                 _previewsAllowed = value;
                 if (!_previewsAllowed)
                     StopAllPreviews();
@@ -70,7 +69,6 @@ namespace Cards
         {
             OverCollider = false;
 
-            // Stop the preview coroutine if it's running
             if (_previewCoroutine != null)
             {
                 StopCoroutine(_previewCoroutine);
@@ -91,7 +89,6 @@ namespace Cards
             }
         }
 
-        // OTHER METHODS
         void PreviewThisObject()
         {
             StopAllPreviews();
@@ -101,7 +98,6 @@ namespace Cards
                 turnThisOffWhenPreviewing.SetActive(false);
             previewGameObject.transform.localPosition = Vector3.zero;
             previewGameObject.transform.localScale = Vector3.one;
-            // tween to target position
             previewGameObject.transform.DOLocalMove(targetPosition, 1f).SetEase(Ease.OutQuint);
             previewGameObject.transform.DOScale(targetScale, 1f).SetEase(Ease.OutQuint);
         }

@@ -16,9 +16,8 @@ public class CreatureLogic //: MonoBehaviour//ICharacter
     // public CreatureEffect effect;
     public string UniqueCreatureID;
 
-    public int LaneIndex;// { get; private set; }
+    public int LaneIndex;
 
-    // NEW: na jakim Table (lane) stoi
     public Table CurrentTable { get; private set; }
 
     public Biome CurrentBiome => CurrentTable != null ? CurrentTable.Biome : Biome.T; // default jak chcesz
@@ -95,24 +94,7 @@ public class CreatureLogic //: MonoBehaviour//ICharacter
         // owner.otherPlayer.Health -= Attack;
     }
 
-    // public void AttackCreature(CreatureLogic target)
-    // {
-    //     AttacksLeftThisTurn--;
-    //     Debug.Log("target's casual power: " + target.CasualPower + " , target's Tpower: " + target.TPower);
-    //     Debug.Log("Creature's casual power: " + CasualPower + " , creature's Tpower: " + TPower);
-    //     if (target.CasualPower + target.TPower > CasualPower + TPower)
-    //     {
-    //         Die();
-    //     }
-    //     else if (target.CasualPower + target.TPower < CasualPower + TPower)
-    //     {
-    //         target.Die();
-    //     }
-    //     else
-    //     {
-    //         Debug.Log("Tie!");
-    //     }
-    // }
+    
     public void AttackCreature(CreatureLogic target)
     {
         AttacksLeftThisTurn--;
@@ -156,26 +138,4 @@ public class CreatureLogic //: MonoBehaviour//ICharacter
         CreatureLogic target = CreatureLogic.CreaturesCreatedThisGame[uniqueCreatureID];
         AttackCreature(target);
     }
-
-    // the basic health that we have in CardAsset
-    // private int baseHealth;
-    //
-    // // health with all the current buffs taken into account
-    // public int MaxHealth => baseHealth;
-    //
-    // private int health;
-    //
-    // public int Health
-    // {
-    //     get { return health; }
-    //     set
-    //     {
-    //         if (value > MaxHealth)
-    //         {
-    //             health = baseHealth;
-    //         }
-    //         else if (value <= 0) { /* Die(); */ }
-    //         else health = value;
-    //     }
-    // }
 }

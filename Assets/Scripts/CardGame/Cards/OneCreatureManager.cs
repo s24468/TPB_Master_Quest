@@ -40,7 +40,6 @@ namespace Cards
 
         public void ReadCreatureFromAsset()
         {
-            // Change the card graphic sprite
             if (manaCostText != null && nameText != null)
             {
                 nameText.text = cardAsset.Name;
@@ -56,15 +55,6 @@ namespace Cards
             previewManager.setReferences(cardAsset);
             // previewManager.cardAsset = cardAsset;
             // previewManager.ReadCardFromAsset();
-        }
-
-        public void TakeDamage(int amount, int healthAfter)
-        {
-            if (amount > 0)
-            {
-                // TODO DamageEffect.CreateDamageEffect(transform.position, amount);
-                // HealthText.text = healthAfter.ToString();
-            }
         }
     }
 }
