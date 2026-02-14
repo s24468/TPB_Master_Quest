@@ -5,11 +5,9 @@ using System.Collections.Generic;
 [System.Serializable]
 public class CreatureLogic //: MonoBehaviour//ICharacter 
 {
-    // PUBLIC FIELDS
     public Player owner;
     public CardAsset ca;
 
-    // [Header("Creature Info")]
     public int CasualPower;
     public int TPower;
     public int PPower;
@@ -18,11 +16,19 @@ public class CreatureLogic //: MonoBehaviour//ICharacter
     // public CreatureEffect effect;
     public string UniqueCreatureID;
 
-    // NEW: na którym stole (0..2) stoi ta creatura
-    public int LaneIndex { get; private set; }
+    public int LaneIndex;// { get; private set; }
+
+    // NEW: na jakim Table (lane) stoi
+    public Table CurrentTable { get; private set; }
+
+    public Biome CurrentBiome => CurrentTable != null ? CurrentTable.Biome : Biome.T; // default jak chcesz
+
     public string ID => UniqueCreatureID;
 
     public bool Frozen = false;
+
+    // STATIC For managing IDs
+    public static Dictionary<string, CreatureLogic> CreaturesCreatedThisGame = new Dictionary<string, CreatureLogic>();
 
     public bool CanAttack
     {
@@ -46,21 +52,15 @@ public class CreatureLogic //: MonoBehaviour//ICharacter
     public int AttacksLeftThisTurn { get; set; }
 
     // CONSTRUCTOR
-    public CreatureLogic(Player owner, CardAsset ca, int laneIndex)
+    public CreatureLogic(Player owner, CardAsset ca, int laneIndex, Table table)
     {
-        this.ca = ca;
-        // baseHealth = ca.MaxHealth;
-        // Health = ca.MaxHealth;
-        // baseAttack = ca.Attack;
-        // attacksForOneTurn = ca.AttacksForOneTurn;
-        // // AttacksLeftThisTurn is now equal to 0
-        // if (ca.Charge)
-        //     AttacksLeftThisTurn = attacksForOneTurn;
         this.owner = owner;
+        this.ca = ca;
+        this.LaneIndex = laneIndex;
+        this.CurrentTable = table;
 
         // UniqueCreatureID = IDFactory.GetUniqueID();
         UniqueCreatureID = ca.Id;
-        this.LaneIndex = laneIndex;
         CasualPower = ca.CasualPower;
         TPower = ca.TPower;
         PPower = ca.PPower;
@@ -81,20 +81,12 @@ public class CreatureLogic //: MonoBehaviour//ICharacter
         AttacksLeftThisTurn = attacksForOneTurn;
     }
 
-    // public void Die()
-    // {
-    //     owner.table.CreaturesOnTable.Remove(this); // usuwa z skryptu Table
-    //     new CreatureDieCommand(UniqueCreatureID, owner).AddToQueue();
-    // }
     public void Die()
     {
-        // OLD: owner.table.CreaturesOnTable.Remove(this);
-        // NEW: usuwamy z właściwego lane'a
         owner.tables[LaneIndex].CreaturesOnTable.Remove(this);
-
-        // NEW: command też dostaje laneIndex
         new CreatureDieCommand(UniqueCreatureID, owner, LaneIndex).AddToQueue();
     }
+
     public void GoFace()
     {
         AttacksLeftThisTurn--;
@@ -103,16 +95,41 @@ public class CreatureLogic //: MonoBehaviour//ICharacter
         // owner.otherPlayer.Health -= Attack;
     }
 
+    // public void AttackCreature(CreatureLogic target)
+    // {
+    //     AttacksLeftThisTurn--;
+    //     Debug.Log("target's casual power: " + target.CasualPower + " , target's Tpower: " + target.TPower);
+    //     Debug.Log("Creature's casual power: " + CasualPower + " , creature's Tpower: " + TPower);
+    //     if (target.CasualPower + target.TPower > CasualPower + TPower)
+    //     {
+    //         Die();
+    //     }
+    //     else if (target.CasualPower + target.TPower < CasualPower + TPower)
+    //     {
+    //         target.Die();
+    //     }
+    //     else
+    //     {
+    //         Debug.Log("Tie!");
+    //     }
+    // }
     public void AttackCreature(CreatureLogic target)
     {
         AttacksLeftThisTurn--;
-        Debug.Log("target's casual power: " + target.CasualPower + " , target's Tpower: " + target.TPower);
-        Debug.Log("Creature's casual power: " + CasualPower + " , creature's Tpower: " + TPower);
-        if (target.CasualPower + target.TPower > CasualPower + TPower)
+
+        // biome zależy od tego, na jakim stole stoi ATTACKER (czyli Ty)
+        Biome biome = CurrentBiome;
+
+        int myPower = GetPowerOnBiome(biome);
+        int targetPower = target.GetPowerOnBiome(biome);
+
+        Debug.Log($"Biome={biome} | myPower={myPower} targetPower={targetPower}");
+
+        if (targetPower > myPower)
         {
             Die();
         }
-        else if (target.CasualPower + target.TPower < CasualPower + TPower)
+        else if (targetPower < myPower)
         {
             target.Die();
         }
@@ -122,34 +139,43 @@ public class CreatureLogic //: MonoBehaviour//ICharacter
         }
     }
 
+    private int GetPowerOnBiome(Biome biome)
+    {
+        var biomePower = biome switch
+        {
+            Biome.T => TPower,
+            Biome.P => PPower,
+            Biome.B => BPower,
+            _ => 0
+        };
+        return CasualPower + biomePower;
+    }
+
     public void AttackCreatureWithID(string uniqueCreatureID)
     {
         CreatureLogic target = CreatureLogic.CreaturesCreatedThisGame[uniqueCreatureID];
         AttackCreature(target);
     }
 
-    // STATIC For managing IDs
-    public static Dictionary<string, CreatureLogic> CreaturesCreatedThisGame = new Dictionary<string, CreatureLogic>();
-
     // the basic health that we have in CardAsset
-    private int baseHealth;
-
-    // health with all the current buffs taken into account
-    public int MaxHealth => baseHealth;
-
-    private int health;
-
-    public int Health
-    {
-        get { return health; }
-        set
-        {
-            if (value > MaxHealth)
-            {
-                health = baseHealth;
-            }
-            else if (value <= 0) { /* Die(); */ }
-            else health = value;
-        }
-    }
+    // private int baseHealth;
+    //
+    // // health with all the current buffs taken into account
+    // public int MaxHealth => baseHealth;
+    //
+    // private int health;
+    //
+    // public int Health
+    // {
+    //     get { return health; }
+    //     set
+    //     {
+    //         if (value > MaxHealth)
+    //         {
+    //             health = baseHealth;
+    //         }
+    //         else if (value <= 0) { /* Die(); */ }
+    //         else health = value;
+    //     }
+    // }
 }

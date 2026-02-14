@@ -178,7 +178,7 @@ Transform:
   m_GameObject: {fileID: 39752335}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -666, y: 380, z: 0}
+  m_LocalPosition: {x: 575, y: 380, z: 0}
   m_LocalScale: {x: 1.0000331, y: 1.0000331, z: 1.0000331}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -213,6 +213,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CreaturesOnTable: []
+  linkedTurret: {fileID: 230102266}
+  biomeOverride: 0
+  useTurretBiome: 1
 --- !u!65 &39752339
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -829,6 +832,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 54169937668007427, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
   m_PrefabInstance: {fileID: 230102264}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &230102266 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 311688496905854528, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
+  m_PrefabInstance: {fileID: 230102264}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62f47b8d27f88ad429f44f4cdee01b9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &235911070
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,7 +871,7 @@ Transform:
   m_GameObject: {fileID: 235911070}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 645, y: 380, z: 0}
+  m_LocalPosition: {x: -612, y: 380, z: 0}
   m_LocalScale: {x: 1.0000331, y: 1.0000331, z: 1.0000331}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -892,6 +906,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CreaturesOnTable: []
+  linkedTurret: {fileID: 2091638589}
+  biomeOverride: 2
+  useTurretBiome: 1
 --- !u!65 &235911074
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1427,6 +1444,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 54169937668007427, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
   m_PrefabInstance: {fileID: 469627909}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &469627911 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 311688496905854528, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
+  m_PrefabInstance: {fileID: 469627909}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62f47b8d27f88ad429f44f4cdee01b9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &472999838
 GameObject:
   m_ObjectHideFlags: 0
@@ -1511,6 +1539,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CreaturesOnTable: []
+  linkedTurret: {fileID: 1945688587}
+  biomeOverride: 1
+  useTurretBiome: 1
 --- !u!1 &501302029
 GameObject:
   m_ObjectHideFlags: 0
@@ -1625,6 +1656,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CreaturesOnTable: []
+  linkedTurret: {fileID: 1091752578}
+  biomeOverride: 1
+  useTurretBiome: 1
 --- !u!65 &525236931
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2160,8 +2194,8 @@ RectTransform:
   - {fileID: 1918795115}
   - {fileID: 253465243}
   - {fileID: 472999839}
-  - {fileID: 1812811322}
   - {fileID: 1851293930}
+  - {fileID: 1812811322}
   m_Father: {fileID: 2077510055}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
@@ -2203,8 +2237,8 @@ MonoBehaviour:
   handVisual: {fileID: 772031558}
   tableVisuals:
   - {fileID: 472999840}
-  - {fileID: 1812811323}
   - {fileID: 1851293931}
+  - {fileID: 1812811323}
   PortraitPosition: {fileID: 0}
 --- !u!1 &751856948
 GameObject:
@@ -3155,6 +3189,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 54169937668007427, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
   m_PrefabInstance: {fileID: 1091752576}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1091752578 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 311688496905854528, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
+  m_PrefabInstance: {fileID: 1091752576}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62f47b8d27f88ad429f44f4cdee01b9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &1092692262
 GameObject:
   m_ObjectHideFlags: 0
@@ -3736,6 +3781,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 54169937668007427, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
   m_PrefabInstance: {fileID: 1330093779}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1330093781 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 311688496905854528, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
+  m_PrefabInstance: {fileID: 1330093779}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62f47b8d27f88ad429f44f4cdee01b9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1001 &1342118864
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4694,7 +4750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4bc46f027a84057b7d8b481e2477a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laneIndex: 1
+  laneIndex: 2
   owner: 1
   slots: {fileID: 1066605000}
 --- !u!114 &1812811324
@@ -4710,6 +4766,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CreaturesOnTable: []
+  linkedTurret: {fileID: 469627911}
+  biomeOverride: 0
+  useTurretBiome: 1
 --- !u!65 &1812811325
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4778,7 +4837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4bc46f027a84057b7d8b481e2477a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laneIndex: 2
+  laneIndex: 1
   owner: 1
   slots: {fileID: 404651168}
 --- !u!114 &1851293932
@@ -4794,6 +4853,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CreaturesOnTable: []
+  linkedTurret: {fileID: 1330093781}
+  biomeOverride: 2
+  useTurretBiome: 1
 --- !u!65 &1851293933
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5088,6 +5150,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 54169937668007427, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
   m_PrefabInstance: {fileID: 1945688585}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1945688587 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 311688496905854528, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
+  m_PrefabInstance: {fileID: 1945688585}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62f47b8d27f88ad429f44f4cdee01b9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &1962134862
 GameObject:
   m_ObjectHideFlags: 0
@@ -5460,6 +5533,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 54169937668007427, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
   m_PrefabInstance: {fileID: 2091638587}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2091638589 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 311688496905854528, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
+  m_PrefabInstance: {fileID: 2091638587}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62f47b8d27f88ad429f44f4cdee01b9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &2098313445
 GameObject:
   m_ObjectHideFlags: 0
