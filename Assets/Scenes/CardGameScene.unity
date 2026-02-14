@@ -752,7 +752,7 @@ MonoBehaviour:
   owner: 0
   TakeCardsOpenly: 1
   slots: {fileID: 294642416}
-  Deck: {fileID: 855834042}
+  deck: {fileID: 855834042}
 --- !u!1 &253465242
 GameObject:
   m_ObjectHideFlags: 0
@@ -1740,7 +1740,7 @@ MonoBehaviour:
   owner: 1
   TakeCardsOpenly: 1
   slots: {fileID: 1329281695}
-  Deck: {fileID: 942205642}
+  deck: {fileID: 942205642}
 --- !u!1 &820265095
 GameObject:
   m_ObjectHideFlags: 0

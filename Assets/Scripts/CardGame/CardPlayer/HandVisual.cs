@@ -6,6 +6,7 @@ using Cards;
 using Cards.ExtenstionMethods;
 using DG.Tweening;
 using UI;
+using UnityEngine.Serialization;
 
 public class HandVisual : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class HandVisual : MonoBehaviour
     public bool TakeCardsOpenly = true;
     public SameDistanceChildren slots;
 
-    [Header("Transform References")] public GameObject Deck;
+    [Header("Transform References")] public GameObject deck;
 
     private List<GameObject> CardsInHand = new List<GameObject>();
 
@@ -26,57 +27,54 @@ public class HandVisual : MonoBehaviour
         UpdatePlacementOfSlots();
     }
 
-    private void Awake()
-    {
-        setDeck();
-        ShufflingExtention.Shuffle(Deck.GetComponent<Deck>().cards);
-    }
+    // private void Awake()
+    // {
+    //     setDeck();
+    //     ShufflingExtention.Shuffle(Deck.GetComponent<Deck>().cards);
+    // }
 
 
-    public void setDeck()
-    {
-        var cardDictionaryCollected = DataPersistenceManager.instance.gameData.CardDictionaryCollected;
-
-        var cards = CardDataLoader.Instance.GetCreatureCards();
-        cards.AddRange(CardDataLoader.Instance.GetSpellCards());
-
-        var deck = Deck.GetComponent<Deck>();
-
-        foreach (var cardDic in cardDictionaryCollected)
-        {
-            int key = Convert.ToInt32(cardDic.Key);
-            int count = cardDic.Value;
-
-            var card = cards.FirstOrDefault(c => c.ID == key);
-            if (card == null)
-            {
-                Debug.LogWarning($"setDeck(): Nie znaleziono karty o ID={key}");
-                continue;
-            }
-
-            for (int i = 0; i < count; i++)
-            {
-                // TWORZYSZ NOWĄ INSTANCJĘ dla każdej kopii karty
-                CardAsset cardAsset = ScriptableObject.CreateInstance<CardAsset>();
-
-                // Unikalne ID instancji karty (każda kopia ma inne)
-                // var ids = Services.Get<IInstanceIdService>();
-                // cardAsset.Id = ids.NewId($"type{card.ID}");
-                cardAsset.Id = card.ID.ToString();
-                cardAsset.Name = card.Name;
-                cardAsset.CardImage = card.CardSprite;
-                cardAsset.ManaCost = card.Mana;
-                cardAsset.IsCreature = card.Type.ToLower() == "creature";
-                cardAsset.Description = card.Description;
-                cardAsset.CasualPower = card.CasualPower;
-                cardAsset.TPower = card.TPower;
-                cardAsset.PPower = card.PPower;
-                cardAsset.BPower = card.BPower;
-
-                deck.cards.Add(cardAsset);
-            }
-        }
-    }
+    // public void setDeck()
+    // {
+    //     var cardDictionaryCollected = DataPersistenceManager.instance.gameData.CardDictionaryCollected;
+    //
+    //     var cards = CardDataLoader.Instance.GetCreatureCards();
+    //     cards.AddRange(CardDataLoader.Instance.GetSpellCards());
+    //
+    //     var deck = Deck.GetComponent<Deck>();
+    //
+    //     foreach (var cardDic in cardDictionaryCollected)
+    //     {
+    //         int key = Convert.ToInt32(cardDic.Key);
+    //         int count = cardDic.Value;
+    //
+    //         var card = cards.FirstOrDefault(c => c.ID == key);
+    //         if (card == null)
+    //         {
+    //             Debug.LogWarning($"setDeck(): Nie znaleziono karty o ID={key}");
+    //             continue;
+    //         }
+    //
+    //         for (int i = 0; i < count; i++)
+    //         {
+    //             // TWORZYSZ NOWĄ INSTANCJĘ dla każdej kopii karty
+    //             CardAsset cardAsset = ScriptableObject.CreateInstance<CardAsset>();
+    //
+    //             cardAsset.Id = card.ID.ToString();
+    //             cardAsset.Name = card.Name;
+    //             cardAsset.CardImage = card.CardSprite;
+    //             cardAsset.ManaCost = card.Mana;
+    //             cardAsset.IsCreature = card.Type.ToLower() == "creature";
+    //             cardAsset.Description = card.Description;
+    //             cardAsset.CasualPower = card.CasualPower;
+    //             cardAsset.TPower = card.TPower;
+    //             cardAsset.PPower = card.PPower;
+    //             cardAsset.BPower = card.BPower;
+    //
+    //             deck.cards.Add(cardAsset);
+    //         }
+    //     }
+    // }
 
     public void RemoveCard(GameObject card)
     {
@@ -85,19 +83,6 @@ public class HandVisual : MonoBehaviour
         UpdatePlacementOfSlots();
     }
 
-    // remove card with a given index from hand
-    public void RemoveCardAtIndex(int index)
-    {
-        CardsInHand.RemoveAt(index);
-        PlaceCardsOnNewSlots();
-        UpdatePlacementOfSlots();
-    }
-
-    // get a card GameObject with a given index in hand
-    public GameObject GetCardAtIndex(int index)
-    {
-        return CardsInHand[index];
-    }
 
     void UpdatePlacementOfSlots()
     {
@@ -135,13 +120,13 @@ public class HandVisual : MonoBehaviour
         {
             card = Instantiate(GlobalSettings.Instance.TargetedSpellCardPrefab, position,
                 Quaternion.Euler(eulerAngles));
-        }
+        }//new CreatureLogic
 
         card.transform.localScale = new Vector3(8f, 8f, 1f);
         OneCardManager manager = card.GetComponent<OneCardManager>();
         manager.cardAsset = cardAsset;
         manager.ReadCardFromAsset();
-        manager.cardLogic = new CardLogic(cardAsset,card.GetComponent<IDHolder>().UniqueID);
+        manager.cardLogic = new CardLogic(cardAsset, card.GetComponent<IDHolder>().UniqueID);
         return card;
     }
 
@@ -155,24 +140,22 @@ public class HandVisual : MonoBehaviour
 
     public void GivePlayerARandomCard()
     {
-        CardAsset c = getRandomCardFromDeck();
-        // var ids = Services.Get<IInstanceIdService>();
-        // string instanceId = ids.NewId($"type{c.Id}");
+        CardAsset c = deck.GetComponent<Deck>().getRandomCardFromDeck();
         GivePlayerACard(c);
     }
 
-    public CardAsset getRandomCardFromDeck()
-    {
-        CardAsset c = Deck.GetComponent<Deck>().cards[0];
-        Deck.GetComponent<Deck>().cards.RemoveAt(0);
-        return c;
-    }
+    // public CardAsset getRandomCardFromDeck()
+    // {
+    //     CardAsset c = Deck.GetComponent<Deck>().cards[0];
+    //     Deck.GetComponent<Deck>().cards.RemoveAt(0);
+    //     return c;
+    // }
 
     public void GivePlayerACard(CardAsset c, bool fast = false, bool fromDeck = true)
     {
         GameObject card;
 
-        card = CreateACardAtPosition(c, Deck.transform.position, new Vector3(0f, -179f, 0f));
+        card = CreateACardAtPosition(c, deck.transform.position, new Vector3(0f, -179f, 0f));
 
         foreach (Transform t in card.GetComponentsInChildren<Transform>())
         {
@@ -180,7 +163,6 @@ public class HandVisual : MonoBehaviour
         }
 
         AddCard(card);
-
 
         Sequence s = DOTween.Sequence();
         Vector3 targetPos = slots.children[0].transform.localPosition;
@@ -190,9 +172,5 @@ public class HandVisual : MonoBehaviour
 
         s.Append(card.transform.DOLocalMove(targetPos, moveTime));
         s.Append(card.transform.DORotate(Vector3.zero, moveTime / 2));
-        // s.Append(card.transform.DOLocalMove(slots.children[0].transform.localPosition,
-        //     GlobalSettings.Instance.CardTransitionTimeFast));
-        // if (TakeCardsOpenly)
-        //     s.Insert(0f, card.transform.DORotate(Vector3.zero, GlobalSettings.Instance.CardTransitionTimeFast));
     }
 }

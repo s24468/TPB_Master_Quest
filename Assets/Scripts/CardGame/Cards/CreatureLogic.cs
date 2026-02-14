@@ -22,7 +22,6 @@ public class CreatureLogic //: MonoBehaviour//ICharacter
 
     public Biome CurrentBiome => CurrentTable != null ? CurrentTable.Biome : Biome.T; // default jak chcesz
 
-    public string ID => UniqueCreatureID;
 
     public bool Frozen = false;
 
@@ -50,16 +49,16 @@ public class CreatureLogic //: MonoBehaviour//ICharacter
     private int attacksForOneTurn = 1;
     public int AttacksLeftThisTurn { get; set; }
 
-    // CONSTRUCTOR
-    public CreatureLogic(Player owner, CardAsset ca, int laneIndex, Table table)
+    // CONSTRUCTOR new CreatureLogic
+    public CreatureLogic(Player owner, CardLogic cardLogic, string uniqueCreatureID, int laneIndex, Table table)
     {
         this.owner = owner;
-        this.ca = ca;
+        this.ca = cardLogic.ca;
         this.LaneIndex = laneIndex;
         this.CurrentTable = table;
 
-        // UniqueCreatureID = IDFactory.GetUniqueID();
-        UniqueCreatureID = ca.Id;
+        // UniqueCreatureID = cardLogic.UniqueCardID;
+        UniqueCreatureID = uniqueCreatureID;
         CasualPower = ca.CasualPower;
         TPower = ca.TPower;
         PPower = ca.PPower;

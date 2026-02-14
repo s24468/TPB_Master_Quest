@@ -90,14 +90,12 @@ public class Player : MonoBehaviour //, ICharacter
     public void PlayACreatureFromHand(CardLogic playedCard, int laneIndex, int tablePos)
     {
         ManaLeft -= playedCard.CurrentManaCost;
-
         // CreatureLogic newCreature = new CreatureLogic(this, playedCard.ca, laneIndex);
         // tables[laneIndex].CreaturesOnTable.Insert(tablePos, newCreature);
-        Table laneTable = tables[laneIndex];
-        CreatureLogic newCreature = new CreatureLogic(this, playedCard.ca, laneIndex, laneTable);
-        laneTable.CreaturesOnTable.Insert(tablePos, newCreature);
-
-        new PlayACreatureCommand(playedCard, this, laneIndex, tablePos, playedCard.UniqueCardID).AddToQueue();
+        // Table laneTable = tables[laneIndex];
+        // CreatureLogic newCreature = new CreatureLogic(this, playedCard, laneIndex, laneTable);
+        // laneTable.CreaturesOnTable.Insert(tablePos, newCreature);
+        new PlayACreatureCommand(playedCard, this, laneIndex, tablePos).AddToQueue();
 
         hand.CardsInHand.Remove(playedCard);
         HighlightPlayableCards();

@@ -8,6 +8,7 @@ namespace Cards
     public class OneCreatureManager : MonoBehaviour
     {
         public CardAsset cardAsset;
+        public CreatureLogic CreatureLogic;
         public PreviewManager previewManager;
         [Header("Text Component References")] public TextMeshProUGUI nameText;
         public TextMeshProUGUI manaCostText;

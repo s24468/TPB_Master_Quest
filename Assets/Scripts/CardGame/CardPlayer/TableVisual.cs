@@ -49,22 +49,30 @@ public class TableVisual : MonoBehaviour
             HoveredTable = null;
     }
 
-    public void AddCreatureAtIndex(CardAsset ca, string UniqueID, int index, Vector3 eulerAngles)
-    {
+    public CreatureLogic AddCreatureAtIndex(CardLogic cardLogic, int index, Vector3 eulerAngles, Player PlayerOwner)
+    {        
+
         GameObject creature = Instantiate(GlobalSettings.Instance.CreaturePrefab,
             slots.children[index].transform.position, Quaternion.Euler(eulerAngles));
         creature.transform.localScale = new Vector3(8f, 8f, 1f);
-        creature.transform.rotation = Quaternion.Euler(0, 0, 0);
 
+        creature.transform.rotation = Quaternion.Euler(0, 0, 0);
+        
 
         OneCreatureManager manager = creature.GetComponent<OneCreatureManager>();
-        manager.cardAsset = ca;
+        manager.cardAsset = cardLogic.ca;
+
         manager.ReadCreatureFromAsset();
+
+        manager.CreatureLogic = new CreatureLogic(PlayerOwner, cardLogic,creature.GetComponent<IDHolder>().UniqueID , laneIndex, PlayerOwner.tables[laneIndex]);
 
         foreach (Transform t in creature.GetComponentsInChildren<Transform>())
         {
+
             t.tag = owner.ToString() + "Creature";
+
         }
+
         // t.tag = "Creature";
 
         // parent a new creature gameObject to table slots
@@ -76,16 +84,13 @@ public class TableVisual : MonoBehaviour
         w.Slot = index;
         // w.VisualState = VisualStates.LowTable;
 
-        // add our unique ID to this creature
-        // IDHolder id = creature.AddComponent<IDHolder>();
-        // id.UniqueID = UniqueID;
-
         // after a new creature is added update placing of all the other creatures
         ShiftSlotsGameObjectAccordingToNumberOfCreatures();
         PlaceCreaturesOnNewSlots();
 
         // end command execution
         Command.CommandExecutionComplete();
+        return manager.CreatureLogic;
     }
 
 

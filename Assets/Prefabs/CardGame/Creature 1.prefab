@@ -2587,7 +2587,7 @@ GameObject:
   - component: {fileID: 7185391712925070336}
   - component: {fileID: 6790751615610642305}
   - component: {fileID: 6374893162162419446}
-  - component: {fileID: 4073671061305022015}
+  - component: {fileID: 7730586450729213629}
   m_Layer: 6
   m_Name: Creature 1
   m_TagString: Untagged
@@ -2651,7 +2651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hover: {fileID: 0}
---- !u!114 &4073671061305022015
+--- !u!114 &7730586450729213629
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

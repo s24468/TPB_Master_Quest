@@ -8,24 +8,24 @@ public class PlayACreatureCommand : Command
     private int laneIndex;   // NEW: 0..2
     private int tablePos;
     private Player p;
-    private string creatureID;
     // NEW ctor: laneIndex added
-    public PlayACreatureCommand(CardLogic cl, Player p, int laneIndex, int tablePos, string creatureID)
+    public PlayACreatureCommand(CardLogic cl, Player p, int laneIndex, int tablePos)
     {
-        this.p = p;
         this.cl = cl;
+        this.p = p;
         this.laneIndex = laneIndex;
         this.tablePos = tablePos;
-        this.creatureID = creatureID;
     }
 
     public override void StartCommandExecution()
     {
         // remove and destroy the card in hand
         HandVisual playerHand = p.PArea.handVisual;
+
         GameObject card = Services.Get<IInstanceIdService>().Find(cl.UniqueCardID);
 
         playerHand.RemoveCard(card);
+
         GameObject.Destroy(card);
 
         // enable Hover Previews Back
@@ -35,12 +35,15 @@ public class PlayACreatureCommand : Command
         // NOTE: requires PlayerArea.tableVisuals (TableVisual[]) to exist and be filled in Inspector
         TableVisual targetTable = p.PArea.tableVisuals[laneIndex];
 
-        targetTable.AddCreatureAtIndex(
-            cl.ca,
-            creatureID,
+        CreatureLogic  newCreatureLogic= targetTable.AddCreatureAtIndex(
+            cl,
             tablePos,
-            new Vector3(0f, -179f, 0f)
+            new Vector3(0f, -179f, 0f),
+            p
         );
+
+        p.tables[laneIndex].CreaturesOnTable.Insert(tablePos,newCreatureLogic);
+
     }
     // public PlayACreatureCommand(CardLogic cl, Player p, int tablePos, string creatureID)
     // {

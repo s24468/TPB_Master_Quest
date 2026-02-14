@@ -34,7 +34,7 @@ public class CardLogic//: MonoBehaviour//: IIdentifiable
             // return ownersTurn && fieldNotFull && (CurrentManaCost <= owner.ManaLeft);
             return false;
         }
-    }
+    }//new CardLogic
     public CardLogic(CardAsset ca, string UniqueCardID)
     {
         this.ca = ca;
