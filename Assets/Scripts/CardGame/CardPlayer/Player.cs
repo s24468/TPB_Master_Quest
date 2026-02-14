@@ -2,29 +2,35 @@
 using System.Collections;
 using Cards;
 
-public class Player : MonoBehaviour//, ICharacter
+public class Player : MonoBehaviour //, ICharacter
 {
     public int PlayerID;
+
     // public CharacterAsset charAsset;
     public PlayerArea PArea;
     // public SpellEffect HeroPowerEffect;
 
     public Deck deck;
+
     public Hand hand;
-    public Table table;
+
+    // public Table table;
+    public Table[] tables = new Table[3];
+
 
     private int bonusManaThisTurn = 0;
     public bool usedHeroPowerThisTurn = false;
 
     public int ID
     {
-        get{ return PlayerID; }
+        get { return PlayerID; }
     }
 
     private int manaThisTurn;
+
     public int ManaThisTurn
     {
-        get{ return manaThisTurn;}
+        get { return manaThisTurn; }
         set
         {
             manaThisTurn = value;
@@ -34,14 +40,11 @@ public class Player : MonoBehaviour//, ICharacter
     }
 
     private int manaLeft;
+
     public int ManaLeft
     {
-        get
-        { return manaLeft;}
-        set
-        {
-            manaLeft = value;
-        }
+        get { return manaLeft; }
+        set { manaLeft = value; }
     }
 
     public Player otherPlayer
@@ -56,21 +59,20 @@ public class Player : MonoBehaviour//, ICharacter
     }
 
     private int health;
+
     public int Health
     {
-        get { return health;}
+        get { return health; }
         set
         {
             health = value;
             if (value <= 0)
-                Die(); 
+                Die();
         }
     }
 
     public delegate void VoidWithNoArguments();
-    //public event VoidWithNoArguments CreaturePlayedEvent;
-    //public event VoidWithNoArguments SpellPlayedEvent;
-    //public event VoidWithNoArguments StartTurnEvent;
+
     public event VoidWithNoArguments EndTurnEvent;
 
     public static Player[] Players;
@@ -81,6 +83,56 @@ public class Player : MonoBehaviour//, ICharacter
         // PlayerID = IDFactory.GetUniqueID();
     }
 
+
+    // public void PlayACreatureFromHand(string UniqueID, int tablePos)
+    // {
+    //     PlayACreatureFromHand(CardLogic.CardsCreatedThisGame[UniqueID], tablePos);
+    // }
+    //
+    // public void PlayACreatureFromHand(CardLogic playedCard, int tablePos)
+    // {
+    //     ManaLeft -= playedCard.CurrentManaCost;
+    //     Debug.Log("Mana Left after played a creature: " + ManaLeft);
+    //     // create a new creature object and add it to Table
+    //     CreatureLogic newCreature = new CreatureLogic(this, playedCard.ca);
+    //     table.CreaturesOnTable.Insert(tablePos, newCreature);
+    //     // table.CreaturesOnTable.Insert(tablePos, playedCard);
+    //     // no matter what happens, move this card to PlayACardSpot
+    //     new PlayACreatureCommand(playedCard, this, tablePos, playedCard.UniqueCardID).AddToQueue();
+    //     // remove this card from hand
+    //     hand.CardsInHand.Remove(playedCard);
+    //     HighlightPlayableCards();
+    // }
+    public void PlayACreatureFromHand(string UniqueID, int laneIndex, int tablePos)
+    {
+        PlayACreatureFromHand(CardLogic.CardsCreatedThisGame[UniqueID], laneIndex, tablePos);
+    }
+
+    public void PlayACreatureFromHand(CardLogic playedCard, int laneIndex, int tablePos)
+    {
+        ManaLeft -= playedCard.CurrentManaCost;
+
+        // CreatureLogic newCreature = new CreatureLogic(this, playedCard.ca);
+        CreatureLogic newCreature = new CreatureLogic(this, playedCard.ca, laneIndex);
+        tables[laneIndex].CreaturesOnTable.Insert(tablePos, newCreature);
+
+        new PlayACreatureCommand(playedCard, this, laneIndex, tablePos, playedCard.UniqueCardID).AddToQueue();
+
+        hand.CardsInHand.Remove(playedCard);
+        HighlightPlayableCards();
+    }
+
+    public void GetBonusMana(int amount)
+    {
+        bonusManaThisTurn += amount;
+        ManaThisTurn += amount;
+        ManaLeft += amount;
+    }
+
+
+    //public event VoidWithNoArguments CreaturePlayedEvent;
+    //public event VoidWithNoArguments SpellPlayedEvent;
+    //public event VoidWithNoArguments StartTurnEvent;
     // public virtual void OnTurnStart()
     // {
     //     // add one mana crystal to the pool;
@@ -93,14 +145,6 @@ public class Player : MonoBehaviour//, ICharacter
     //     PArea.HeroPower.WasUsedThisTurn = false;
     //
     // }
-
-    public void GetBonusMana(int amount)
-    {
-        bonusManaThisTurn += amount;
-        ManaThisTurn += amount;
-        ManaLeft += amount;
-    }   
-
     // public void OnTurnEnd()
     // {
     //     if(EndTurnEvent != null)
@@ -189,25 +233,6 @@ public class Player : MonoBehaviour//, ICharacter
     //     // check if this is a creature or a spell
     // }
 
-    public void PlayACreatureFromHand(string UniqueID, int tablePos)
-    {
-        PlayACreatureFromHand(CardLogic.CardsCreatedThisGame[UniqueID], tablePos);
-    }
-
-    public void PlayACreatureFromHand(CardLogic playedCard, int tablePos)
-    {
-        ManaLeft -= playedCard.CurrentManaCost;
-        Debug.Log("Mana Left after played a creature: " + ManaLeft);
-        // create a new creature object and add it to Table
-        CreatureLogic newCreature = new CreatureLogic(this, playedCard.ca);
-        table.CreaturesOnTable.Insert(tablePos, newCreature);
-        // table.CreaturesOnTable.Insert(tablePos, playedCard);
-        // no matter what happens, move this card to PlayACardSpot
-        new PlayACreatureCommand(playedCard, this, tablePos, playedCard.UniqueCardID).AddToQueue();
-        // remove this card from hand
-        hand.CardsInHand.Remove(playedCard);
-        HighlightPlayableCards();
-    }
 
     public void Die()
     {
@@ -273,5 +298,4 @@ public class Player : MonoBehaviour//, ICharacter
         //     PArea.AllowedToControlThisPlayer = true;
         // }
     }
-
 }

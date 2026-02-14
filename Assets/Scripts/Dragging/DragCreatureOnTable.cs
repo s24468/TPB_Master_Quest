@@ -41,43 +41,78 @@ public class DragCreatureOnTable : DraggingActions
     {
     }
 
+    // public override void OnEndDrag()
+    // {
+    //     // 1) Check if we are holding a card over the table
+    //     if (DragSuccessful())
+    //     {
+    //         // determine table position
+    //         int tablePos = playerOwner.PArea.tableVisual.TablePosForNewCreature(Camera.main.ScreenToWorldPoint(
+    //             new Vector3(Input.mousePosition.x, Input.mousePosition.y,
+    //                 transform.position.z - Camera.main.transform.position.z)).x);
+    //         Debug.Log("Table Pos for new Creature: " + tablePos.ToString());
+    //         // play this card
+    //         playerOwner.PlayACreatureFromHand(GetComponent<IDHolder>().UniqueID, tablePos);
+    //     }
+    //     else
+    //     {
+    //         // Set old sorting order 
+    //         Debug.Log("Saved  handslot number: "+ savedHandSlot);
+    //
+    //         whereIsCard.SetHandSortingOrder();
+    //         Debug.Log("Saved  handslot number after setgandSortingOrder: "+ savedHandSlot);
+    //
+    //         whereIsCard.VisualState = tempState;
+    //         // Move this card back to its slot position
+    //         HandVisual PlayerHand = playerOwner.PArea.handVisual;
+    //         Debug.Log("I coulnt find table pos for new creature "+ PlayerHand.slots.children.Length.ToString() +" "+ savedHandSlot);
+    //         
+    //         
+    //         
+    //         Vector3 oldCardPos = PlayerHand.slots.children[savedHandSlot].transform.localPosition;
+    //         transform.DOLocalMove(oldCardPos, 1f);
+    //     }
+    // }
     public override void OnEndDrag()
     {
-        // 1) Check if we are holding a card over the table
         if (DragSuccessful())
         {
-            // determine table position
-            int tablePos = playerOwner.PArea.tableVisual.TablePosForNewCreature(Camera.main.ScreenToWorldPoint(
+            TableVisual hovered = TableVisual.HoveredTable;
+
+            // bezpieczeństwo: nie pozwól dropnąć na enemy stół
+            if (hovered == null || hovered.owner != playerOwner.PArea.owner)
+            {
+                ReturnToHand();
+                return;
+            }
+
+            float mouseX = Camera.main.ScreenToWorldPoint(
                 new Vector3(Input.mousePosition.x, Input.mousePosition.y,
-                    transform.position.z - Camera.main.transform.position.z)).x);
-            Debug.Log("Table Pos for new Creature: " + tablePos.ToString());
-            // play this card
-            playerOwner.PlayACreatureFromHand(GetComponent<IDHolder>().UniqueID, tablePos);
-        }
-        else
-        {
-            // Set old sorting order 
-            Debug.Log("Saved  handslot number: "+ savedHandSlot);
+                    transform.position.z - Camera.main.transform.position.z)).x;
 
-            whereIsCard.SetHandSortingOrder();
-            Debug.Log("Saved  handslot number after setgandSortingOrder: "+ savedHandSlot);
+            int tablePos = hovered.TablePosForNewCreature(mouseX);
+            int laneIndex = hovered.laneIndex;
 
-            whereIsCard.VisualState = tempState;
-            // Move this card back to its slot position
-            HandVisual PlayerHand = playerOwner.PArea.handVisual;
-            Debug.Log("I coulnt find table pos for new creature "+ PlayerHand.slots.children.Length.ToString() +" "+ savedHandSlot);
-            
-            
-            
-            Vector3 oldCardPos = PlayerHand.slots.children[savedHandSlot].transform.localPosition;
-            transform.DOLocalMove(oldCardPos, 1f);
+            playerOwner.PlayACreatureFromHand(GetComponent<IDHolder>().UniqueID, laneIndex, tablePos);
+            return;
         }
+
+        ReturnToHand();
+    }
+
+    private void ReturnToHand()
+    {
+        whereIsCard.SetHandSortingOrder();
+        whereIsCard.VisualState = tempState;
+
+        HandVisual PlayerHand = playerOwner.PArea.handVisual;
+        Vector3 oldCardPos = PlayerHand.slots.children[savedHandSlot].transform.localPosition;
+        transform.DOLocalMove(oldCardPos, 1f);
     }
 
     protected override bool DragSuccessful()
     {
-        // bool TableNotFull = (playerOwner.table.CreaturesOnTable.Count < 8);
-
         return TableVisual.CursorOverSomeTable; // && TableNotFull;
     }
 }
+// bool TableNotFull = (playerOwner.table.CreaturesOnTable.Count < 8);

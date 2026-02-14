@@ -9,28 +9,30 @@ using UI;
 public class TableVisual : MonoBehaviour
 {
     // PUBLIC FIELDS
+    public int laneIndex; // 0..2
     public AreaPosition owner;
-
     public SameDistanceChildren slots;
 
     // PRIVATE FIELDS
     private List<GameObject> CreaturesOnTable = new List<GameObject>();
     private bool cursorOverThisTable = false;
     private BoxCollider col;
+    public static TableVisual HoveredTable { get; private set; }
 
+    public static bool CursorOverSomeTable => HoveredTable != null;
     // returns true if we are hovering over any player`s table collider
-    public static bool CursorOverSomeTable
-    {
-        get
-        {
-            TableVisual[] bothTables = GameObject.FindObjectsOfType<TableVisual>();
-            Debug.Log(bothTables.Length);
-            if (bothTables.Length > 0)
-                Debug.Log(bothTables[0].name);
-
-            return (bothTables[0].CursorOverThisTable) || bothTables[1].CursorOverThisTable;
-        }
-    }
+    // public static bool CursorOverSomeTable
+    // {
+    //     get
+    //     {
+    //         TableVisual[] bothTables = GameObject.FindObjectsOfType<TableVisual>();
+    //         Debug.Log(bothTables.Length);
+    //         if (bothTables.Length > 0)
+    //             Debug.Log(bothTables[0].name);
+    //
+    //         return (bothTables[0].CursorOverThisTable) || bothTables[1].CursorOverThisTable;
+    //     }
+    // }
 
     // returns true only if we are hovering over this table`s collider
     public bool CursorOverThisTable
@@ -46,30 +48,44 @@ public class TableVisual : MonoBehaviour
     }
 
     // CURSOR/MOUSE DETECTION
+    // void Update()
+    // {
+    //     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    //     // Zasięg nieskończony, uwzględniamy wszystkie layer’y oraz triggery
+    //     RaycastHit[] hits = Physics.RaycastAll(
+    //         ray,
+    //         Mathf.Infinity,
+    //         ~0,
+    //         QueryTriggerInteraction.Collide
+    //     );
+    //
+    //     bool passedThroughTableCollider = false;
+    //
+    //     foreach (RaycastHit h in hits)
+    //     {
+    //         // check if the collider that we hit is the collider on this GameObject
+    //         if (h.collider == col)
+    //             passedThroughTableCollider = true;
+    //     }
+    //
+    //     cursorOverThisTable = passedThroughTableCollider;
+    // }
     void Update()
     {
-        // RaycastHit[] hits;
-        // raycst to mousePosition and store all the hits in the array
-        // hits = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition), 30f);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        // Zasięg nieskończony, uwzględniamy wszystkie layer’y oraz triggery
-        RaycastHit[] hits = Physics.RaycastAll(
-            ray,
-            Mathf.Infinity,
-            ~0,
-            QueryTriggerInteraction.Collide
-        );
+        RaycastHit[] hits = Physics.RaycastAll(ray, Mathf.Infinity, ~0, QueryTriggerInteraction.Collide);
 
-        bool passedThroughTableCollider = false;
+        bool passed = false;
+        foreach (var h in hits)
+            if (h.collider == col) { passed = true; break; }
 
-        foreach (RaycastHit h in hits)
-        {
-            // check if the collider that we hit is the collider on this GameObject
-            if (h.collider == col)
-                passedThroughTableCollider = true;
-        }
+        cursorOverThisTable = passed;
 
-        cursorOverThisTable = passedThroughTableCollider;
+        // zarządzanie globalnym "hover"
+        if (passed)
+            HoveredTable = this;
+        else if (HoveredTable == this)
+            HoveredTable = null;
     }
 
     public void AddCreatureAtIndex(CardAsset ca, string UniqueID, int index, Vector3 eulerAngles)

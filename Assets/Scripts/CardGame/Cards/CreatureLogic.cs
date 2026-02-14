@@ -18,10 +18,9 @@ public class CreatureLogic //: MonoBehaviour//ICharacter
     // public CreatureEffect effect;
     public string UniqueCreatureID;
 
-    public string ID
-    {
-        get { return UniqueCreatureID; }
-    }
+    // NEW: na którym stole (0..2) stoi ta creatura
+    public int LaneIndex { get; private set; }
+    public string ID => UniqueCreatureID;
 
     public bool Frozen = false;
 
@@ -47,7 +46,7 @@ public class CreatureLogic //: MonoBehaviour//ICharacter
     public int AttacksLeftThisTurn { get; set; }
 
     // CONSTRUCTOR
-    public CreatureLogic(Player owner, CardAsset ca)
+    public CreatureLogic(Player owner, CardAsset ca, int laneIndex)
     {
         this.ca = ca;
         // baseHealth = ca.MaxHealth;
@@ -61,7 +60,7 @@ public class CreatureLogic //: MonoBehaviour//ICharacter
 
         // UniqueCreatureID = IDFactory.GetUniqueID();
         UniqueCreatureID = ca.Id;
-
+        this.LaneIndex = laneIndex;
         CasualPower = ca.CasualPower;
         TPower = ca.TPower;
         PPower = ca.PPower;
@@ -82,12 +81,20 @@ public class CreatureLogic //: MonoBehaviour//ICharacter
         AttacksLeftThisTurn = attacksForOneTurn;
     }
 
+    // public void Die()
+    // {
+    //     owner.table.CreaturesOnTable.Remove(this); // usuwa z skryptu Table
+    //     new CreatureDieCommand(UniqueCreatureID, owner).AddToQueue();
+    // }
     public void Die()
     {
-        owner.table.CreaturesOnTable.Remove(this); // usuwa z skryptu Table
-        new CreatureDieCommand(UniqueCreatureID, owner).AddToQueue();
-    }
+        // OLD: owner.table.CreaturesOnTable.Remove(this);
+        // NEW: usuwamy z właściwego lane'a
+        owner.tables[LaneIndex].CreaturesOnTable.Remove(this);
 
+        // NEW: command też dostaje laneIndex
+        new CreatureDieCommand(UniqueCreatureID, owner, LaneIndex).AddToQueue();
+    }
     public void GoFace()
     {
         AttacksLeftThisTurn--;
@@ -128,27 +135,21 @@ public class CreatureLogic //: MonoBehaviour//ICharacter
     private int baseHealth;
 
     // health with all the current buffs taken into account
-    public int MaxHealth
-    {
-        get { return baseHealth; }
-    }
+    public int MaxHealth => baseHealth;
 
     private int health;
 
     public int Health
     {
         get { return health; }
-
         set
         {
             if (value > MaxHealth)
-                health = baseHealth;
-            else if (value <= 0)
             {
-                // Die();
+                health = baseHealth;
             }
-            else
-                health = value;
+            else if (value <= 0) { /* Die(); */ }
+            else health = value;
         }
     }
 }
