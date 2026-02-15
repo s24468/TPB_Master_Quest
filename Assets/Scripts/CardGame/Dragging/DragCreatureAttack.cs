@@ -18,6 +18,17 @@ public class DragCreatureAttack : DraggingActions
 
     private OneCreatureManager _manager;
 
+
+    [SerializeField] private LayerMask targetMask;
+    private readonly RaycastHit[] _hits = new RaycastHit[8];
+    private Targetable _currentTarget;
+    private float _nextCheckTime;
+    [SerializeField] private float targetCheckInterval = 0.03f;
+
+    // private string _attackerId;
+    // private int _attackerOwnerId;
+    // private bool _hasCachedAttacker;
+
     void Awake()
     {
         _sr = GetComponent<SpriteRenderer>();
@@ -28,6 +39,7 @@ public class DragCreatureAttack : DraggingActions
 
         _manager = GetComponentInParent<OneCreatureManager>();
         _whereIsThisCreature = GetComponentInParent<WhereIsTheCardOrCreature>();
+        // targetMask = LayerMask.NameToLayer("UIAttackable");
     }
 
     public override bool CanDrag
@@ -46,6 +58,8 @@ public class DragCreatureAttack : DraggingActions
         _whereIsThisCreature.VisualState = VisualStates.Dragging;
         _sr.enabled = true;
         _lr.enabled = true;
+        
+        
     }
 
     public override void OnDraggingInUpdate()
@@ -73,6 +87,69 @@ public class DragCreatureAttack : DraggingActions
             _lr.enabled = false;
             _triangleSr.enabled = false;
         }
+
+        if (Time.time >= _nextCheckTime)
+        {
+            _nextCheckTime = Time.time + targetCheckInterval;
+
+            var origin = Camera.main.transform.position;
+            var dir = (transform.position - origin).normalized;
+
+            int count = Physics.RaycastNonAlloc(origin, dir, _hits, 200f, targetMask, QueryTriggerInteraction.Ignore);
+
+            Targetable newTarget = null;
+            Debug.Log("Raycast count: " + count);
+
+
+            for (int i = 0; i < count; i++)
+            {
+                var col = _hits[i].collider;
+                if (!col) continue;
+
+                Debug.Log("Hit: " + col.name);
+
+                if (col.transform == transform || col.transform.IsChildOf(transform))
+                    continue;
+
+                newTarget = col.GetComponent<Targetable>();
+                if (newTarget != null)
+                    Debug.Log("Targetable found on: " + col.name);
+
+                if (newTarget != null && newTarget.Attackable != null)
+                    break;
+            }
+
+
+            if (newTarget != _currentTarget)
+            {
+                if (_currentTarget != null && _currentTarget.Glow != null)
+                    _currentTarget.Glow.Hide();
+
+                _currentTarget = newTarget;
+
+                if (_currentTarget != null && _currentTarget.Glow != null)
+                {
+                    var attackerId = GetComponentInParent<IDHolder>().UniqueID;
+                    var attackerOwnerId = CreatureLogic.CreaturesCreatedThisGame[attackerId].owner.PlayerID;
+
+                    if (_currentTarget.Attackable.Owner.PlayerID == attackerOwnerId)
+                    {
+                        _currentTarget.Glow.SetColor(new Color(1f, 0.1f, 0f, 1f));
+                    }
+                    else
+                    {
+                        _currentTarget.Glow.SetColor(new Color(0.2f, 1f, 0.2f, 1f));
+                    }
+
+                    _currentTarget.Glow.Show();
+                }
+            }
+
+            if (_currentTarget == null)
+            {
+                // nic nie świeci
+            }
+        }
     }
 
     public override void OnEndDrag()
@@ -87,7 +164,6 @@ public class DragCreatureAttack : DraggingActions
 
         RaycastHit[] hits = Physics.RaycastAll(origin, dir, 200f);
         Debug.Log($"Raycast hits: {hits.Length}");
-
         foreach (var h in hits)
         {
             // ignoruj samego siebie i swoje dzieci
@@ -119,14 +195,14 @@ public class DragCreatureAttack : DraggingActions
         // 2) walidacja + wykonanie ataku
         if (targetAttackable != null)
         {
-            // attackerId (UniqueID tej creatury)
             var attackerHolder = GetComponentInParent<IDHolder>();
             string attackerId = attackerHolder != null ? attackerHolder.UniqueID : string.Empty;
-
             Debug.Log(
                 $"Target picked: {(targetAttackable as MonoBehaviour)?.name}, targetID: {targetAttackable.UniqueID}");
 
             targetAttackable.ReceiveAttack(attackerId);
+
+
             targetValid = true;
         }
 
@@ -142,6 +218,11 @@ public class DragCreatureAttack : DraggingActions
         _sr.enabled = false;
         _lr.enabled = false;
         _triangleSr.enabled = false;
+        if (_currentTarget != null && _currentTarget.Glow != null)
+            _currentTarget.Glow.Hide();
+
+        _currentTarget = null;
+
     }
 
     // NOT USED IN THIS SCRIPT

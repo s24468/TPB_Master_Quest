@@ -27,55 +27,6 @@ public class HandVisual : MonoBehaviour
         UpdatePlacementOfSlots();
     }
 
-    // private void Awake()
-    // {
-    //     setDeck();
-    //     ShufflingExtention.Shuffle(Deck.GetComponent<Deck>().cards);
-    // }
-
-
-    // public void setDeck()
-    // {
-    //     var cardDictionaryCollected = DataPersistenceManager.instance.gameData.CardDictionaryCollected;
-    //
-    //     var cards = CardDataLoader.Instance.GetCreatureCards();
-    //     cards.AddRange(CardDataLoader.Instance.GetSpellCards());
-    //
-    //     var deck = Deck.GetComponent<Deck>();
-    //
-    //     foreach (var cardDic in cardDictionaryCollected)
-    //     {
-    //         int key = Convert.ToInt32(cardDic.Key);
-    //         int count = cardDic.Value;
-    //
-    //         var card = cards.FirstOrDefault(c => c.ID == key);
-    //         if (card == null)
-    //         {
-    //             Debug.LogWarning($"setDeck(): Nie znaleziono karty o ID={key}");
-    //             continue;
-    //         }
-    //
-    //         for (int i = 0; i < count; i++)
-    //         {
-    //             // TWORZYSZ NOWĄ INSTANCJĘ dla każdej kopii karty
-    //             CardAsset cardAsset = ScriptableObject.CreateInstance<CardAsset>();
-    //
-    //             cardAsset.Id = card.ID.ToString();
-    //             cardAsset.Name = card.Name;
-    //             cardAsset.CardImage = card.CardSprite;
-    //             cardAsset.ManaCost = card.Mana;
-    //             cardAsset.IsCreature = card.Type.ToLower() == "creature";
-    //             cardAsset.Description = card.Description;
-    //             cardAsset.CasualPower = card.CasualPower;
-    //             cardAsset.TPower = card.TPower;
-    //             cardAsset.PPower = card.PPower;
-    //             cardAsset.BPower = card.BPower;
-    //
-    //             deck.cards.Add(cardAsset);
-    //         }
-    //     }
-    // }
-
     public void RemoveCard(GameObject card)
     {
         CardsInHand.Remove(card);
@@ -120,7 +71,7 @@ public class HandVisual : MonoBehaviour
         {
             card = Instantiate(GlobalSettings.Instance.TargetedSpellCardPrefab, position,
                 Quaternion.Euler(eulerAngles));
-        }//new CreatureLogic
+        }
 
         card.transform.localScale = new Vector3(8f, 8f, 1f);
         OneCardManager manager = card.GetComponent<OneCardManager>();

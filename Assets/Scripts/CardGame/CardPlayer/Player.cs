@@ -57,19 +57,6 @@ public class Player : MonoBehaviour //, ICharacter
         }
     }
 
-    // private int health;
-    //
-    // public int Health
-    // {
-    //     get { return health; }
-    //     set
-    //     {
-    //         health = value;
-    //         if (value <= 0)
-    //             Die();
-    //     }
-    // }
-
     public delegate void VoidWithNoArguments();
 
     public event VoidWithNoArguments EndTurnEvent;
@@ -79,7 +66,6 @@ public class Player : MonoBehaviour //, ICharacter
     void Awake()
     {
         Players = GameObject.FindObjectsOfType<Player>();
-        // PlayerID = IDFactory.GetUniqueID();
     }
 
     public void PlayACreatureFromHand(string UniqueID, int laneIndex, int tablePos)
@@ -90,11 +76,6 @@ public class Player : MonoBehaviour //, ICharacter
     public void PlayACreatureFromHand(CardLogic playedCard, int laneIndex, int tablePos)
     {
         ManaLeft -= playedCard.CurrentManaCost;
-        // CreatureLogic newCreature = new CreatureLogic(this, playedCard.ca, laneIndex);
-        // tables[laneIndex].CreaturesOnTable.Insert(tablePos, newCreature);
-        // Table laneTable = tables[laneIndex];
-        // CreatureLogic newCreature = new CreatureLogic(this, playedCard, laneIndex, laneTable);
-        // laneTable.CreaturesOnTable.Insert(tablePos, newCreature);
         new PlayACreatureCommand(playedCard, this, laneIndex, tablePos).AddToQueue();
 
         hand.CardsInHand.Remove(playedCard);

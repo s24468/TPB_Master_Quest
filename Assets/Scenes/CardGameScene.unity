@@ -571,6 +571,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 311688496905854528, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 1790595351}
+    - target: {fileID: 311688496905854528, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
       propertyPath: turretAsset
       value: 
       objectReference: {fileID: 11400000, guid: 60a5a6ed95439e04b8f06f30b01c60ba, type: 2}
@@ -1115,6 +1119,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 311688496905854528, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 253465244}
     - target: {fileID: 4639431296629373937, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
       propertyPath: m_Name
       value: Turret0
@@ -2626,6 +2634,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 311688496905854528, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 1790595351}
+    - target: {fileID: 311688496905854528, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
       propertyPath: turretAsset
       value: 
       objectReference: {fileID: 11400000, guid: d68993a04a2f63c419f94150766802a3, type: 2}
@@ -3147,6 +3159,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 311688496905854528, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 253465244}
     - target: {fileID: 311688496905854528, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
       propertyPath: turretAsset
       value: 
@@ -4304,6 +4320,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 311688496905854528, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 253465244}
+    - target: {fileID: 311688496905854528, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
       propertyPath: turretAsset
       value: 
       objectReference: {fileID: 11400000, guid: d68993a04a2f63c419f94150766802a3, type: 2}
@@ -4622,6 +4642,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 311688496905854528, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 1790595351}
     - target: {fileID: 311688496905854528, guid: 01d41dfef549f214d875bce422da5c80, type: 3}
       propertyPath: turretAsset
       value: 
