@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 [System.Serializable]
-public class CreatureLogic //: MonoBehaviour//ICharacter 
+public class CreatureLogic 
 {
     public Player owner;
     public CardAsset ca;

@@ -5,17 +5,11 @@ using Dragging;
 public class DragCreatureAttack : DraggingActions
 {
     private SpriteRenderer _sr;
-
     private LineRenderer _lr;
-
     private WhereIsTheCardOrCreature _whereIsThisCreature;
-
     private Transform _triangle;
-
     private SpriteRenderer _triangleSr;
-
     private GameObject _target;
-
     private OneCreatureManager _manager;
 
 
@@ -25,9 +19,11 @@ public class DragCreatureAttack : DraggingActions
     private float _nextCheckTime;
     [SerializeField] private float targetCheckInterval = 0.03f;
 
-    // private string _attackerId;
-    // private int _attackerOwnerId;
-    // private bool _hasCachedAttacker;
+    private string _attackerId;
+    private int _attackerOwnerId;
+    private bool _hasCachedAttacker;
+    private Biome _attackerBiome;
+    private bool _hasAttackerBiome;
 
     void Awake()
     {
@@ -39,7 +35,6 @@ public class DragCreatureAttack : DraggingActions
 
         _manager = GetComponentInParent<OneCreatureManager>();
         _whereIsThisCreature = GetComponentInParent<WhereIsTheCardOrCreature>();
-        // targetMask = LayerMask.NameToLayer("UIAttackable");
     }
 
     public override bool CanDrag
@@ -58,171 +53,198 @@ public class DragCreatureAttack : DraggingActions
         _whereIsThisCreature.VisualState = VisualStates.Dragging;
         _sr.enabled = true;
         _lr.enabled = true;
-        
-        
+        _attackerId = GetComponentInParent<IDHolder>()?.UniqueID ?? string.Empty;
+        _attackerId = GetComponentInParent<IDHolder>()?.UniqueID ?? string.Empty;
+
+        if (!string.IsNullOrEmpty(_attackerId) &&
+            CreatureLogic.CreaturesCreatedThisGame.TryGetValue(_attackerId, out var logic) &&
+            logic != null)
+        {
+            _attackerBiome = logic.CurrentBiome;
+            _hasAttackerBiome = true;
+        }
+        else
+        {
+            _hasAttackerBiome = false;
+        }
+    }
+    private bool TryGetTargetBiome(IAttackable target, out Biome biome)
+    {
+        biome = default;
+
+        if (target == null) return false;
+
+        // 1) Turret
+        if (target is TurretController turret)
+        {
+            biome = turret.Biome;
+            return true;
+        }
+
+        // 2) Creature (po UniqueID -> CreatureLogic -> CurrentBiome)
+        var id = target.UniqueID;
+        if (!string.IsNullOrEmpty(id) &&
+            CreatureLogic.CreaturesCreatedThisGame.TryGetValue(id, out var logic) &&
+            logic != null)
+        {
+            biome = logic.CurrentBiome;
+            return true;
+        }
+
+        return false;
     }
 
     public override void OnDraggingInUpdate()
     {
+        // 1) arrow visuals (Twoje, bez zmian)
         Vector3 notNormalized = transform.position - transform.parent.position;
         Vector3 direction = notNormalized.normalized;
         float distanceToTarget = (direction * 2.3f).magnitude;
-        if (notNormalized.magnitude > distanceToTarget)
-        {
-            // draw a line between the creature and the target
-            _lr.SetPositions(new Vector3[] { transform.parent.position, transform.position - direction * 2.3f });
-            _lr.enabled = true;
 
-            // position the end of the arrow between near the target.
-            _triangleSr.enabled = true;
+        bool farEnough = notNormalized.magnitude > distanceToTarget;
+
+        _lr.enabled = farEnough;
+        _triangleSr.enabled = farEnough;
+
+        if (farEnough)
+        {
+            _lr.SetPositions(new[] { transform.parent.position, transform.position - direction * 2.3f });
             _triangleSr.transform.position = transform.position - 1.5f * direction;
 
-            // proper rotarion of arrow end
             float rot_z = Mathf.Atan2(notNormalized.y, notNormalized.x) * Mathf.Rad2Deg;
             _triangleSr.transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
         }
-        else
+
+        // 2) highlight update co X sekund
+        if (Time.time < _nextCheckTime)
         {
-            // if the target is not far enough from creature, do not show the arrow
-            _lr.enabled = false;
-            _triangleSr.enabled = false;
+            return;
         }
 
-        if (Time.time >= _nextCheckTime)
-        {
-            _nextCheckTime = Time.time + targetCheckInterval;
+        _nextCheckTime = Time.time + targetCheckInterval;
 
-            var origin = Camera.main.transform.position;
-            var dir = (transform.position - origin).normalized;
-
-            int count = Physics.RaycastNonAlloc(origin, dir, _hits, 200f, targetMask, QueryTriggerInteraction.Ignore);
-
-            Targetable newTarget = null;
-            Debug.Log("Raycast count: " + count);
-
-
-            for (int i = 0; i < count; i++)
-            {
-                var col = _hits[i].collider;
-                if (!col) continue;
-
-                Debug.Log("Hit: " + col.name);
-
-                if (col.transform == transform || col.transform.IsChildOf(transform))
-                    continue;
-
-                newTarget = col.GetComponent<Targetable>();
-                if (newTarget != null)
-                    Debug.Log("Targetable found on: " + col.name);
-
-                if (newTarget != null && newTarget.Attackable != null)
-                    break;
-            }
-
-
-            if (newTarget != _currentTarget)
-            {
-                if (_currentTarget != null && _currentTarget.Glow != null)
-                    _currentTarget.Glow.Hide();
-
-                _currentTarget = newTarget;
-
-                if (_currentTarget != null && _currentTarget.Glow != null)
-                {
-                    var attackerId = GetComponentInParent<IDHolder>().UniqueID;
-                    var attackerOwnerId = CreatureLogic.CreaturesCreatedThisGame[attackerId].owner.PlayerID;
-
-                    if (_currentTarget.Attackable.Owner.PlayerID == attackerOwnerId)
-                    {
-                        _currentTarget.Glow.SetColor(new Color(1f, 0.1f, 0f, 1f));
-                    }
-                    else
-                    {
-                        _currentTarget.Glow.SetColor(new Color(0.2f, 1f, 0.2f, 1f));
-                    }
-
-                    _currentTarget.Glow.Show();
-                }
-            }
-
-            if (_currentTarget == null)
-            {
-                // nic nie świeci
-            }
-        }
+        var newTarget = RaycastTargetable();
+        SetHighlighted(newTarget);
     }
 
     public override void OnEndDrag()
     {
-        Debug.Log("End dragging");
+        // target z ostatniego update (wystarczy w praktyce)
+        var target = _currentTarget?.Attackable;
 
-        // 1) szukamy targetu (IAttackable)
-        IAttackable targetAttackable = null;
+        bool targetValid = IsValidTarget(target);
 
-        var origin = Camera.main.transform.position;
-        var dir = (transform.position - origin).normalized;
-
-        RaycastHit[] hits = Physics.RaycastAll(origin, dir, 200f);
-        Debug.Log($"Raycast hits: {hits.Length}");
-        foreach (var h in hits)
+        if (targetValid && target != null)
         {
-            // ignoruj samego siebie i swoje dzieci
-            if (h.transform == transform || h.transform.IsChildOf(transform))
-            {
-                continue;
-            }
-
-            // bierz pierwszy obiekt, który implementuje IAttackable (np. turret albo creature)
-            var candidate = h.transform.GetComponentInParent<IAttackable>();
-            if (candidate == null)
-            {
-                continue;
-            }
-
-            var attackerId = GetComponentInParent<IDHolder>().UniqueID;
-            var attackerOwnerId = CreatureLogic.CreaturesCreatedThisGame[attackerId].owner.PlayerID;
-
-            if (candidate.Owner != null && candidate.Owner.PlayerID == attackerOwnerId)
-                continue;
-
-
-            targetAttackable = candidate;
-            break;
+            target.ReceiveAttack(_attackerId);
         }
-
-        bool targetValid = false;
-
-        // 2) walidacja + wykonanie ataku
-        if (targetAttackable != null)
-        {
-            var attackerHolder = GetComponentInParent<IDHolder>();
-            string attackerId = attackerHolder != null ? attackerHolder.UniqueID : string.Empty;
-            Debug.Log(
-                $"Target picked: {(targetAttackable as MonoBehaviour)?.name}, targetID: {targetAttackable.UniqueID}");
-
-            targetAttackable.ReceiveAttack(attackerId);
-
-
-            targetValid = true;
-        }
-
-        // 3) jeśli nieważny target -> wróć
-        if (!targetValid)
+        else
         {
             _whereIsThisCreature.VisualState = VisualStates.LowTable;
             _whereIsThisCreature.SetTableSortingOrder();
         }
 
-        // 4) zawsze resetuj wizual
+        // reset wizual
         transform.localPosition = Vector3.zero;
         _sr.enabled = false;
         _lr.enabled = false;
         _triangleSr.enabled = false;
-        if (_currentTarget != null && _currentTarget.Glow != null)
+        if (_currentTarget?.Glow != null)
+        {
             _currentTarget.Glow.Hide();
-
+        }
         _currentTarget = null;
+        _hasCachedAttacker = false;
+    }
 
+
+    private Targetable RaycastTargetable()
+    {
+        var cam = Camera.main;
+        if (cam == null)
+        {
+            return null;
+        }
+
+        var origin = cam.transform.position;
+        var dir = (transform.position - origin).normalized;
+
+        int count = Physics.RaycastNonAlloc(origin, dir, _hits, 200f, targetMask, QueryTriggerInteraction.Collide);
+
+        for (int i = 0; i < count; i++)
+        {
+            var col = _hits[i].collider;
+            if (!col)
+            {
+                continue;
+            }
+
+            // ignoruj siebie i swoje dzieci
+            if (col.transform == transform || col.transform.IsChildOf(transform))
+            {
+                continue;
+            }
+
+            var t = col.GetComponent<Targetable>();
+            if (t != null && t.Attackable != null)
+            {
+                return t;
+            }
+        }
+
+        return null;
+    }
+
+    private bool IsValidTarget(IAttackable target)
+    {
+        if (target == null) return false;
+
+        // owner check (Twoja wersja z playerOwner)
+        var me = playerOwner;
+        if (me == null) return false;
+
+        var them = target.Owner;
+        if (them != null && them.PlayerID == me.PlayerID)
+            return false;
+
+        // biome check
+        if (!_hasAttackerBiome) return false;
+
+        if (!TryGetTargetBiome(target, out var targetBiome))
+            return false;
+
+        return targetBiome == _attackerBiome;
+    }
+
+
+    private Color GetGlowColorFor(IAttackable target)
+    {
+        return IsValidTarget(target)
+            ? new Color(0.2f, 2.2f, 0.2f, 1f) // zieleń
+            : new Color(2.2f, 0.1f, 0.1f, 1f); // czerwień
+    }
+
+    private void SetHighlighted(Targetable newTarget)
+    {
+        if (newTarget == _currentTarget)
+        {
+            return;
+        }
+
+        // zgaś poprzedni
+        if (_currentTarget?.Glow != null)
+        {
+            _currentTarget.Glow.Hide();
+        }
+
+        _currentTarget = newTarget;
+
+        // zapal nowy
+        if (_currentTarget?.Glow != null)
+        {
+            _currentTarget.Glow.SetColor(GetGlowColorFor(_currentTarget.Attackable));
+            _currentTarget.Glow.Show();
+        }
     }
 
     // NOT USED IN THIS SCRIPT
