@@ -13,8 +13,8 @@ namespace Cards
         void Start()
         {
             // Rozpocznij korutynę
-            StartCoroutine(setHand(hand));
-            StartCoroutine(setHand(hand2));
+            // StartCoroutine(setHand(hand));
+            // StartCoroutine(setHand(hand2));
         }
 
         IEnumerator setHand(GameObject hand)

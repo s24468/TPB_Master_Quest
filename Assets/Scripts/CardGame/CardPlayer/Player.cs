@@ -54,7 +54,29 @@ public class Player : MonoBehaviour //, ICharacter
                 return Players[0];
         }
     }
+    // public void DrawACard()
+    // {
+    //     if (deck.cards.Count == 0)
+    //         return;
+    //
+    //     CardAsset cardAsset = deck.DrawTopCard();
+    //     CardLogic logic = new CardLogic(cardAsset, this);
+    //
+    //     hand.CardsInHand.Add(logic);
+    //
+    // }
 
+    public virtual void DrawCardAtTurnStart()
+    {
+        DrawACard();
+    }
+
+    public void DrawACard()
+    {
+        hand.GetComponent<HandVisual>().GivePlayerARandomCard();
+        new DrawACardCommand(this).AddToQueue();
+    }
+    
     public delegate void VoidWithNoArguments();
 
     public event VoidWithNoArguments EndTurnEvent;
@@ -100,30 +122,25 @@ public class Player : MonoBehaviour //, ICharacter
     }
 
 
+    public virtual void OnTurnStart()
+    {
+        foreach (var table in tables)
+        {
+            foreach (CreatureLogic cl in table.CreaturesOnTable)
+                cl.OnTurnStart();
+        }
+    }
+    public void OnTurnEnd()
+    {
+        EndTurnEvent?.Invoke();
+        GetComponent<TurnMaker>().StopAllCoroutines();
+    }
+
     //public event VoidWithNoArguments CreaturePlayedEvent;
     //public event VoidWithNoArguments SpellPlayedEvent;
     //public event VoidWithNoArguments StartTurnEvent;
-    // public virtual void OnTurnStart()
-    // {
-    //     // add one mana crystal to the pool;
-    //     Debug.Log("In ONTURNSTART for "+ gameObject.name);
-    //     usedHeroPowerThisTurn = false;
-    //     ManaThisTurn++;
-    //     ManaLeft = ManaThisTurn;
-    //     foreach (CreatureLogic cl in table.CreaturesOnTable)
-    //         cl.OnTurnStart();
-    //     PArea.HeroPower.WasUsedThisTurn = false;
-    //
-    // }
-    // public void OnTurnEnd()
-    // {
-    //     if(EndTurnEvent != null)
-    //         EndTurnEvent.Invoke();
-    //     ManaThisTurn -= bonusManaThisTurn;
-    //     bonusManaThisTurn = 0;
-    //     GetComponent<TurnMaker>().StopAllCoroutines();
-    // }
-
+    
+    
     // public void DrawACard(bool fast = false)
     // {
     //     if (deck.cards.Count > 0)
@@ -254,8 +271,8 @@ public class Player : MonoBehaviour //, ICharacter
     //     }
     // }
 
-    public void TransmitInfoAboutPlayerToVisual()
-    {
+    // public void TransmitInfoAboutPlayerToVisual()
+    // {
         // PArea.Portrait.GetComponent<IDHolder>().UniqueID = PlayerID;
         // if (GetComponent<TurnMaker>() is AITurnMaker)
         // {
@@ -267,5 +284,5 @@ public class Player : MonoBehaviour //, ICharacter
         //     // allow turn making for this character
         //     PArea.AllowedToControlThisPlayer = true;
         // }
-    }
+    // }
 }
