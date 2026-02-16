@@ -11,8 +11,21 @@ public abstract class DraggingActions : MonoBehaviour {
 
 
     public virtual bool CanDrag => true;
+    public string DraggedUniqueID => GetComponent<IDHolder>().UniqueID;
 
-    protected virtual Player playerOwner
+    public virtual void ConsumeFromHandAndDestroy()
+    {
+        // usuń logicznie z hand (już robisz to w Player.Sacrifice..., więc tu tylko visual)
+        var handVisual = playerOwner.PArea.handVisual;
+
+        GameObject cardObj = Services.Get<IInstanceIdService>().Find(DraggedUniqueID);
+        if (cardObj != null)
+            handVisual.RemoveCard(cardObj);
+
+        Destroy(gameObject);
+    }
+
+    public virtual Player playerOwner
     {
         get{
             Debug.Log("Object detected!" +

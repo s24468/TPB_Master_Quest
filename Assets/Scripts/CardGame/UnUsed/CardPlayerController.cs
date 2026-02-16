@@ -74,10 +74,10 @@ namespace Cards
         }
 
 // METHOD TO SHOW GLOW HIGHLIGHTS
-        public void HighlightPlayableCards(bool removeAllHighlights = false)
-        {
+        // public void HighlightPlayableCards(bool removeAllHighlights = false)
+        // {
             // Logic to highlight playable cards
-        }
+        // }
 
 // use hero power - activate its effect like you've paid a spell
         public void UseHeroPower()

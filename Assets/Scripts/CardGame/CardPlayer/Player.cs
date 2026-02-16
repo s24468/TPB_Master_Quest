@@ -18,8 +18,6 @@ public class Player : MonoBehaviour //, ICharacter
     public Table[] tables = new Table[3];
 
 
-    private int bonusManaThisTurn = 0;
-
     public int ID
     {
         get { return PlayerID; }
@@ -75,18 +73,30 @@ public class Player : MonoBehaviour //, ICharacter
 
     public void PlayACreatureFromHand(CardLogic playedCard, int laneIndex, int tablePos)
     {
-        ManaLeft -= playedCard.CurrentManaCost;
-        new PlayACreatureCommand(playedCard, this, laneIndex, tablePos).AddToQueue();
+        if (ManaLeft < playedCard.CurrentManaCost)
+        {
+            Debug.LogWarning(
+                $"[MANA] Not enough mana to play {playedCard.ca.name}. Needed: {playedCard.CurrentManaCost}, have: {ManaLeft}");
+            return;
+        }
 
+        ManaLeft -= playedCard.CurrentManaCost;
+
+        new UpdateManaPoolCommand(this, ManaThisTurn, ManaLeft).AddToQueue();
+        
+        new PlayACreatureCommand(playedCard, this, laneIndex, tablePos).AddToQueue();
         hand.CardsInHand.Remove(playedCard);
-        HighlightPlayableCards();
     }
 
-    public void GetBonusMana(int amount)
+    public void SacrificeCardForOneMaxMana(string uniqueId)
     {
-        bonusManaThisTurn += amount;
-        ManaThisTurn += amount;
-        ManaLeft += amount;
+        var playedCard = CardLogic.CardsCreatedThisGame[uniqueId];
+
+        // 1️⃣ usuń z ręki
+        hand.CardsInHand.Remove(playedCard);
+
+        // 2️⃣ wywołaj komendę
+        new AddManaCrystalCommand(this, 1).AddToQueue();
     }
 
 
@@ -205,26 +215,26 @@ public class Player : MonoBehaviour //, ICharacter
     }
 
     // METHODS TO SHOW GLOW HIGHLIGHTS
-    public void HighlightPlayableCards(bool removeAllHighlights = false)
-    {
-        //Debug.Log("HighlightPlayable remove: "+ removeAllHighlights);
-        // foreach (CardLogic cl in hand.CardsInHand)
-        // {
-        //     GameObject g = IDHolder.GetGameObjectWithID(cl.UniqueCardID);
-        //     if (g!=null)
-        //         g.GetComponent<OneCardManager>().CanBePlayedNow = (cl.CurrentManaCost <= ManaLeft) && !removeAllHighlights;
-        // }
-        //
-        // foreach (CreatureLogic crl in table.CreaturesOnTable)
-        // {
-        //     GameObject g = IDHolder.GetGameObjectWithID(crl.UniqueCreatureID);
-        //     if(g!= null)
-        //         g.GetComponent<OneCreatureManager>().CanAttackNow = (crl.AttacksLeftThisTurn > 0) && !removeAllHighlights;
-        // }
-        //     
-        // // highlight hero power
-        // PArea.HeroPower.Highlighted = (!usedHeroPowerThisTurn) && (ManaLeft > 1) && !removeAllHighlights;
-    }
+    // public void HighlightPlayableCards(bool removeAllHighlights = false)
+    // {
+    //Debug.Log("HighlightPlayable remove: "+ removeAllHighlights);
+    // foreach (CardLogic cl in hand.CardsInHand)
+    // {
+    //     GameObject g = IDHolder.GetGameObjectWithID(cl.UniqueCardID);
+    //     if (g!=null)
+    //         g.GetComponent<OneCardManager>().CanBePlayedNow = (cl.CurrentManaCost <= ManaLeft) && !removeAllHighlights;
+    // }
+    //
+    // foreach (CreatureLogic crl in table.CreaturesOnTable)
+    // {
+    //     GameObject g = IDHolder.GetGameObjectWithID(crl.UniqueCreatureID);
+    //     if(g!= null)
+    //         g.GetComponent<OneCreatureManager>().CanAttackNow = (crl.AttacksLeftThisTurn > 0) && !removeAllHighlights;
+    // }
+    //     
+    // // highlight hero power
+    // PArea.HeroPower.Highlighted = (!usedHeroPowerThisTurn) && (ManaLeft > 1) && !removeAllHighlights;
+    // }
 
     // START GAME METHODS
     // public void LoadCharacterInfoFromAsset()

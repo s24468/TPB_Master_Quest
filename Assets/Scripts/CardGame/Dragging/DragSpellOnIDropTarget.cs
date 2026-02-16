@@ -3,7 +3,7 @@ using System.Collections;
 using Cards;
 using DG.Tweening;
 
-public class DragSpellOnTable : DraggingActions
+public class DragSpellOnIDropTarget : DraggingActions
 {
     private int savedHandSlot;
     private WhereIsTheCardOrCreature whereIsCard;
@@ -44,27 +44,14 @@ public class DragSpellOnTable : DraggingActions
 
     public override void OnEndDrag()
     {
-        // if (DragSuccessful())
-        // {
-        //     TableVisual hovered = TableVisual.HoveredTable;
-        //
-        //     // bezpieczeństwo: nie pozwól dropnąć na enemy stół
-        //     if (hovered == null || hovered.owner != playerOwner.PArea.owner)
-        //     {
-        //         ReturnToHand();
-        //         return;
-        //     }
-        //
-        //     float mouseX = Camera.main.ScreenToWorldPoint(
-        //         new Vector3(Input.mousePosition.x, Input.mousePosition.y,
-        //             transform.position.z - Camera.main.transform.position.z)).x;
-        //
-        //     int tablePos = hovered.TablePosForNewCreature(mouseX);
-        //     int laneIndex = hovered.laneIndex;
-        //
-        //     playerOwner.PlayACreatureFromHand(GetComponent<IDHolder>().UniqueID, laneIndex, tablePos);
-        //     return;
-        // }
+        var target = GetHoveredDropTarget();
+
+        // ✅ Tylko ManaPool na razie
+        if (target is Cards.ManaPoolVisual manaTarget && target.CanAcceptDrop(this))
+        {
+            target.AcceptDrop(this);
+            return;
+        }
 
         ReturnToHand();
     }
@@ -78,9 +65,29 @@ public class DragSpellOnTable : DraggingActions
         Vector3 oldCardPos = PlayerHand.slots.children[savedHandSlot].transform.localPosition;
         transform.DOLocalMove(oldCardPos, 1f);
     }
+    protected IDropTarget GetHoveredDropTarget()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit[] hits = Physics.RaycastAll(ray, Mathf.Infinity, ~0, QueryTriggerInteraction.Collide);
 
+        foreach (var h in hits)
+        {
+            if (h.collider == null) continue;
+
+            // szukamy komponentu DropTarget na obiekcie collidera
+            var dt = h.collider.GetComponent<DropTarget>() 
+                     ?? h.collider.GetComponentInParent<DropTarget>();
+
+            if (dt != null && dt.Target != null)
+                return dt.Target;
+        }
+
+        return null;
+    }
     protected override bool DragSuccessful()
     {
-        return TableVisual.CursorOverSomeTable;
+        // teraz sukces = istnieje target i akceptuje drop
+        var target = GetHoveredDropTarget();
+        return target != null && target.CanAcceptDrop(this);
     }
 }
