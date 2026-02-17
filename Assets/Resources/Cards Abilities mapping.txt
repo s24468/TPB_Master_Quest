@@ -1,0 +1,4 @@
+A1 -> draw a card  
+A2 -> draw two cards
+
+  

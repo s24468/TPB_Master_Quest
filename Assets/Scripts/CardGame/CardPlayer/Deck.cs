@@ -51,7 +51,8 @@ namespace Cards
                     cardAsset.TPower = card.TPower;
                     cardAsset.PPower = card.PPower;
                     cardAsset.BPower = card.BPower;
-                    cardAsset.Abilities = card.Abilities;
+                    cardAsset.TriggerAbilities = card.TriggerAbilities;
+                    cardAsset.PassiveAbilities = card.PassiveAbilities;
 
                     this.cards.Add(cardAsset);
                 }

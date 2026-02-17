@@ -34,7 +34,8 @@ namespace UI
         public int CasualPower { get; set; }
         public string Description { get; set; }
         public int Cost { get; set; }
-        public string Abilities { get; set; }
+        public string TriggerAbilities { get; set; }
+        public string PassiveAbilities { get; set; }
 
         // to zostaw jako pole (CsvHelper i tak tego nie wczyta z CSV)
         public Sprite CardSprite;

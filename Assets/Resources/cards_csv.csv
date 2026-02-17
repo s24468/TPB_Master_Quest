@@ -1,52 +1,56 @@
-ID;Name;Type;Mana;TPower;PPower;BPower;CasualPower;Description;Cost;Abilities
-1;Electrifying Fox;creature;7;200;100;100;600;When this creature is attacked, it gets +100 casual power;0;A
-2;Tied up Soul;Spell;5;-1;-1;-1;-1;Your opponent discards 3 cards at random from his hand. For each discarded creature your opponent destroys one of his creatures in the battle zone;0;B
-3;Crazy Fangtooth;creature;1;200;100;0;200;This creature gest +100 casual power for each tapped creature in its current biome;0;C
-4;Dimenstional Monster;creature;3;100;0;400;200;This creature can't protect turrets;0;D
-5;Illusional Beast;creature;5;0;0;0;800;For each other creature in its current biome this creature gets - 100 casual power;0;E
-6;Search for the Soulmate;Spell;3;-1;-1;-1;-1;Search your deck. You may take a creature from your deck, show that creature to your opponent and put it into yur hand. Then shuffle your deck;0;F
-7;Harbinger of Doom;creature;7;100;100;0;800;When this creature wins a battle, your opponent discards a card at random from his hand;0;G
-8;Death of Silence;creature;4;0;200;100;400;;0;H
-9;Wild Power;Spell;3;-1;-1;-1;-1;Choose one biome. All your creatures in chosen biome get +200 casual power until the end of your and your opponent's turn;0;I
-10;Blue Knight;creature;1;0;100;100;200;;0;J
-11;Healing Fireplace;Spell;5;-1;-1;-1;-1;You may draw a card and heal 1/4 of chosen turret;0;K
-12;Give me a drink, bartender;Spell;4;-1;-1;-1;-1;Draw 2 cards and if you have no cards in your hand, draw another one;0;L
-13;Arctic Protector;creature;5;200;100;200;200;When this creature protects anything, it gets +200 casual power;0;M
-14;Quick Teleportation;Spell;1;-1;-1;-1;-1;Move any creature in the battle zone into chosen biome;0;N
-15;Catastrophic Failure;creature;5;200;100;0;700;This creature dies when battle creatures with 500 casual power and more;100;O
-16;Colossus Giant;creature;8;0;200;100;600;In the battle opponent's additional power doesn't work;100;P
-17;Tropical Murder;creature;2;200;0;100;400;When this creature wins a battle, destroy it;100;Q
-18;Woody Lord;creature;4;300;200;-100;300;;100;R
-19;Skullcrawler Rider ;creature;4;200;100;0;500;;100;S
-20;Desertic Nomads;creature;6;200;200;0;400;When this creature protects a turret, nothing happens;100;T
-21;Weaken the Concentration;Spell;4;-1;-1;-1;-1;Choose a card in your opponent's mana and destroy it ;100;U
-22;Lovely hamster;creature;2;100;0;200;100;When you put this creature into the battle zone, you may draw a card;100;V
-23;Beach Maggot;creature;2;200;100;0;300;;100;W
-24;Toxic Mushrooms;creature;3;300;0;100;200;;200;X
-25;Purple Nightmare;creature;2;100;0;200;300;;200;Y
-26;Deadly Fungus;creature;3;200;100;200;300;;200;Z
-27;Adjoining Toxicity;creature;3;0;200;100;200;This creature may attack other creatures in adjoining biomes;200;AA
-28;Untouchable Assasin;creature;7;0;200;100;700;This creature can't be blocked;200;AB
-29;Warden of Weakness;creature;3;100;0;200;100;All opponent's creatures in its current biome get  -100 casual power;200;AC
-30;Angel of Weirdness;creature;8;100;0;200;900;;300;AD
-31;Childhood's love;creature;3;0;100;100;200;Symbiosis 1;300;AE
-32;Horses of Mana;creature;2;200;100;0;200;When you put this creature into your battle zone, put the top card of your deck into your mana;300;AF
-33;Mana Prey;Spell;3;-1;-1;-1;-1;You may destroy one of your creatures. If you succeed, put the top 2 cards of your deck into your mana. ;300;AG
-34;Colourful Trio;creature;4;200;0;100;400;When you put this creature into your battle zone and there are at least one of your creatures in each biome, put the top 2 cards of your deck into your mana;300;AH
-35;Desertic Nomad's Bird;creature;5;200;200;0;300;Symbiosis 2, Flyer ;300;AI
-36;Distraction Gases;creature;1;0;100;100;200;When you put this creature into your battle zone, you and your opponent  put the top card of your deck into your mana;300;AJ
-37;Flying Fugitive;creature;5;200;200;200;100;Flyer , Healer 1/4;300;AK
-38;Three-headed Sludge;creature;4;100;0;200;250;Symbiosis 2,  In the symbiotic form, this creature's ( without power of the second creture) casual power doubles;300;AL
-39;End of Cycle;Spell;4;-1;-1;-1;-1;You may destroy one of your opponent's creatures. If you succeed, discard one card at random from your hand;300;AM
-40;Energy Crab;creature;6;200;100;100;300;Symbiosis 2, In the symbiotic form, every second creature's additional power doubles;300;AN
-41;Creature from Beyond;creature;7;0;100;100;500;Symbiosis 3, In the symbiotic form, combined casual power doubles;300;AO
-42;God of Hope;creature;5;0;200;100;400;Healer 1/2;300;AP
-43;Fire Salamander;creature;3;100;0;100;300;Healer 1/4;300;AQ
-44;The Magic of Death;Spell;4;-1;-1;-1;-1;Tap one of your creatures. If you succeed,you may destroy one of your opponent's creatures.;300;AR
-45;Violet Settlers;creature;6;0;0;0;100;Symbiosis 1, In the symbiotic form, combined casual power  doubles;300;AS
-46;Tactical Knock-out;Spell;2;-1;-1;-1;-1;In the next battle, your opponent's creature always loses. If your turn ended without this effect being used, your opponent may draw a card and the effect is permanently lost.;300;AT
-47;Jungle Death;creature;3;0;100;100;500;When this creature is attacked, it gets -300 casual power.;300;AU
-48;Seashore Jaws;creature;2;0;300;100;300;;400;AV
-49;Rock Devourers;creature;4;0;300;100;400;Symbiosis 2,  In the symbiotic form, everytime it attacks, you may untap chosen creature;400;AW
-50;Deadly Combination;Spell;30;-1;-1;-1;-1;Tap two of your creatures. If you succeed,you may destroy one of your opponent's creatures.;400;AX
-51;Mystical Gecko;creature;5;100;0;200;300;Symbiosis 3, In the symbiotic form, everytime it attacks, you may tap chosen creature;400;AY
+ID;Name;Type;Mana;TPower;PPower;BPower;CasualPower;Description;Cost;TriggerAbilities;PassiveAbilities
+1;Electrifying Fox;creature;7;200;100;100;600;When this creature is attacked, it gets +100 casual power;0;nothing;X
+2;Tied up Soul;Spell;5;-1;-1;-1;-1;Your opponent discards 3 cards at random from his hand. For each discarded creature your opponent destroys one of his creatures in the battle zone;0;X;nothing
+3;Crazy Fangtooth;creature;1;200;100;0;200;This creature gest +100 casual power for each tapped creature in its current biome;0;nothing;X
+4;Dimenstional Monster;creature;3;100;0;400;200;This creature can't protect turrets;0;nothing;X
+5;Illusional Beast;creature;5;0;0;0;800;For each other creature in its current biome this creature gets - 100 casual power;0;nothing;X
+6;Search for the Soulmate;Spell;3;-1;-1;-1;-1;Search your deck. You may take a creature from your deck, show that creature to your opponent and put it into yur hand. Then shuffle your deck;0;X;nothing
+7;Harbinger of Doom;creature;7;100;100;0;800;When this creature wins a battle, your opponent discards a card at random from his hand;0;nothing;X
+8;Death of Silence;creature;4;0;200;100;400;;0;nothing;nothing
+9;Wild Power;Spell;3;-1;-1;-1;-1;Choose one biome. All your creatures in chosen biome get +200 casual power until the end of your and your opponent's turn;0;X;nothing
+10;Blue Knight;creature;1;0;100;100;200;;0;nothing;nothing
+11;Healing Fireplace;Spell;5;-1;-1;-1;-1;You may draw a card and heal 1/4 of chosen turret;0;A1;nothing
+12;Give me a drink, bartender;Spell;4;-1;-1;-1;-1;Draw 2 cards and if you have no cards in your hand, draw another one;0;A2;nothing
+13;Arctic Protector;creature;5;200;100;200;200;When this creature protects anything, it gets +200 casual power;0;nothing;X
+14;Quick Teleportation;Spell;1;-1;-1;-1;-1;Move any creature in the battle zone into chosen biome;0;X;nothing
+15;Catastrophic Failure;creature;5;200;100;0;700;This creature dies when battle creatures with 500 casual power and more;100;nothing;X
+16;Colossus Giant;creature;8;0;200;100;600;In the battle opponent's additional power doesn't work;100;nothing;X
+17;Tropical Murder;creature;2;200;0;100;400;When this creature wins a battle, destroy it;100;nothing;X
+18;Woody Lord;creature;4;300;200;-100;300;;100;nothing;nothing
+19;Skullcrawler Rider ;creature;4;200;100;0;500;;100;nothing;nothing
+20;Desertic Nomads;creature;6;200;200;0;400;When this creature protects a turret, nothing happens;100;nothing;X
+21;Weaken the Concentration;Spell;4;-1;-1;-1;-1;Choose a card in your opponent's mana and destroy it ;100;X;nothing
+22;Lovely hamster;creature;2;100;0;200;100;When you put this creature into the battle zone, you may draw a card;100;A1;A1
+23;Beach Maggot;creature;2;200;100;0;300;;100;nothing;nothing
+24;Toxic Mushrooms;creature;3;300;0;100;200;;200;nothing;nothing
+25;Purple Nightmare;creature;2;100;0;200;300;;200;nothing;nothing
+26;Deadly Fungus;creature;3;200;100;200;300;;200;nothing;nothing
+27;Adjoining Toxicity;creature;3;0;200;100;200;This creature may attack other creatures in adjoining biomes;200;nothing;X
+28;Untouchable Assasin;creature;7;0;200;100;700;This creature can't be blocked;200;nothing;X
+29;Warden of Weakness;creature;3;100;0;200;100;All opponent's creatures in its current biome get  -100 casual power;200;nothing;X
+30;Angel of Weirdness;creature;8;100;0;200;900;;300;nothing;nothing
+31;Childhood's love;creature;3;0;100;100;200;Symbiosis 1;300;nothing;Xsymbiosis
+32;Horses of Mana;creature;2;200;100;0;200;When you put this creature into your battle zone, put the top card of your deck into your mana;300;B1;nothing
+33;Mana Prey;Spell;3;-1;-1;-1;-1;You may destroy one of your creatures. If you succeed, put the top 2 cards of your deck into your mana. ;300;B2;nothing
+34;Colourful Trio;creature;4;200;0;100;400;When you put this creature into your battle zone and there are at least one of your creatures in each biome, put the top 2 cards of your deck into your mana;300;X;nothing
+35;Desertic Nomad's Bird;creature;5;200;200;0;300;Symbiosis 2, Flyer ;300;nothing;XSymbiosisFlyer
+36;Distraction Gases;creature;1;0;100;100;200;When you put this creature into your battle zone, you and your opponent  put the top card of your deck into your mana;300;B1;nothing
+37;Flying Fugitive;creature;5;200;200;200;100;Flyer , Healer 1/4;300;nothing;XSymbiosisHealer
+38;Three-headed Sludge;creature;4;100;0;200;250;Symbiosis 2,  In the symbiotic form, this creature's ( without power of the second creture) casual power doubles;300;nothing;Xsymbiosis and something
+39;End of Cycle;Spell;4;-1;-1;-1;-1;You may destroy one of your opponent's creatures. If you succeed, discard one card at random from your hand;300;X;nothing
+40;Energy Crab;creature;6;200;100;100;300;Symbiosis 2, In the symbiotic form, every second creature's additional power doubles;300;nothing;Xsymbiosis and something
+41;Creature from Beyond;creature;7;0;100;100;500;Symbiosis 3, In the symbiotic form, combined casual power doubles;300;nothing;Xsymbiosis and something
+42;God of Hope;creature;5;0;200;100;400;Healer 1/2;300;X;Xhealer
+43;Fire Salamander;creature;3;100;0;100;300;Healer 1/4;300;X;Xhealer
+44;The Magic of Death;Spell;4;-1;-1;-1;-1;Tap one of your creatures. If you succeed,you may destroy one of your opponent's creatures.;300;X;nothing
+45;Violet Settlers;creature;6;0;0;0;100;Symbiosis 1, In the symbiotic form, combined casual power  doubles;300;nothing;Xsymbiosis and something
+46;Tactical Knock-out;Spell;2;-1;-1;-1;-1;In the next battle, your opponent's creature always loses. If your turn ended without this effect being used, your opponent may draw a card and the effect is permanently lost.;300;X;nothing
+47;Jungle Death;creature;3;0;100;100;500;When this creature is attacked, it gets -300 casual power.;300;nothing;X
+48;Seashore Jaws;creature;2;0;300;100;300;;400;nothing;nothing
+49;Rock Devourers;creature;4;0;300;100;400;Symbiosis 2,  In the symbiotic form, everytime it attacks, you may untap chosen creature;400;nothing;Xsymbiosis and something
+50;Deadly Combination;Spell;3;-1;-1;-1;-1;Tap two of your creatures. If you succeed,you may destroy one of your opponent's creatures.;400;X;nothing
+51;Mystical Gecko;creature;5;100;0;200;300;Symbiosis 3, In the symbiotic form, everytime it attacks, you may tap chosen creature;400;nothing;Xsymbiosis and something
+52;Hunted Hunter;creature;4;300;100;100;300;;400;nothing;nothing
+53;Lake Guardian;creature;5;0;300;100;500;;500;nothing;nothing
+54;Tamer of Void Creatures;creature;4;0;100;100;200;- This creature wins the battle if the opponent's creature’s total power is more than twice its own total power.;500;nothing;X
+55;Beneficial Trauma;Spell;4;-1;-1;-1;-1;- Choose one of your creatures. If it is destroyed this turn, return it from your Cemetery to any biome at the beginning of your next turn.;500;X;nothing

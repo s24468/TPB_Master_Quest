@@ -70,12 +70,20 @@ public class Player : MonoBehaviour
         new SpendManaCommand(this, playedCard.CurrentManaCost).AddToQueue();
         
         
-        switch (playedCard.ca.Abilities)
+        switch (playedCard.ca.TriggerAbilities)
         {
-            case "A":
+            case "A1":
             {
-                Debug.Log($"[A] {playedCard.ca.name}");
-                new AddMaxManaCommand(this,1).AddToQueue();
+                Debug.Log($"[A1] {playedCard.ca.name}");
+                new DrawACardCommand(this).AddToQueue();
+                break;
+            }
+            case "A2":
+            {
+                Debug.Log($"[A2] {playedCard.ca.name}");
+                new DrawACardCommand(this).AddToQueue();
+                new DrawACardCommand(this).AddToQueue();
+                // new AddMaxManaCommand(this,1).AddToQueue();
                 break;
             }
         }

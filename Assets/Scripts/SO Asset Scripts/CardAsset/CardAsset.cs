@@ -21,7 +21,8 @@ public class CardAsset : ScriptableObject
 	public Sprite CardImage;
     public int ManaCost;
     public bool IsCreature;
-    public string Abilities;
+    public string TriggerAbilities;
+    public string PassiveAbilities;
     [TextArea(2,3)]
     public string Description;  // Description for spell or character
 
