@@ -18,33 +18,21 @@ namespace Cards
         public static bool CursorOverSomeManaPool => HoveredManaPool != null;
 
         // =========================
-        // EDITOR TEST
-        // =========================
-
-        [Header("Editor test (only in edit mode)")]
-        [SerializeField] private int testMaxCrystals = 5;
-        [SerializeField] private int testAvailableCrystals = 3;
-
-        // =========================
         // UI
         // =========================
 
-        [Header("UI")]
-        [SerializeField] private Image[] crystals;
+        [Header("UI")] [SerializeField] private Image[] crystals;
         [SerializeField] private TextMeshProUGUI progressText;
 
-        [Header("Colors")]
-        [SerializeField] private Color availableColor = Color.white;
+        [Header("Colors")] [SerializeField] private Color availableColor = Color.white;
         [SerializeField] private Color spentColor = Color.gray;
 
         // =========================
         // LOGIC
         // =========================
 
-        [Header("Logic")]
-        [SerializeField] private ManaPoolLogic logic = new ManaPoolLogic();
+        [Header("Logic")] [SerializeField] public ManaPoolLogic logic = new ManaPoolLogic();
 
-        private int HardCap => crystals != null ? crystals.Length : 0;
 
         private void Awake()
         {
@@ -61,7 +49,11 @@ namespace Cards
 
                 bool passed = false;
                 foreach (var h in hits)
-                    if (h.collider == col) { passed = true; break; }
+                    if (h.collider == col)
+                    {
+                        passed = true;
+                        break;
+                    }
 
                 cursorOverThisMana = passed;
 
@@ -70,30 +62,30 @@ namespace Cards
                 else if (HoveredManaPool == this)
                     HoveredManaPool = null;
             }
-
-            // -------- EDITOR PREVIEW --------
-            if (Application.isEditor && !Application.isPlaying)
-            {
-                logic.SetState(testMaxCrystals, testAvailableCrystals, HardCap);
-                Refresh();
-            }
         }
 
         // =========================
         // PUBLIC API
         // =========================
 
-        public void SetMax(int max)
+        public void SubtractAvailableCrystals(int value)
         {
-            logic.SetMax(max, HardCap);
+            logic.SubtractAvailableCrystals(value);
             Refresh();
         }
 
-        public void SetAvailable(int available)
+        public void AddMaxCrystals(int value)
         {
-            logic.SetAvailable(available);
+            logic.AddMaxCrystals(value);
             Refresh();
         }
+
+        public void RefillAll()
+        {
+            logic.RefillToMax();
+            Refresh();
+        }
+
 
         public void Refresh()
         {
@@ -120,12 +112,25 @@ namespace Cards
         public bool CanAcceptDrop(DraggingActions dragged)
         {
             var manaArea = GetComponentInParent<PlayerArea>();
-            return manaArea != null && manaArea.owner == dragged.playerOwner.PArea.owner;
+            if (manaArea == null)
+            {
+                return false;
+            }
+
+            var ownerPlayer = manaArea.owner;
+
+            // 1) musi być ten sam gracz (tak jak masz)
+            bool isSameOwner = ownerPlayer == dragged.playerOwner.PArea.owner;
+            // 2) tylko raz na turę
+            bool notUsedYet = !dragged.playerOwner.SacrificeUsedThisTurn;
+
+            return isSameOwner && notUsedYet;
         }
 
         public void AcceptDrop(DraggingActions dragged)
         {
-            dragged.playerOwner.SacrificeCardForOneMaxMana(dragged.DraggedUniqueID);
+            dragged.playerOwner.SacrificeUsedThisTurn = true;
+            new AddMaxManaCommand(dragged.playerOwner, 1).AddToQueue();
             dragged.ConsumeFromHandAndDestroy();
         }
     }

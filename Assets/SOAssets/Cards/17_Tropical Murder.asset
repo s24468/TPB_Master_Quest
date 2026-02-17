@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 9611267f211e74d42afaf13f76c6804b, type: 3}
   ManaCost: 2
   IsCreature: 1
+  Abilities: A
   Description: When this creature wins a battle, destroy it
   CasualPower: 400
   TPower: 200

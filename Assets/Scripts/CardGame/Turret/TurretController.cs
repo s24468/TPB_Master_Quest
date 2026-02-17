@@ -52,6 +52,8 @@ public class TurretController : AttackableBase
             return;
         }
 
+        attacker.AttacksLeftThisTurn--;
+
         int damage = ComputeDamageFrom(attacker);
 
         // ile segmentów ma spaść?

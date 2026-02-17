@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 21880156d820adf459e861cf12c8a15d, type: 3}
   ManaCost: 5
   IsCreature: 0
+  Abilities: A
   Description: You may draw a card and heal 1/4 of chosen turret
   CasualPower: -1
   TPower: -1

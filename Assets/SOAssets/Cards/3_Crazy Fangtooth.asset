@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 6346816f02911ef43b8d6b4f5c2035b0, type: 3}
   ManaCost: 1
   IsCreature: 1
+  Abilities: A
   Description: This creature gest +100 casual power for each tapped creature in its
     current biome
   CasualPower: 200

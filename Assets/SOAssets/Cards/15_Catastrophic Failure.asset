@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 89553a31468ea194f8f6173a42d79b75, type: 3}
   ManaCost: 5
   IsCreature: 1
+  Abilities: A
   Description: This creature dies when battle creatures with 500 casual power and
     more
   CasualPower: 700

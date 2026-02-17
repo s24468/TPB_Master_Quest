@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Cards;
 
 [System.Serializable]
 public class CreatureLogic 
@@ -32,9 +33,8 @@ public class CreatureLogic
     {
         get
         {
-            // bool ownersTurn = (TurnManager.Instance.whoseTurn == owner);
-            bool ownersTurn = true;
-            return (ownersTurn && (AttacksLeftThisTurn > 0) && !Frozen);
+            bool ownersTurn = (TurnManager.Instance.whoseTurn == owner);
+            return (ownersTurn && (AttacksLeftThisTurn > 0));
         }
     }
 
@@ -47,7 +47,7 @@ public class CreatureLogic
     }
 
     private int attacksForOneTurn = 1;
-    public int AttacksLeftThisTurn { get; set; }
+    public int AttacksLeftThisTurn;// { get; set; }
 
     // CONSTRUCTOR new CreatureLogic
     public CreatureLogic(Player owner, CardLogic cardLogic, string uniqueCreatureID, int laneIndex, Table table)
@@ -57,19 +57,13 @@ public class CreatureLogic
         this.LaneIndex = laneIndex;
         this.CurrentTable = table;
 
-        // UniqueCreatureID = cardLogic.UniqueCardID;
         UniqueCreatureID = uniqueCreatureID;
         CasualPower = ca.CasualPower;
         TPower = ca.TPower;
         PPower = ca.PPower;
         BPower = ca.BPower;
 
-
-        // if (ca.CreatureScriptName!= null && ca.CreatureScriptName!= "")
-        // {
-        //     effect = System.Activator.CreateInstance(System.Type.GetType(ca.CreatureScriptName), new System.Object[]{owner, this, ca.specialCreatureAmount}) as CreatureEffect;
-        //     effect.RegisterEffect();
-        // }
+        AttacksLeftThisTurn = attacksForOneTurn;
 
         CreaturesCreatedThisGame.Add(UniqueCreatureID, this);
     }

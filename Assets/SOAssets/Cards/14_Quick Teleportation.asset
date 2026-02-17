@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: c30c6286e21b3eb49a9bd39239575647, type: 3}
   ManaCost: 1
   IsCreature: 0
+  Abilities: A
   Description: Move any creature in the battle zone into chosen biome
   CasualPower: -1
   TPower: -1

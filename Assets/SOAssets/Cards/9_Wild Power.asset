@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 236b807e9f5c7634d9bb73f25dd9e55c, type: 3}
   ManaCost: 3
   IsCreature: 0
+  Abilities: A
   Description: Choose one biome. All your creatures in chosen biome get +200 casual
     power until the end of your and your opponent's turn
   CasualPower: -1

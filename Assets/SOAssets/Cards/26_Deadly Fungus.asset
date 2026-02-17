@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 2107aa6d5bb7717438b4e35edf04c274, type: 3}
   ManaCost: 3
   IsCreature: 1
+  Abilities: A
   Description: 
   CasualPower: 300
   TPower: 200

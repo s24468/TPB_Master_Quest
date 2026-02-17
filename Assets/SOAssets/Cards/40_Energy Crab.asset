@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 0a75ca57d5d5bf74b9163fd263e7bf4c, type: 3}
   ManaCost: 6
   IsCreature: 1
+  Abilities: A
   Description: Symbiosis 2, In the symbiotic form, every second creature's additional
     power doubles
   CasualPower: 300

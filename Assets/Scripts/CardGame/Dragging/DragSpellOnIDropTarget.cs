@@ -11,14 +11,6 @@ public class DragSpellOnIDropTarget : DraggingActions
     private VisualStates tempState;
     private OneCardManager manager;
 
-    public override bool CanDrag
-    {
-        get
-        {
-            // TODO : include full field check
-            return base.CanDrag && manager.CanBePlayedNow;
-        }
-    }
 
     void Awake()
     {
@@ -30,8 +22,6 @@ public class DragSpellOnIDropTarget : DraggingActions
     {
         savedHandSlot = whereIsCard.Slot;
         Debug.Log("Saving handslot number: " + savedHandSlot);
-
-
         tempState = whereIsCard.VisualState;
         whereIsCard.VisualState = VisualStates.Dragging;
         whereIsCard.BringToFront();
@@ -47,7 +37,14 @@ public class DragSpellOnIDropTarget : DraggingActions
         var target = GetHoveredDropTarget();
 
         // ✅ Tylko ManaPool na razie
-        if (target is Cards.ManaPoolVisual manaTarget && target.CanAcceptDrop(this))
+        // if (target is Cards.ManaPoolVisual manaTarget && target.CanAcceptDrop(this))
+        // {
+        //     target.AcceptDrop(this);
+        //     return;
+        // }
+
+        // ✅ Tylko ManaPool na razie
+        if (target != null && target.CanAcceptDrop(this))
         {
             target.AcceptDrop(this);
             return;
@@ -61,10 +58,11 @@ public class DragSpellOnIDropTarget : DraggingActions
         whereIsCard.SetHandSortingOrder();
         whereIsCard.VisualState = tempState;
 
-        HandVisual PlayerHand = playerOwner.PArea.handVisual;
+        HandManager PlayerHand = playerOwner.PArea.handManager;
         Vector3 oldCardPos = PlayerHand.slots.children[savedHandSlot].transform.localPosition;
         transform.DOLocalMove(oldCardPos, 1f);
     }
+
     protected IDropTarget GetHoveredDropTarget()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -75,7 +73,7 @@ public class DragSpellOnIDropTarget : DraggingActions
             if (h.collider == null) continue;
 
             // szukamy komponentu DropTarget na obiekcie collidera
-            var dt = h.collider.GetComponent<DropTarget>() 
+            var dt = h.collider.GetComponent<DropTarget>()
                      ?? h.collider.GetComponentInParent<DropTarget>();
 
             if (dt != null && dt.Target != null)
@@ -84,6 +82,17 @@ public class DragSpellOnIDropTarget : DraggingActions
 
         return null;
     }
+
+    public override bool CanDrag
+    {
+        get
+        {
+            if (!base.CanDrag) return false;
+            bool ownersTurn = (TurnManager.Instance.whoseTurn == playerOwner);
+            return ownersTurn;
+        }
+    }
+
     protected override bool DragSuccessful()
     {
         // teraz sukces = istnieje target i akceptuje drop

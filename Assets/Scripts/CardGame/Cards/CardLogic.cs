@@ -5,7 +5,7 @@ using System;
 using Unity.VisualScripting;
 
 [System.Serializable]
-public class CardLogic//: MonoBehaviour//: IIdentifiable
+public class CardLogic
 {
     // public Player owner;
     public string UniqueCardID; 
@@ -14,8 +14,6 @@ public class CardLogic//: MonoBehaviour//: IIdentifiable
     public GameObject VisualRepresentation;
 
     private int baseManaCost;
-    // public SpellEffect effect;
-
     // STATIC (for managing IDs)
     public static Dictionary<string, CardLogic> CardsCreatedThisGame = new Dictionary<string, CardLogic>();
     public int CurrentManaCost{ get; set; }

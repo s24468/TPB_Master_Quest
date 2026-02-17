@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 9997c9d33f620c14ab025a2083b7a753, type: 3}
   ManaCost: 7
   IsCreature: 1
+  Abilities: A
   Description: This creature can't be blocked
   CasualPower: 700
   TPower: 0

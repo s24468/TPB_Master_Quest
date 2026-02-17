@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 88af68a6907cda84f81b3e7506b74ca5, type: 3}
   ManaCost: 7
   IsCreature: 1
+  Abilities: A
   Description: When this creature wins a battle, your opponent discards a card at
     random from his hand
   CasualPower: 800

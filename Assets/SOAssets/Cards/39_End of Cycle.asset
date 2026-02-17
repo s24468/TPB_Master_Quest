@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 704ae6b0d5acfd749bfa3701a5aad9b1, type: 3}
   ManaCost: 4
   IsCreature: 0
+  Abilities: A
   Description: You may destroy one of your opponent's creatures. If you succeed,
     discard one card at random from your hand
   CasualPower: -1

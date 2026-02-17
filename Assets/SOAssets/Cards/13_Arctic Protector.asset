@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: d6d97ed902694c74981eac4a9d513a83, type: 3}
   ManaCost: 5
   IsCreature: 1
+  Abilities: A
   Description: When this creature protects anything, it gets +200 casual power
   CasualPower: 200
   TPower: 200

@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: b0d2311b9ac751b42b0366872213d865, type: 3}
   ManaCost: 2
   IsCreature: 1
+  Abilities: A
   Description: When you put this creature into the battle zone, you may draw a card
   CasualPower: 100
   TPower: 100

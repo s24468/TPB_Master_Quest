@@ -8,11 +8,11 @@ using DG.Tweening;
 using UI;
 using UnityEngine.Serialization;
 
-public class HandVisual : MonoBehaviour
+public class HandManager : MonoBehaviour
 {
     // PUBLIC FIELDS
     public AreaPosition owner;
-    public bool TakeCardsOpenly = true;
+    // public bool TakeCardsOpenly = true;
     public SameDistanceChildren slots;
 
     [Header("Transform References")] public GameObject deck;
@@ -95,12 +95,6 @@ public class HandVisual : MonoBehaviour
         GivePlayerACard(c);
     }
 
-    // public CardAsset getRandomCardFromDeck()
-    // {
-    //     CardAsset c = Deck.GetComponent<Deck>().cards[0];
-    //     Deck.GetComponent<Deck>().cards.RemoveAt(0);
-    //     return c;
-    // }
 
     public void GivePlayerACard(CardAsset c, bool fast = false, bool fromDeck = true)
     {

@@ -9,18 +9,7 @@ public class PlayerArea : MonoBehaviour
 {
     public AreaPosition owner;
     public bool ControlsON = true;
-    // public PlayerDeckVisual PDeck;
-    // public EndTurnButton EndTurnButton;
     public ManaPoolVisual ManaPool;
-    public HandVisual handVisual;
+    [FormerlySerializedAs("handVisual")] public HandManager handManager;
     public TableVisual[] tableVisuals = new TableVisual[3];
-
-    public Transform PortraitPosition;
-
-    public bool AllowedToControlThisPlayer
-    {
-        get;
-        set;
-    }      
-
 }

@@ -6,7 +6,7 @@ namespace Cards
     {
         public int PlayerID;
         public Deck deck;
-        public Hand hand;
+        // public Hand hand;
         public Table table;
         public static CardPlayerController[] Players;
 

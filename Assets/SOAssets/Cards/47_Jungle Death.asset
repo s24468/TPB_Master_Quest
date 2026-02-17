@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: eb0926670ab11c6469f6ad59423da9ee, type: 3}
   ManaCost: 3
   IsCreature: 1
+  Abilities: A
   Description: When this creature is attacked, it gets -300 casual power.
   CasualPower: 500
   TPower: 0

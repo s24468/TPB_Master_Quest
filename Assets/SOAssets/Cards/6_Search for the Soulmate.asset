@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 378b830ccc0e3474bbd11fc46321985c, type: 3}
   ManaCost: 3
   IsCreature: 0
+  Abilities: A
   Description: Search your deck. You may take a creature from your deck, show that
     creature to your opponent and put it into yur hand. Then shuffle your deck
   CasualPower: -1

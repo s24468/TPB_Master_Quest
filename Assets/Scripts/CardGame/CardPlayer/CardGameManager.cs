@@ -25,7 +25,7 @@ namespace Cards
             float elapsedTime = 0f;
             while (elapsedTime < duration)
             {
-                hand.GetComponent<HandVisual>().GivePlayerARandomCard();
+                hand.GetComponent<HandManager>().GivePlayerARandomCard();
                 yield return new WaitForSeconds(interval);
                 elapsedTime += interval;
             }

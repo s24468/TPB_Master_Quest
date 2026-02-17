@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 45d8de18f6ac6f2419212829860ca22d, type: 3}
   ManaCost: 3
   IsCreature: 1
+  Abilities: A
   Description: This creature may attack other creatures in adjoining biomes
   CasualPower: 200
   TPower: 0

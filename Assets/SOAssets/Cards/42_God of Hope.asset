@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 8e518c24a6a05d141810014bd5d97807, type: 3}
   ManaCost: 5
   IsCreature: 1
+  Abilities: A
   Description: Healer 1/2
   CasualPower: 400
   TPower: 0

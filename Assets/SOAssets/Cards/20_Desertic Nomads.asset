@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 209b553ba9df99f44b46e1a0f7bdcf2a, type: 3}
   ManaCost: 6
   IsCreature: 1
+  Abilities: A
   Description: When this creature protects a turret, nothing happens
   CasualPower: 400
   TPower: 200

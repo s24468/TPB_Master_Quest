@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 13da5434984120543b134229eb68799e, type: 3}
   ManaCost: 3
   IsCreature: 1
+  Abilities: A
   Description: All opponent's creatures in its current biome get  -100 casual power
   CasualPower: 100
   TPower: 100

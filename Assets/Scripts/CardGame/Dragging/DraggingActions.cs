@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class DraggingActions : MonoBehaviour {
-
+public abstract class DraggingActions : MonoBehaviour
+{
     public abstract void OnStartDrag();
 
     public abstract void OnEndDrag();
@@ -11,12 +11,13 @@ public abstract class DraggingActions : MonoBehaviour {
 
 
     public virtual bool CanDrag => true;
+    // public abs bool CanDrag;
     public string DraggedUniqueID => GetComponent<IDHolder>().UniqueID;
 
     public virtual void ConsumeFromHandAndDestroy()
     {
         // usuń logicznie z hand (już robisz to w Player.Sacrifice..., więc tu tylko visual)
-        var handVisual = playerOwner.PArea.handVisual;
+        var handVisual = playerOwner.PArea.handManager;
 
         GameObject cardObj = Services.Get<IInstanceIdService>().Find(DraggedUniqueID);
         if (cardObj != null)
@@ -27,10 +28,11 @@ public abstract class DraggingActions : MonoBehaviour {
 
     public virtual Player playerOwner
     {
-        get{
+        get
+        {
             Debug.Log("Object detected!" +
-                           "\nName: " + gameObject.name+
-                           "\nTag: " + gameObject.tag);
+                      "\nName: " + gameObject.name +
+                      "\nTag: " + gameObject.tag);
 
             if (tag.Contains("Low"))
                 return GlobalSettings.Instance.LowPlayer;
@@ -46,6 +48,7 @@ public abstract class DraggingActions : MonoBehaviour {
             }
         }
     }
+
     // public virtual bool CanDrag
     // {
     //     get

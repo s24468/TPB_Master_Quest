@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 3f7b3b12fd45d744a944ca5bd8b289f1, type: 3}
   ManaCost: 4
   IsCreature: 1
+  Abilities: A
   Description: Symbiosis 2,  In the symbiotic form, everytime it attacks, you may
     untap chosen creature
   CasualPower: 400

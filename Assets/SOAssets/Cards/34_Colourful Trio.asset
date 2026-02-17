@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: aa4ce5e252e9c334e9e25995ef395363, type: 3}
   ManaCost: 4
   IsCreature: 1
+  Abilities: A
   Description: When you put this creature into your battle zone and there are at
     least one of your creatures in each biome, put the top 2 cards of your deck into
     your mana

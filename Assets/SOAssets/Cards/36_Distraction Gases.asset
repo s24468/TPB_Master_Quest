@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 09ecb2c8956a578488a764d82bc47a7a, type: 3}
   ManaCost: 1
   IsCreature: 1
+  Abilities: A
   Description: When you put this creature into your battle zone, you and your opponent 
     put the top card of your deck into your mana
   CasualPower: 200

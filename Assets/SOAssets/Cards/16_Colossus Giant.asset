@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: ca48aecdba206bb4bb2a16ca2e6a6162, type: 3}
   ManaCost: 8
   IsCreature: 1
+  Abilities: A
   Description: In the battle opponent's additional power doesn't work
   CasualPower: 600
   TPower: 0

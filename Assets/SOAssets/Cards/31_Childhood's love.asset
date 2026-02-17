@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 0207ee56bc7119a439a621acad33fef7, type: 3}
   ManaCost: 3
   IsCreature: 1
+  Abilities: A
   Description: Symbiosis 1
   CasualPower: 200
   TPower: 0

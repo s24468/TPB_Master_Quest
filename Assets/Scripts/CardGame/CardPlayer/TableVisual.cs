@@ -93,7 +93,7 @@ public class TableVisual : MonoBehaviour, IDropTarget
         PlaceCreaturesOnNewSlots();
 
         // end command execution
-        Command.CommandExecutionComplete();
+        // Command.CommandExecutionComplete();
         return manager.CreatureLogic;
     }
 
@@ -185,18 +185,30 @@ public class TableVisual : MonoBehaviour, IDropTarget
 
     public void AcceptDrop(DraggingActions dragged)
     {
-        if (dragged is not DragCreatureOnIDropTarget)
+        if (dragged is  DragCreatureOnIDropTarget)
         {
-            return;
+
+            string id = dragged.DraggedUniqueID;
+
+            float mouseX = Camera.main.ScreenToWorldPoint(
+                new Vector3(Input.mousePosition.x, Input.mousePosition.y,
+                    dragged.transform.position.z - Camera.main.transform.position.z)).x;
+
+            int tablePos = TablePosForNewCreature(mouseX);
+            dragged.playerOwner.PlayACreatureFromHand(id, laneIndex, tablePos);
+        }else if (dragged is DragSpellOnIDropTarget)
+        {
+
+            string id = dragged.DraggedUniqueID;
+
+            float mouseX = Camera.main.ScreenToWorldPoint(
+                new Vector3(Input.mousePosition.x, Input.mousePosition.y,
+                    dragged.transform.position.z - Camera.main.transform.position.z)).x;
+
+            int tablePos = TablePosForNewCreature(mouseX);
+            dragged.playerOwner.PlayASpellFromHand(id, laneIndex, tablePos);
         }
+        return;
 
-        string id = dragged.DraggedUniqueID;
-
-        float mouseX = Camera.main.ScreenToWorldPoint(
-            new Vector3(Input.mousePosition.x, Input.mousePosition.y,
-                dragged.transform.position.z - Camera.main.transform.position.z)).x;
-
-        int tablePos = TablePosForNewCreature(mouseX);
-        dragged.playerOwner.PlayACreatureFromHand(id, laneIndex, tablePos);
     }
 }

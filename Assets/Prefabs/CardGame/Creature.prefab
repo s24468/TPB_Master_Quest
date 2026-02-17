@@ -2096,6 +2096,7 @@ GameObject:
   - component: {fileID: 6176868009160304106}
   - component: {fileID: 6547797273906154404}
   - component: {fileID: 5792079301507002997}
+  - component: {fileID: 5368139600410616569}
   m_Layer: 6
   m_Name: TargetObject
   m_TagString: Untagged
@@ -2291,6 +2292,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   glow: {fileID: 0}
+--- !u!114 &5368139600410616569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5337758465215979455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82369784986446428a573dd755f0960c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cards.Dragging.CanCreatureAttackGlow
+  glow: {fileID: 6547797273906154404}
+  checkInterval: 0.08
+  canAttackColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &5521912666727682290
 GameObject:
   m_ObjectHideFlags: 0

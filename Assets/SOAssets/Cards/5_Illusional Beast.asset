@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: fab159fea2a61234c95fb9cd98feefb4, type: 3}
   ManaCost: 5
   IsCreature: 1
+  Abilities: A
   Description: For each other creature in its current biome this creature gets -
     100 casual power
   CasualPower: 800

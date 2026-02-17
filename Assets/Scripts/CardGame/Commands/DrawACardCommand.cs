@@ -13,7 +13,7 @@ public class DrawACardCommand : Command
 
     public override void StartCommandExecution()
     {
-        player.hand.GetComponent<HandVisual>().GivePlayerARandomCard();
+        player.hand.GivePlayerARandomCard();
         CommandExecutionComplete();
         // player.StartCoroutine(DrawCardAnimation());
     }

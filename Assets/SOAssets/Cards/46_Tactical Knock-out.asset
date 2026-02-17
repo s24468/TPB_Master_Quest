@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 78f0604e5349db543b1c858f9a3310e1, type: 3}
   ManaCost: 2
   IsCreature: 0
+  Abilities: A
   Description: In the next battle, your opponent's creature always loses. If your
     turn ended without this effect being used, your opponent may draw a card and
     the effect is permanently lost.

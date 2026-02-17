@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 22f91cc484faff84caf7937db2803b21, type: 3}
   ManaCost: 3
   IsCreature: 0
+  Abilities: A
   Description: You may destroy one of your creatures. If you succeed, put the top
     2 cards of your deck into your mana.
   CasualPower: -1

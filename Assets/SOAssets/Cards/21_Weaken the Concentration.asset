@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: d4dd151e6aa62f345a921facabd223c4, type: 3}
   ManaCost: 4
   IsCreature: 0
+  Abilities: A
   Description: 'Choose a card in your opponent''s mana and destroy it '
   CasualPower: -1
   TPower: -1

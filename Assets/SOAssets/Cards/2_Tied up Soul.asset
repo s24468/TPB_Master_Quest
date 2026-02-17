@@ -17,6 +17,7 @@ MonoBehaviour:
   CardImage: {fileID: 21300000, guid: 6ced1c3b42c64cb40a772d986155bc6e, type: 3}
   ManaCost: 5
   IsCreature: 0
+  Abilities: A
   Description: Your opponent discards 3 cards at random from his hand. For each discarded
     creature your opponent destroys one of his creatures in the battle zone
   CasualPower: -1
