@@ -21,10 +21,10 @@ public class DragCreatureAttack : DraggingActions
 
     private string _attackerId;
     private int _attackerOwnerId;
-    private bool _hasCachedAttacker;
     private Biome _attackerBiome;
     private bool _hasAttackerBiome;
     private CreatureLogic _logic;
+
     void Awake()
     {
         _sr = GetComponent<SpriteRenderer>();
@@ -35,10 +35,8 @@ public class DragCreatureAttack : DraggingActions
 
         _manager = GetComponentInParent<OneCreatureManager>();
         _whereIsThisCreature = GetComponentInParent<WhereIsTheCardOrCreature>();
-        
-        
     }
-    
+
     //
     public override bool CanDrag
     {
@@ -78,6 +76,7 @@ public class DragCreatureAttack : DraggingActions
         _hasAttackerBiome = false;
         return false;
     }
+
     public override void OnStartDrag()
     {
         // _attackerId = GetComponentInParent<IDHolder>()?.UniqueID;
@@ -95,7 +94,7 @@ public class DragCreatureAttack : DraggingActions
 
         if (!TryCacheAttacker() || !_logic.CanAttack)
             return;
-        if (_logic == null )
+        if (_logic == null)
         {
             return;
         }
@@ -109,6 +108,7 @@ public class DragCreatureAttack : DraggingActions
         _sr.enabled = true;
         _lr.enabled = true;
     }
+
     private bool TryGetTargetBiome(IAttackable target, out Biome biome)
     {
         biome = default;
@@ -194,8 +194,8 @@ public class DragCreatureAttack : DraggingActions
         {
             _currentTarget.Glow.Hide();
         }
+
         _currentTarget = null;
-        _hasCachedAttacker = false;
     }
 
 
@@ -238,28 +238,21 @@ public class DragCreatureAttack : DraggingActions
 
     private bool IsValidTarget(IAttackable target)
     {
-        Debug.Log("AAAAAAA");
         if (target == null) return false;
-        Debug.Log("BBBB");
-
         // owner check (Twoja wersja z playerOwner)
         var me = playerOwner;
         if (me == null) return false;
-        Debug.Log("CCCC");
 
         var them = target.Owner;
         if (them != null && them.PlayerID == me.PlayerID)
             return false;
-        Debug.Log("DDDD");
 
         // biome check
         if (!_hasAttackerBiome) return false;
 
-        Debug.Log("EEEEEE");
 
         if (!TryGetTargetBiome(target, out var targetBiome))
             return false;
-        Debug.Log("FFFFF");
 
         return targetBiome == _attackerBiome;
     }

@@ -15,7 +15,6 @@ public class GameData
         money = 600;
         nickname = "";
         playerPosition = Vector3.zero;
-        // CardDictionaryCollected = new SerializableDictionary<string, int>();
         CardDictionaryCollected = new SerializableDictionary<string, int>
         {
             { "32", 4 },

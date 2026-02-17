@@ -4,7 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UI;
-
+using CsvHelper;
+using CsvHelper.Configuration;
+using System.Globalization;
 using Amazon.S3;
 using Amazon.S3.Model;
 
@@ -47,6 +49,113 @@ public class CardDataLoader : MonoBehaviour
 
         LoadCardsFromCSV(csvAsset.text);
     }
+    
+    void LoadCardsFromCSV(string csvContent)
+    {
+        using var reader = new StringReader(csvContent);
+
+        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+        {
+            Delimiter = ";", // bo masz średniki
+            HasHeaderRecord = true
+        };
+
+        using var csv = new CsvReader(reader, config);
+
+        var records = csv.GetRecords<Card>();
+
+        foreach (var card in records)
+        {
+            card.CardSprite = DefaultSprite;
+
+            string spritePath = $"Sprites/Cards/{card.Type}s/{card.ID} {card.Name}";
+            Sprite loadedSprite = Resources.Load<Sprite>(spritePath);
+            if (loadedSprite != null)
+                card.CardSprite = loadedSprite;
+
+            if (card.Type.ToLower() == "creature")
+                creatureCards.Add(card);
+            else if (card.Type.ToLower() == "spell")
+                spellCards.Add(card);
+        }
+    }
+    // void LoadCardsFromCSV(string csvContent)
+    // {
+    //     StringReader reader = new StringReader(csvContent);
+    //     string headerLine = reader.ReadLine(); // Skip header
+    //
+    //     while (true)
+    //     {
+    //         string line = reader.ReadLine();
+    //         if (line == null) break;
+    //
+    //         string[] fields = ParseCSVLine(line, ';');
+    //
+    //         Card card = new Card
+    //         {
+    //             ID = int.TryParse(fields[0], out int id) ? id : 0,
+    //             Name = fields[1],
+    //             Type = fields[2],
+    //             Mana = int.TryParse(fields[3], out int mana) ? mana : 0,
+    //             TPower = int.TryParse(fields[4], out int tPower) ? tPower : 0,
+    //             PPower = int.TryParse(fields[5], out int pPower) ? pPower : 0,
+    //             BPower = int.TryParse(fields[6], out int bPower) ? bPower : 0,
+    //             CasualPower = int.TryParse(fields[7], out int casualPower) ? casualPower : 0,
+    //             Description = fields[8],
+    //             Cost = int.TryParse(fields[9], out int cost) ? cost : 0,
+    //             Abilities = fields[10],
+    //             CardSprite = DefaultSprite
+    //         };
+    //         // string spritePath = $"Sprites/Cards/Creatures/{card.ID} {card.Name}";
+    //         string spritePath = $"Sprites/Cards/{card.Type}s/{card.ID} {card.Name}";
+    //
+    //         Sprite loadedSprite = Resources.Load<Sprite>(spritePath);
+    //         if (loadedSprite != null) card.CardSprite = loadedSprite;
+    //
+    //         if (card.Type.ToLower() == "creature")
+    //         {
+    //             creatureCards.Add(card);
+    //         }
+    //         else if (card.Type.ToLower() == "spell")
+    //         {
+    //             spellCards.Add(card);
+    //         }
+    //     }
+    //
+    //     reader.Close();
+    // }
+    // private string[] ParseCSVLine(string line, char delimiter)
+    // {
+    //     // szybka ścieżka, jeśli nie ma cudzysłowów
+    //     if (!line.Contains("\""))
+    //         return line.Split(delimiter);
+    //
+    //     List<string> fields = new List<string>();
+    //     bool insideQuote = false;
+    //     var currentField = new System.Text.StringBuilder();
+    //
+    //     foreach (char c in line)
+    //     {
+    //         if (c == '"')
+    //         {
+    //             insideQuote = !insideQuote;
+    //             continue;
+    //         }
+    //
+    //         if (c == delimiter && !insideQuote)
+    //         {
+    //             fields.Add(currentField.ToString().Trim());
+    //             currentField.Clear();
+    //             continue;
+    //         }
+    //
+    //         currentField.Append(c);
+    //     }
+    //
+    //     fields.Add(currentField.ToString().Trim());
+    //     return fields.ToArray();
+    // }
+
     IEnumerator DownloadCSVFromS3()
     {
         
@@ -76,90 +185,7 @@ public class CardDataLoader : MonoBehaviour
             LoadCardsFromCSV(csvData);
         }
     }
-    void LoadCardsFromCSV(string csvContent)
-    {
-        StringReader reader = new StringReader(csvContent);
-        string headerLine = reader.ReadLine(); // Skip header
-
-        while (true)
-        {
-            string line = reader.ReadLine();
-            if (line == null) break;
-
-            // string[] fields = line.Split(',');
-            string[] fields = ParseCSVLine(line);
-            
-            Card card = new Card
-            {
-                ID = int.TryParse(fields[0], out int id) ? id : 0,
-                Name = fields[1],
-                Type = fields[2],
-                Mana = int.TryParse(fields[3], out int mana) ? mana : 0,
-                TPower = int.TryParse(fields[4], out int tPower) ? tPower : 0,
-                PPower = int.TryParse(fields[5], out int pPower) ? pPower : 0,
-                BPower = int.TryParse(fields[6], out int bPower) ? bPower : 0,
-                CasualPower = int.TryParse(fields[7], out int casualPower) ? casualPower : 0,
-                Description = fields[8],
-                Cost = int.TryParse(fields[9], out int cost) ? cost : 0,
-                Abilities = fields[10],
-                CardSprite = DefaultSprite
-            };
-            // string spritePath = $"Sprites/Cards/Creatures/{card.ID} {card.Name}";
-            string spritePath = $"Sprites/Cards/{card.Type}s/{card.ID} {card.Name}";
-
-            Sprite loadedSprite = Resources.Load<Sprite>(spritePath);
-            if (loadedSprite != null) card.CardSprite = loadedSprite;
-
-            if (card.Type.ToLower() == "creature")
-            {
-                creatureCards.Add(card);
-            }
-            else if (card.Type.ToLower() == "spell")
-            {
-                spellCards.Add(card);
-            }
-        }
-
-        reader.Close();
-    }
-
-    private string[] ParseCSVLine(string line)
-    {
-        if (!line.Contains("\""))
-        {
-            return line.Split(','); // Simple split for lines without quotes
-        }
-
-
-        List<string> fields = new List<string>();
-        bool insideQuote = false;
-        var currentField = new System.Text.StringBuilder();
-
-        foreach (char c in line)
-        {
-            switch (c)
-            {
-                //xyz,"abc",123
-                case '"':
-                    insideQuote = !insideQuote; // Toggle the quote state
-                    break;
-
-                case ',' when !insideQuote:
-                    fields.Add(currentField.ToString().Trim()); // Add the field
-                    currentField.Clear(); // Reset the field
-                    break;
-
-                default:
-                    currentField.Append(c); // Add the character to the current field
-                    break;
-            }
-        }
-
-        // Add the last field
-        fields.Add(currentField.ToString().Trim());
-
-        return fields.ToArray();
-    }
+    
 
     // Publiczny dostęp do danych kart
     public List<Card> GetCreatureCards() => creatureCards;

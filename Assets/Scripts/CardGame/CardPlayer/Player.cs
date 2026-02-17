@@ -41,10 +41,6 @@ public class Player : MonoBehaviour
         new DrawACardCommand(this).AddToQueue();
     }
 
-    // public void PlayACreatureFromHand(string UniqueID, int laneIndex, int tablePos)
-    // {
-    //     PlayACreatureFromHand(CardLogic.CardsCreatedThisGame[UniqueID], laneIndex, tablePos);
-    // }
 
     public void PlayACreatureFromHand(string UniqueID, int laneIndex, int tablePos)
     {
