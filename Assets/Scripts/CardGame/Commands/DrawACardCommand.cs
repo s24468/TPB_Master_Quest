@@ -15,8 +15,8 @@ public class DrawACardCommand : Command
     {
         player.hand.GivePlayerARandomCard();
         CommandExecutionComplete();
-        // player.StartCoroutine(DrawCardAnimation());
     }
+    // player.StartCoroutine(DrawCardAnimation());
 
     // private IEnumerator DrawCardAnimation()
     // {

@@ -48,17 +48,5 @@ public class Command
         }
         return false;
     }
-    // public static void PrependToQueue(IEnumerable<Command> commands)
-    // {
-    //     var newQueue = new Queue<Command>();
-    //
-    //     foreach (var c in commands)
-    //         newQueue.Enqueue(c);
-    //
-    //     while (CommandQueue.Count > 0)
-    //         newQueue.Enqueue(CommandQueue.Dequeue());
-    //
-    //     CommandQueue = newQueue;
-    // }
 
 }

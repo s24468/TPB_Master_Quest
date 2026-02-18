@@ -54,3 +54,6 @@ ID;Name;Type;Mana;TPower;PPower;BPower;CasualPower;Description;Cost;TriggerAbili
 53;Lake Guardian;creature;5;0;300;100;500;;500;nothing;nothing
 54;Tamer of Void Creatures;creature;4;0;100;100;200;- This creature wins the battle if the opponent's creature’s total power is more than twice its own total power.;500;nothing;X
 55;Beneficial Trauma;Spell;4;-1;-1;-1;-1;- Choose one of your creatures. If it is destroyed this turn, return it from your Cemetery to any biome at the beginning of your next turn.;500;X;nothing
+56;B;Spell;4;-1;-1;-1;-1;X;500;X;nothing
+57;C;creature;4;300;100;100;300;;500;nothing;nothing
+58;Hunting for Luck;Spell;2;-1;-1;-1;-1;Look at the top 3 cards of your deck. For each of those cards, if its cost is 2, add it to your mana. Otherwise, destroy it.;500;X;nothing

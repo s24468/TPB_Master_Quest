@@ -105,6 +105,7 @@ public class Player : MonoBehaviour
     public void OnTurnEnd()
     {
         EndTurnEvent?.Invoke();
+        Debug.Log("[Turn tried to end turn");
         GetComponent<TurnMaker>().StopAllCoroutines();
     }
 

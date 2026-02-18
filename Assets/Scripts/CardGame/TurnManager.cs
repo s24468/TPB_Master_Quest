@@ -46,40 +46,19 @@ namespace Cards
             int rnd = Random.Range(0, 2);
             Player whoGoesFirst = Player.Players[rnd];
             Player whoGoesSecond = whoGoesFirst.otherPlayer;
-
-            StartCoroutine(GameStartSequence(whoGoesFirst, whoGoesSecond));
+            EnqueueSetHandsInterleaved(whoGoesFirst, whoGoesSecond, 5, 1f);
         }
-
-        private IEnumerator GameStartSequence(Player first, Player second)
+        private void EnqueueSetHandsInterleaved(Player a, Player b, int cards, float interval)
         {
-            bool firstDone = false;
-            bool secondDone = false;
+            new DelayCommand(1f).AddToQueue(); // start delay jak w coroutine
 
-            StartCoroutine(SetHand(first, () => firstDone = true));
-            StartCoroutine(SetHand(second, () => secondDone = true));
-
-            // czekamy aż obie się skończą
-            yield return new WaitUntil(() => firstDone && secondDone);
-
-            new StartATurnCommand(first).AddToQueue();
-        }
-
-        private IEnumerator SetHand(Player player, System.Action onComplete)
-        {
-            yield return new WaitForSeconds(1f);
-
-            float duration = 5f;
-            float interval = 1f;
-            float elapsedTime = 0f;
-
-            while (elapsedTime < duration)
+            for (int i = 0; i < cards; i++)
             {
-                player.DrawACard();
-                yield return new WaitForSeconds(interval);
-                elapsedTime += interval;
+                new DrawACardCommand(a).AddToQueue();
+                new DrawACardCommand(b).AddToQueue();
+                new DelayCommand(interval).AddToQueue();
             }
-
-            onComplete?.Invoke();
+            new StartATurnCommand(a).AddToQueue();
         }
 
         public void StartTurn(Player p)
