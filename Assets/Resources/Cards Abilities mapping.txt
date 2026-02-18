@@ -1,4 +1,6 @@
 A1 -> draw a card  
 A2 -> draw two cards
+B1 -> put the top card of your deck into your mana
+B2 -> put the two top card of your deck into your mana
 
   

@@ -39,14 +39,4 @@ public class Command
         CommandQueue.Dequeue().StartCommandExecution();
     }
 
-    public static bool CardDrawPending()
-    {
-        foreach (Command c in CommandQueue)
-        {
-            if (c is DrawACardCommand)
-                return true;
-        }
-        return false;
-    }
-
 }

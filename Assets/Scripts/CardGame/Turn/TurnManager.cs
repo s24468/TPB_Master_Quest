@@ -48,16 +48,17 @@ namespace Cards
             Player whoGoesSecond = whoGoesFirst.otherPlayer;
             EnqueueSetHandsInterleaved(whoGoesFirst, whoGoesSecond, 5, 1f);
         }
+
         private void EnqueueSetHandsInterleaved(Player a, Player b, int cards, float interval)
         {
-            new DelayCommand(1f).AddToQueue(); // start delay jak w coroutine
-
+            new DelayCommand(1f).AddToQueue();
             for (int i = 0; i < cards; i++)
             {
                 new DrawACardCommand(a).AddToQueue();
                 new DrawACardCommand(b).AddToQueue();
                 new DelayCommand(interval).AddToQueue();
             }
+
             new StartATurnCommand(a).AddToQueue();
         }
 

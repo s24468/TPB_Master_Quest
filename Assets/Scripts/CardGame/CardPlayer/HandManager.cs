@@ -12,6 +12,7 @@ public class HandManager : MonoBehaviour
 {
     // PUBLIC FIELDS
     public AreaPosition owner;
+
     // public bool TakeCardsOpenly = true;
     public SameDistanceChildren slots;
 
@@ -89,6 +90,30 @@ public class HandManager : MonoBehaviour
         }
     }
 
+    public void GivePlayerARandomCardWithDelay(
+        float delay,
+        Action onComplete = null)
+    {
+        CardAsset c = deck.GetComponent<Deck>().getRandomCardFromDeck();
+        GameObject card = CreateACardAtPosition(c, deck.transform.position, new Vector3(0f, -179f, 0f));
+        foreach (Transform t in card.GetComponentsInChildren<Transform>())
+        {
+            t.tag = owner.ToString() + "Card";
+        }
+
+        AddCard(card);
+
+        Vector3 targetPos = slots.children[0].transform.localPosition;
+        Sequence s = DOTween.Sequence();
+
+        float moveTime = GlobalSettings.Instance.CardTransitionTimeFast;
+
+        s.Append(card.transform.DOLocalMove(targetPos, moveTime));
+        s.Append(card.transform.DORotate(Vector3.zero, moveTime / 2));
+
+        s.OnComplete(() => onComplete?.Invoke());
+    }
+
     public void GivePlayerARandomCard()
     {
         CardAsset c = deck.GetComponent<Deck>().getRandomCardFromDeck();
@@ -96,7 +121,7 @@ public class HandManager : MonoBehaviour
     }
 
 
-    public void GivePlayerACard(CardAsset c, bool fast = false, bool fromDeck = true)
+    public void GivePlayerACard(CardAsset c)
     {
         GameObject card;
 
@@ -112,10 +137,43 @@ public class HandManager : MonoBehaviour
         Sequence s = DOTween.Sequence();
         Vector3 targetPos = slots.children[0].transform.localPosition;
 
-        float upTime = 1.8f;
-        float moveTime = GlobalSettings.Instance.CardTransitionTimeFast;
+        var moveTime = GlobalSettings.Instance.CardTransitionTimeFast;
 
         s.Append(card.transform.DOLocalMove(targetPos, moveTime));
         s.Append(card.transform.DORotate(Vector3.zero, moveTime / 2));
     }
+    
+    
+    public void GivePlayerARandomCardFlyToTargetAndVanish(
+        Transform target,
+        float delay = 0f,
+        Action onComplete = null)
+    {
+        CardAsset c = deck.GetComponent<Deck>().getRandomCardFromDeck();
+        GameObject card = CreateACardAtPosition(c, deck.transform.position, new Vector3(0f, -179f, 0f));
+
+        foreach (Transform t in card.GetComponentsInChildren<Transform>())
+            t.tag = owner.ToString() + "Card";
+
+        // ważne: parent ustawiamy na slots, żeby lokalne współrzędne miały sens
+        card.transform.SetParent(slots.transform, worldPositionStays: true);
+
+        // nie dodajemy do ręki (bo ma zniknąć), więc NIE wywołujemy AddCard(card)
+
+        float moveTime = GlobalSettings.Instance.CardTransitionTimeFast;
+
+        // target w lokalnych współrzędnych slots (ten sam układ odniesienia)
+        Vector3 targetLocalPos = slots.transform.InverseTransformPoint(target.position);
+
+        DOTween.Sequence()
+            .AppendInterval(Mathf.Max(0f, delay))
+            .Append(card.transform.DOLocalMove(targetLocalPos, moveTime))
+            .Join(card.transform.DORotate(Vector3.zero, moveTime / 2f))
+            .OnComplete(() =>
+            {
+                Destroy(card);
+                onComplete?.Invoke();
+            });
+    }
+
 }

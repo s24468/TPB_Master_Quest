@@ -16,15 +16,4 @@ public class DrawACardCommand : Command
         player.hand.GivePlayerARandomCard();
         CommandExecutionComplete();
     }
-    // player.StartCoroutine(DrawCardAnimation());
-
-    // private IEnumerator DrawCardAnimation()
-    // {
-    //     // odpal animację w HandVisual
-    //     yield return player.hand
-    //         .GetComponent<HandVisual>()
-    //         .AnimateCardDraw(card);
-    //
-    //     CommandExecutionComplete();
-    // }
 }

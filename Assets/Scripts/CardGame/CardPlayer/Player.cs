@@ -55,8 +55,8 @@ public class Player : MonoBehaviour
         new SpendManaCommand(this, playedCard.CurrentManaCost).AddToQueue();
         new PlayACreatureCommand(playedCard, this, laneIndex, tablePos).AddToQueue();
         new RemoveCardFromHandCommand(this, playedCard).AddToQueue();
-
     }
+
     public void PlayASpellFromHand(string UniqueID, int laneIndex, int tablePos)
     {
         var playedCard = CardLogic.CardsCreatedThisGame[UniqueID];
@@ -68,29 +68,37 @@ public class Player : MonoBehaviour
         }
 
         new SpendManaCommand(this, playedCard.CurrentManaCost).AddToQueue();
-        
-        
+        new RemoveCardFromHandCommand(this, playedCard).AddToQueue();
         switch (playedCard.ca.TriggerAbilities)
         {
             case "A1":
             {
                 Debug.Log($"[A1] {playedCard.ca.name}");
-                new DrawACardCommand(this).AddToQueue();
+                new DrawCardsCommandWithTheDelay(this, 1f, 3, 0.35f).AddToQueue();
                 break;
             }
             case "A2":
             {
                 Debug.Log($"[A2] {playedCard.ca.name}");
-                new DrawACardCommand(this).AddToQueue();
-                new DrawACardCommand(this).AddToQueue();
-                // new AddMaxManaCommand(this,1).AddToQueue();
+                new DrawCardsCommandWithTheDelay(this, 1f, 3, 0.35f).AddToQueue();
+                break;
+            }
+            case "B1":
+            {
+                Debug.Log($"[B1] {playedCard.ca.name}");
+                new AddMaxManaCommand(this, 1).AddToQueue();
+                new DelayCommand(0.2f).AddToQueue();
+
+                break;
+            }
+            case "B2":
+            {
+                Debug.Log($"[B2] {playedCard.ca.name}");
+                new AddMaxManaCommand(this, 2).AddToQueue();
+                new DelayCommand(0.2f).AddToQueue();
                 break;
             }
         }
-        
-        
-        new RemoveCardFromHandCommand(this, playedCard).AddToQueue();
-        
     }
 
     public virtual void OnTurnStart()
@@ -122,5 +130,4 @@ public class Player : MonoBehaviour
         // TurnManager.Instance.StopTheTimer();
         // new GameOverCommand(this).AddToQueue();
     }
-
 }
