@@ -198,6 +198,28 @@ public class HandManager : MonoBehaviour
     //
     //     s.OnComplete(() => onComplete?.Invoke());
     // }
+
+
+    public void GivePlayerARandomCardsCenterThenTarget(
+        Player player,
+        int count,
+        Action onEachCardComplete,
+        Action onAllComplete = null)
+    {
+        if (count <= 0)
+        {
+            onAllComplete?.Invoke();
+            return;
+        }
+
+        GivePlayerARandomCardCenterThenTarget(player, () =>
+        {
+            onEachCardComplete?.Invoke(); // ✅ po jednej karcie
+            GivePlayerARandomCardsCenterThenTarget(player, count - 1, onEachCardComplete, onAllComplete);
+        });
+    }
+
+
     public void GivePlayerARandomCardCenterThenTarget(
         Player player,
         Action onComplete = null)

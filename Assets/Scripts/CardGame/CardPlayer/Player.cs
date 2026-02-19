@@ -74,29 +74,26 @@ public class Player : MonoBehaviour
             case "A1":
             {
                 Debug.Log($"[A1] {playedCard.ca.name}");
-                // new DrawCardsCommandWithTheDelay(this, 1f, 3, 0.35f).AddToQueue();
-                new AddMaxManaUsingCardFromDeckCommand(this).AddToQueue();
+                new DrawCardsCommandWithTheDelay(this, 1f, 1, 0.35f).AddToQueue();
                 break;
             }
             case "A2":
             {
                 Debug.Log($"[A2] {playedCard.ca.name}");
-                new AddMaxManaUsingCardFromDeckCommand(this).AddToQueue();
-                // new DrawCardsCommandWithTheDelay(this, 1f, 3, 0.35f).AddToQueue();
+                new DrawCardsCommandWithTheDelay(this, 1f, 2, 0.35f).AddToQueue();
                 break;
             }
             case "B1":
             {
                 Debug.Log($"[B1] {playedCard.ca.name}");
-                new AddMaxManaCommand(this, 1).AddToQueue();
+                new AddMaxManaUsingCardFromDeckCommand(this,1).AddToQueue();
                 new DelayCommand(0.2f).AddToQueue();
-
                 break;
             }
             case "B2":
             {
                 Debug.Log($"[B2] {playedCard.ca.name}");
-                new AddMaxManaCommand(this, 2).AddToQueue();
+                new AddMaxManaUsingCardFromDeckCommand(this,2).AddToQueue();
                 new DelayCommand(0.2f).AddToQueue();
                 break;
             }

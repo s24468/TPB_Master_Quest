@@ -2217,6 +2217,8 @@ MonoBehaviour:
   targetScale: 1.5
   previewGameObject: {fileID: 4953298696862773540}
   activateInAwake: 1
+  previewCanvas: {fileID: 7779995937620587133}
+  previewSortingOrder: 10
 --- !u!114 &4265697480375327633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2368,6 +2370,7 @@ MonoBehaviour:
     UniqueCreatureID: 
     LaneIndex: 0
     Frozen: 0
+    AttacksLeftThisTurn: 0
   previewManager: {fileID: 6067160752621711147}
   nameText: {fileID: 0}
   manaCostText: {fileID: 0}
