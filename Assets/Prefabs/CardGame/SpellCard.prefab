@@ -1213,6 +1213,8 @@ MonoBehaviour:
   targetScale: 2.5
   previewGameObject: {fileID: 4475253028087909903}
   activateInAwake: 1
+  previewCanvas: {fileID: 8357846928641003929}
+  previewSortingOrder: 5000
 --- !u!114 &5783735680520401103
 MonoBehaviour:
   m_ObjectHideFlags: 0

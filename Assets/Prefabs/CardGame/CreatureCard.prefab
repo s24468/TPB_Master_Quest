@@ -987,7 +987,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2346045687780612297}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.005, y: 0.005, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1778,6 +1778,8 @@ MonoBehaviour:
   targetScale: 2.5
   previewGameObject: {fileID: 4475253028087909903}
   activateInAwake: 1
+  previewCanvas: {fileID: 8357846928641003929}
+  previewSortingOrder: 5000
 --- !u!114 &5783735680520401103
 MonoBehaviour:
   m_ObjectHideFlags: 0
