@@ -12,18 +12,6 @@ public class AddMaxManaUsingCardFromDeckCommand : Command
         this.amount = amount;
     }
 
-    // public override void StartCommandExecution()
-    // {
-    //     Player p = player;
-    //
-    //     player.hand.GivePlayerARandomCardCenterThenTarget(
-    //         p,
-    //         onComplete: () =>
-    //         {
-    //             player.PArea.ManaPool.AddMaxCrystals(amount);
-    //             CommandExecutionComplete();
-    //         });
-    // }
     public override void StartCommandExecution()
     {
         player.hand.GivePlayerARandomCardsCenterThenTarget(

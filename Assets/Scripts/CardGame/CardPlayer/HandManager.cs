@@ -143,63 +143,6 @@ public class HandManager : MonoBehaviour
         s.Append(card.transform.DORotate(Vector3.zero, moveTime / 2));
     }
 
-
-    // public void GivePlayerARandomCardCenterThenTarget(
-    //     Player player,
-    //     Action onComplete = null)
-    // {
-    //     CardAsset c = deck.GetComponent<Deck>().getRandomCardFromDeck();
-    //     GameObject card = CreateACardAtPosition(c, deck.transform.position, new Vector3(0f, -179f, 0f));
-    //     foreach (Transform t in card.GetComponentsInChildren<Transform>())
-    //         t.tag = owner.ToString() + "Card";
-    //     Sequence s = DOTween.Sequence();
-    //
-    //     float moveTime = GlobalSettings.Instance.CardTransitionTimeFast;
-    //     float stayInCenterTime = 0.35f;
-    //
-    //     // card.transform.SetParent(player.transform, worldPositionStays: true);
-    //
-    //     // s.Append(card.transform.DOLocalMove(Vector3.zero, moveTime));
-    //     // s.Append(card.transform.DORotate(Vector3.zero, moveTime / 2));
-    //     // if (stayInCenterTime > 0f)
-    //     //     s.AppendInterval(stayInCenterTime);
-    //     // // 3) Flip z powrotem
-    //     // s.Append(card.transform.DORotate(Vector3.zero, moveTime / 2));
-    //     // 4) Center -> Target (wraca Z)
-    //     // card.transform.SetParent(player.PArea.ManaPool.transform, worldPositionStays: true);
-    //     // s.Append(card.transform.DOLocalMove(Vector3.zero, moveTime));
-    //     // 1) Ustaw parent na "center anchor" (u Ciebie: player.transform) i leć do środka
-    //
-    //     
-    //     card.transform.SetParent(player.transform, worldPositionStays: true);
-    //
-    //     s.Append(card.transform.DOLocalMove(Vector3.zero, moveTime));
-    //     s.Join(card.transform.DORotate(Vector3.zero, moveTime / 2f));
-    //
-    //     // 2) Pauza w centrum
-    //     if (stayInCenterTime > 0f)
-    //         s.AppendInterval(stayInCenterTime);
-    //
-    //     // 3) (opcjonalny) flip z powrotem - ale u Ciebie rotujesz do Vector3.zero drugi raz,
-    //     // więc jeśli chcesz "flip back", to musisz rotować do innej wartości (np. -179).
-    //     // Zostawiam jak masz:
-    //     s.Append(card.transform.DORotate(Vector3.zero, moveTime / 2f));
-    //
-    //     // 4) DOPIERO TERAZ zmień parent na ManaPool (w trakcie sekwencji)
-    //     s.AppendCallback(() =>
-    //     {
-    //         card.transform.SetParent(player.PArea.ManaPool.transform, worldPositionStays: true);
-    //     });
-    //
-    //     // 5) I dopiero po re-parent leć do local zero w Manapoolu
-    //     s.Append(card.transform.DOLocalMove(Vector3.zero, moveTime));
-    //
-    //     
-    //
-    //     s.OnComplete(() => onComplete?.Invoke());
-    // }
-
-
     public void GivePlayerARandomCardsCenterThenTarget(
         Player player,
         int count,
@@ -218,7 +161,6 @@ public class HandManager : MonoBehaviour
             GivePlayerARandomCardsCenterThenTarget(player, count - 1, onEachCardComplete, onAllComplete);
         });
     }
-
 
     public void GivePlayerARandomCardCenterThenTarget(
         Player player,
@@ -265,6 +207,92 @@ public class HandManager : MonoBehaviour
         // 6) do celu (local zero ManaPoola)
         s.Append(card.transform.DOLocalMove(Vector3.zero, moveTime).SetEase(Ease.InCubic));
 
+
+        s.OnComplete(() =>
+        {
+            Destroy(card);
+            onComplete?.Invoke();
+        });
+    }
+
+    public void RemoveRandomCardsFromHandToCenterThenDestroy(
+        Player player,
+        int count,
+        Action onEachCardComplete = null,
+        Action onAllComplete = null)
+    {
+        if (count <= 0)
+        {
+            onAllComplete?.Invoke();
+            return;
+        }
+
+        // jeśli ręka pusta -> kończymy
+        if (CardsInHand == null || CardsInHand.Count == 0)
+        {
+            onAllComplete?.Invoke();
+            return;
+        }
+
+        // nie próbuj usuwać więcej niż masz
+        int safeCount = Mathf.Min(count, CardsInHand.Count);
+
+        RemoveRandomCardFromHandToCenterThenDestroy(player, () =>
+        {
+            onEachCardComplete?.Invoke();
+            RemoveRandomCardsFromHandToCenterThenDestroy(player, safeCount - 1, onEachCardComplete, onAllComplete);
+        });
+    }
+
+    public void RemoveRandomCardFromHandToCenterThenDestroy(
+        Player player,
+        Action onComplete = null)
+    {
+        if (CardsInHand == null || CardsInHand.Count == 0)
+        {
+            onComplete?.Invoke();
+            return;
+        }
+
+        // 1) wybierz losową kartę z ręki
+        int index = UnityEngine.Random.Range(0, CardsInHand.Count);
+        GameObject card = CardsInHand[index];
+
+        // 2) usuń z listy + przestaw resztę
+        CardsInHand.RemoveAt(index);
+        PlaceCardsOnNewSlots();
+        UpdatePlacementOfSlots();
+
+        var where = card.GetComponent<WhereIsTheCardOrCreature>();
+        if (where != null)
+            where.VisualState = VisualStates.Transition;
+
+        float moveTime = GlobalSettings.Instance.CardTransitionTimeFast;
+
+        // float flipTime = 0.25f;
+        // float stayInCenterTime = 0.35f;
+        // Vector3 rotBack = new Vector3(0f, -179f, 0f);
+        // Vector3 rotFront = Vector3.zero;
+
+        // card.transform.localEulerAngles = rotBack;
+
+        card.transform.SetParent(player.transform, worldPositionStays: true);
+
+        Sequence s = DOTween.Sequence();
+
+        // tylko ruch do środka
+        s.Append(card.transform.DOLocalMove(Vector3.zero, moveTime)
+            .SetEase(Ease.OutCubic));
+
+        /*
+        // ---- OBRACANIE WYŁĄCZONE ----
+        s.Append(card.transform.DOLocalRotate(rotFront, flipTime).SetEase(Ease.InOutSine));
+
+        if (stayInCenterTime > 0f)
+            s.AppendInterval(stayInCenterTime);
+
+        s.Append(card.transform.DOLocalRotate(rotBack, flipTime).SetEase(Ease.InOutSine));
+        */
 
         s.OnComplete(() =>
         {

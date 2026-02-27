@@ -1,6 +1,6 @@
 ID;Name;Type;Mana;TPower;PPower;BPower;CasualPower;Description;Cost;TriggerAbilities;PassiveAbilities
 1;Electrifying Fox;creature;7;200;100;100;600;When this creature is attacked, it gets +100 casual power;0;nothing;X
-2;Tied up Soul;Spell;5;-1;-1;-1;-1;Your opponent discards 3 cards at random from his hand. For each discarded creature your opponent destroys one of his creatures in the battle zone;0;X;nothing
+2;Tied up Soul;Spell;5;-1;-1;-1;-1;Your opponent discards 3 cards at random from his hand. For each discarded creature your opponent destroys one of his creatures in the battle zone;0;C3;nothing
 3;Crazy Fangtooth;creature;1;200;100;0;200;This creature gest +100 casual power for each tapped creature in its current biome;0;nothing;X
 4;Dimenstional Monster;creature;3;100;0;400;200;This creature can't protect turrets;0;nothing;X
 5;Illusional Beast;creature;5;0;0;0;800;For each other creature in its current biome this creature gets - 100 casual power;0;nothing;X

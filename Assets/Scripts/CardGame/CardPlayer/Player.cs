@@ -86,17 +86,46 @@ public class Player : MonoBehaviour
             case "B1":
             {
                 Debug.Log($"[B1] {playedCard.ca.name}");
-                new AddMaxManaUsingCardFromDeckCommand(this,1).AddToQueue();
+                new AddMaxManaUsingCardFromDeckCommand(this, 1).AddToQueue();
                 new DelayCommand(0.2f).AddToQueue();
                 break;
             }
             case "B2":
             {
                 Debug.Log($"[B2] {playedCard.ca.name}");
-                new AddMaxManaUsingCardFromDeckCommand(this,2).AddToQueue();
+                new AddMaxManaUsingCardFromDeckCommand(this, 2).AddToQueue();
                 new DelayCommand(0.2f).AddToQueue();
                 break;
             }
+            case "C1":
+            {
+                Debug.Log($"[C1] {playedCard.ca.name}");
+                new RemoveCardFromHand(this, 1).AddToQueue();
+                new DelayCommand(0.2f).AddToQueue();
+                break;
+            }
+            case "C2":
+            {
+                Debug.Log($"[C2] {playedCard.ca.name}");
+                new RemoveCardFromHand(this, 1).AddToQueue();
+                new DelayCommand(0.2f).AddToQueue();
+                break;
+            }
+            case "C3":
+            {
+                Debug.Log($"[C3] {playedCard.ca.name}");
+                new RemoveCardFromHand(this, 1).AddToQueue();
+                new DelayCommand(0.2f).AddToQueue();
+                break;
+            }
+        }
+    }
+
+    public static void show()
+    {
+        foreach (var p in Players)
+        {
+            Debug.Log($"{p} player ");
         }
     }
 
