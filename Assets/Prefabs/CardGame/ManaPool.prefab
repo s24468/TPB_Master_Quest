@@ -274,8 +274,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5918dafe151b0d42a511ca471daca40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testMaxCrystals: 0
-  testAvailableCrystals: 0
   crystals:
   - {fileID: 4947804626636172958}
   - {fileID: 7964945376765230666}

@@ -294,10 +294,28 @@ public class HandManager : MonoBehaviour
         s.Append(card.transform.DOLocalRotate(rotBack, flipTime).SetEase(Ease.InOutSine));
         */
 
+        // s.OnComplete(() =>
+        // {
+        //     Destroy(card);
+        //     onComplete?.Invoke();
+        // });
         s.OnComplete(() =>
         {
-            Destroy(card);
-            onComplete?.Invoke();
+            var burn = card.GetComponentInChildren<CardBurnImages>(true);
+
+            if (burn != null)
+            {
+                burn.Burn(1.5f, 0.8f, () =>
+                {
+                    Destroy(card);
+                    onComplete?.Invoke();
+                });
+            }
+            else
+            {
+                Destroy(card);
+                onComplete?.Invoke();
+            }
         });
     }
 }

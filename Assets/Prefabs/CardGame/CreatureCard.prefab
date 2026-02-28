@@ -1269,6 +1269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6490124126040812715}
   - component: {fileID: 3285325947610700649}
+  - component: {fileID: 2064915034125295371}
   m_Layer: 5
   m_Name: CardPanel
   m_TagString: Untagged
@@ -1305,6 +1306,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3789264348109528556}
   m_CullTransparentMesh: 1
+--- !u!225 &2064915034125295371
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3789264348109528556}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &3953883824943640388
 GameObject:
   m_ObjectHideFlags: 0
@@ -1577,7 +1590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: fe5f5189a07bf9a4cab7694d6eaf7809, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1694,6 +1707,7 @@ GameObject:
   - component: {fileID: 4856248836733972771}
   - component: {fileID: 7702380595660514357}
   - component: {fileID: 251189996082808273}
+  - component: {fileID: 5303580386188946120}
   m_Layer: 0
   m_Name: CreatureCard
   m_TagString: Untagged
@@ -1874,6 +1888,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IDHolder
   instanceId: 
+--- !u!114 &5303580386188946120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4639431296629373937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbaa3f1681d110547a939e587b072f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  canvasGroup: {fileID: 2064915034125295371}
+  cardGraphic: {fileID: 8018403274779271722}
+  cardBody: {fileID: 6552840175825580479}
+  cardFrame: {fileID: 4745314190427274719}
+  frame: {fileID: 4662807354856929721}
+  dissolveParam: _DissolveAmount
 --- !u!1 &4916647108421934005
 GameObject:
   m_ObjectHideFlags: 0
@@ -2416,7 +2448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: fe5f5189a07bf9a4cab7694d6eaf7809, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -2975,7 +3007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: fe5f5189a07bf9a4cab7694d6eaf7809, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -3057,7 +3089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: fe5f5189a07bf9a4cab7694d6eaf7809, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
