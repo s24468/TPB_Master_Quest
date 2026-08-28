@@ -33,6 +33,7 @@ public class TurretController : AttackableBase
             turretAsset.segmentSprites,
             turretAsset.material,
             turretAsset.strongColor,
+            turretAsset.strongStrength,
             turretAsset.weakColor
         );
 

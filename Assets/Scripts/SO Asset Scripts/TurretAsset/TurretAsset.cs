@@ -20,4 +20,5 @@ public class TurretAsset : ScriptableObject
     [Header("UIGlow")] public Material material;
     public Color strongColor;
     public Color weakColor;
+    public float strongStrength = 3;
 }

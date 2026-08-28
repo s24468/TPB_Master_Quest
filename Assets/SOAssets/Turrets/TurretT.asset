@@ -21,3 +21,4 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: 40999757129e4384aa8abbee6e57b75c, type: 2}
   strongColor: {r: 0, g: 1, b: 0, a: 0}
   weakColor: {r: 0.11029584, g: 0.2735849, b: 0, a: 0}
+  strongStrength: 1.5

@@ -23,12 +23,13 @@ public class UITurretController : MonoBehaviour
         letter.text = let;
     }
 
-    public void InitializeUISegments(Sprite[] sprites, Material material, Color strongColor,
+    public void InitializeUISegments(Sprite[] sprites, Material material, Color strongColor, float strongStrength,
         Color weakColor)
     {
         for (var i = 0; i < sprites.Length; i++)
         {
             segments[i].SetSprite(sprites[i]);
+            segments[i].strongStrength = strongStrength;
             segments[i].strongColor = strongColor;
             segments[i].weakColor = weakColor;
             segments[i].SetMaterial(material);
